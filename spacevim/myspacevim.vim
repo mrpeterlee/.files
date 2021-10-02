@@ -128,6 +128,15 @@ func! myspacevim#after() abort
   let g:github_dashboard = { 'username': 'mrpeterlee', 'password': $github_access_token }
   let g:gista#client#default_username = 'mrpeterlee'
 
+  " =========== AutoFlake Settings ===========
+  " See https://github.com/tell-k/vim-autoflake
+  " Register hotkey F9
+  autocmd FileType python map <buffer> <F9> :call Autoflake()<CR>
+  " Remove all unused imports
+  let g:autoflake_remove_all_unused_imports=1
+  " Disable show diff window
+  let g:autoflake_disable_show_diff=1
+
   " =========== My Settings ===========
   " Use rg instead of grep
   if executable("rg")

@@ -1,9 +1,20 @@
 {
+  "suggest.noselect": false,
+  "suggest.enablePreview": true,
+  "suggest.removeDuplicateItems": true,
+  "codeLens.enable": true,
+
+  "coc.preferences.rootPatterns": [
+    ".git",
+    ".vscode"
+  ],
+
   "coc.preferences.useQuickfixForLocations": true,
   "coc.preferences.snippets.enable": true,
   "coc.preferences.formatOnSaveFiletypes": ["python"],
   // python config
   "diagnostic.displayByAle": true,
+
   "python.condaPath": "conda",
   // "python.venvFolders": [".virtualenvs"],
   // "python.venvPath" : "~/",
@@ -12,7 +23,6 @@
   "python.linting.flake8Enabled": false,
   "python.linting.lintOnSave": true,
   "python.jediEnabled": false,
-  "suggest.enablePreview":true,
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "/opt/conda/bin/black",
   "python.sortImports.path": "/opt/conda/bin/isort"
