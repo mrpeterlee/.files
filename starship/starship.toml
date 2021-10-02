@@ -1,9 +1,18 @@
 # ~/.config/starship.toml
-# Don't print a new line at the start of the prompt
+
+# Prompt
+# Use custom format
+format = """
+[┌───────────────────>](bold green)
+[│](bold green)$directory (bold white)$username (bold red)$hostname $package $git_branch $git_status $git_commit
+[└─>](bold green) """
+# Wait 10 milliseconds for starship to check files under the current directory.
+scan_timeout = 10
+# Disable the blank line at the start of the prompt
 add_newline = false
 
 [conda]
-format = "[$symbol$environment](dimmed green) "
+format = "[$symbol$environment](bold blue) "
 disabled = false
 
 [character]

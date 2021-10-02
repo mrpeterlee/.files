@@ -80,7 +80,6 @@ alias man=manp
 
 
 # check of os type
-
 if [[ "$(uname)" == "Darwin" ]]; then
     # Do something under Mac OS X platform
     export os_type='mac'
@@ -105,6 +104,10 @@ dirs=( '/opt/conda/bin' \
        '/lab/lib/finclab/sh/bash' \
        '/lab/lib/finclab/sh/zsh' \
        '/lab/lib/finclab/sh/fish' \
+       '/Users/peter/lab/lib/finclab/sh/bin' \
+       '/Users/peter/lab/lib/finclab/sh/bash' \
+       '/Users/peter/lab/lib/finclab/sh/zsh' \
+       '/Users/peter/lab/lib/finclab/sh/fish' \
    )
 for folderpath in $dirs; do
     # echo "looking at folder $folderpath"
@@ -132,7 +135,7 @@ fi
 repos=("finclab" "datalab")
 
 unset PYTHONPATH
-export PYTHONPATH="/lab/lib"
+export PYTHONPATH="/lab/lib:/Users/peter/lab/lib"
 
 # for repo in $repos; do 
 #     if [ -d ${HOME}/project/${repo} ]; then
@@ -465,8 +468,11 @@ word="finclab"
 test "${string#*$word}" != "$string" && echo "$word found in conda environment" && conda activate finclab
 # test "${string#*$word}" = "$string" && echo "$word NOT found in conda environment" && conda activate base
 
-# Connecting to local deployment of QuantRocket
 export HOUSTON_URL=http://10.1.1.100:1969
+if [[ ${os_type} == "mac" ]]; then
+    # Do something under Mac OS X platform
+    export HOUSTON_URL=http://houston.finclab.com:1969
+fi
 
 # Launch fish
 fish

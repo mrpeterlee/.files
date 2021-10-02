@@ -209,13 +209,13 @@
   merged = false
 
 [[custom_plugins]]
+<<<<<<< HEAD
+  name = "tell-k/vim-autoflake"
+=======
   # This allows jumping to test files
   # Check out: https://www.dev-log.me/Jump_between_test_files_and_implementation_in_Vim/
   name = 'tpope/vim-projectionist'
-  merged = false
-
-[[custom_plugins]]
-  name = 'tell-k/vim-autoflake'
+>>>>>>> 32aab223056c8fb175fc07a1d1d6c97e9602a7d4
   merged = false
 
 # [[custom_plugins]]

@@ -35,21 +35,16 @@ bind \cf forward-char
 set -x PATH $PATH /usr/bin
 set -x PATH $PATH /snap/bin
 set -x PATH $PATH /bin
-set -x PATH $PATH /lab/finclab/zsh
 set -x PATH $PATH /opt/conda/bin
-set -x PATH $PATH /opt/anaconda/bin
-set -x PATH $PATH /opt/anaconda3/bin
-set -x PATH $PATH /usr/local/anaconda3/bin
-set -x PATH $PATH /opt/miniconda/bin
-set -x PATH $PATH /opt/miniconda3/bin
-set -x PATH $PATH /home/peter/project/dotfiles/bin
-set -x PATH $PATH /Users/peter/project/dotfiles/bin
-set -x PATH $PATH /home/peter/project/dotfiles/bin
-set -x PATH $PATH /lab/dotfiles/bin
-set -x PATH $PATH /lab/lib/finclab/sh/fish
 set -x PATH $PATH /lab/lib/finclab/sh/bash
-set -x PATH $PATH /Users/peter/project/finclab/zsh
+set -x PATH $PATH /lab/lib/finclab/sh/zsh
+set -x PATH $PATH /lab/lib/finclab/sh/fish
 set -x PATH $PATH /home/peter/.local/bin
+set -x PATH $PATH /home/peter/.files/bin
+set -x PATH $PATH /Users/peter/.files/bin
+set -x PATH $PATH /Users/peter/lab/lib/finclab/sh/bash
+set -x PATH $PATH /Users/peter/lab/lib/finclab/sh/zsh
+set -x PATH $PATH /Users/peter/lab/lib/finclab/sh/fish
 
 ############################## Abbr #############################
 # gitpush to main
@@ -60,6 +55,7 @@ abbr -a gpp 'set -lx _current_folder (pwd) && cd (git rev-parse --show-toplevel)
 abbr -a paper 'set -lx _current_folder (pwd) && set _current_folder (string replace /lab/prod /lab/paper $_current_folder) && cd $_current_folder && set -e _current_folder'
 abbr -a prod 'set -lx _current_folder (pwd) && set _current_folder (string replace /lab/paper /lab/prod $_current_folder) && cd $_current_folder && set -e _current_folder'
 abbr -a ssh_ts 'ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 50000 peter@10.1.1.100'
+abbr -a pjo pj open
 
 ############################## ALIAS #############################
 alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v /home/peter/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker'
@@ -67,8 +63,9 @@ alias pip2=pip
 alias pip2=pip
 alias pip=pip3
 alias vim=nvim
-alias vpn='sudo /usr/local/Cellar/openvpn/2.4.9/sbin/openvpn --config ~/peter.ovpn'
-alias sshp='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 55555 -L 50000:10.1.1.100:50000 peter@vpn.finclab.com'
+alias vpn='sudo /usr/local/Cellar/openvpn/2.5.2/sbin/openvpn --config ~/.ssh/peter.ovpn'
+alias sshp='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 55555 -L 1969:10.1.1.100:1969 -L 10000:10.1.1.100:10000 -L 50000:10.1.1.100:50000 peter@vpn.finclab.com'
+alias ssha='autossh -M 0 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 10" -p 55555 -L 1969:10.1.1.100:1969 -L 10000:10.1.1.100:10000 -L 50000:10.1.1.100:50000 -L 55000:10.1.1.100:55000 peter@vpn.finclab.com'
 alias update_prezto='cd $ZPREZTODIR;git pull;git submodule update --init --recursive'
 if type -q exa
     alias ls='exa --group-directories-first'

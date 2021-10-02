@@ -43,7 +43,6 @@ func! myspacevim#after() abort
   " which linter to enable for Python source file linting
   let g:neomake_python_enabled_makers = ['pylint']
 
-
   " =========== Python Layer ===========
   " Disable formatter as COC handles it
   let g:neoformat_python_black = {
@@ -51,8 +50,8 @@ func! myspacevim#after() abort
       \ 'stdin': 1,
       \ 'args': ['-q', '-'],
       \ }
-  " let g:neoformat_enabled_python = ['black']
   let g:neoformat_enabled_python = ['black']
+  let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-pyright']
 
   " " =========== Vim-Rooter ===========
   " let g:rooter_patterns = ['=paper', '=prod', '=lib']
