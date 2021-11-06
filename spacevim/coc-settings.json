@@ -12,18 +12,30 @@
   "coc.preferences.useQuickfixForLocations": true,
   "coc.preferences.snippets.enable": true,
   "coc.preferences.formatOnSaveFiletypes": ["python"],
-  // python config
   "diagnostic.displayByAle": true,
-
-  "python.condaPath": "conda",
-  // "python.venvFolders": [".virtualenvs"],
-  // "python.venvPath" : "~/",
+  "coc.preferences.floatActions": false,
+  "pyright.enable": true,
+  "python.analysis.autoImportCompletions": true,
+  "python.pythonPath": "/opt/conda/bin/python",
+  "python.venvPath": "/opt/conda/envs",
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "/opt/conda/bin/black",
+  "python.formatting.blackArgs": ["--line-length=120"],
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
   "python.linting.flake8Enabled": false,
   "python.linting.lintOnSave": true,
   "python.jediEnabled": false,
-  "python.formatting.provider": "black",
-  "python.formatting.blackPath": "/opt/conda/bin/black",
-  "python.sortImports.path": "/opt/conda/bin/isort"
+  "python.completion.snippetSupport": false,
+  "python.condaPath": "conda",
+  "python.sortImports.path": "/opt/conda/bin/isort",
+  "python.sortImports.args": [
+    "--trailing-comma",
+    "--force-grid-wrap", "0",
+    "--use-parentheses",
+    "--force-single-line-imports",
+    "--line-width", "120",
+    "--multi-line", "3",
+    "--float-to-top"
+]
 }

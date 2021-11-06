@@ -8,6 +8,12 @@ windows:
       layout: even-horizontal
       panes:
         - workspace1:
+          - cd $HOME/lab/paper/finclab && git pull
+          - cd $HOME/lab/paper/datalab && git pull
+          - cd $HOME/lab/paper/ts && git pull
+          - cd $HOME/lab/paper/winclient && git pull
+          - cd $HOME/lab/paper/tradestation && git pull
+          - cd $HOME/lab/paper/lab && git pull
           - cd $HOME/lab/paper
           # - conda deactivate && conda activate finclab
         - workspace2:

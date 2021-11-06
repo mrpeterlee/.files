@@ -30,6 +30,13 @@ func! myspacevim#before() abort
   " nnoremap : ;
   vnoremap ; :
   " vnoremap : ;
+
+  " test - map for jupyter ascending
+  nmap <space><space>x <Plug>JupyterExecute
+  nmap <space><space>X <Plug>JupyterExecuteAll
+
+
+
 endf
 
 
@@ -118,6 +125,12 @@ func! myspacevim#after() abort
   " nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
 
 
+  " =========== ALE Linter ===========
+  let g:ale_linters_explicit = 1
+  let g:ale_linters = {
+      \ 'python': ['pyright'],
+      \ }
+
   " =========== Pydocstring ===========
   let g:pydocstring_doq_path = '/opt/conda/bin/doq'
   let g:pydocstring_formatter = 'numpy'
@@ -136,11 +149,13 @@ func! myspacevim#after() abort
   " Disable show diff window
   let g:autoflake_disable_show_diff=1
 
+
   " =========== My Settings ===========
   " Use rg instead of grep
   if executable("rg")
       set grepprg=rg\ --vimgrep
   endif
 
+  let g:node_client_debug = 1
 
 endf

@@ -14,7 +14,7 @@
     colorscheme_bg = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
-    enable_guicolors = false
+    enable_guicolors = true
 
     default_indent = 4
     expand_tab = true
@@ -39,7 +39,7 @@
     enable_statusline_display_mode = false
     enable_statusline_mode = false
 
-    snippet_engine = 'ultisnips'
+    # snippet_engine = 'ultisnips'
 
     # Buffer
     buffer_index_type = 1
@@ -49,9 +49,9 @@
     bootstrap_before = "myspacevim#before"
     bootstrap_after = "myspacevim#after"
 
+    # Autocmoplete
     autocomplete_method = "coc"  # Enable COC as the auto-completion engine
     # autocomplete_method = "deoplete"
-
     # File manager
     filetree_direction = "right"
 
@@ -63,24 +63,38 @@
     # Misc
     vim_help_language = "cn"
 
+    # Linter
+    # lint_engine = "ale"
+    lint_engine = "neomake"
+
+[[layers]]
+  name = "gtags"
+  gtagslabel = "pygments"
+
+
 [[layers]]
     name = "checkers"
-    # Linter
-    enable_neomake = true
-    enable_ale = false
-    lint_on_the_fly = true
+    lint_on_the_fly = false
+    lint_on_save = true
+    show_cursor_error = true
 
 [[layers]]
   name = "autocomplete"
-  auto_completion_return_key_behavior = "smart"
-  auto_completion_tab_key_behavior = "smart"
-  auto_completion_delay = 100
-  auto_completion_complete_with_key_sequence = "fd"
+  auto_completion_delay = 50
+  auto_completion_complete_with_key_sequence = "jj"
   auto_completion_complete_with_key_sequence_delay = 0.1
+  autocomplete_parens = true
+  auto_completion_return_key_behavior = "complete"  # choose between complete, smart
+  auto_completion_tab_key_behavior = "smart"  # choose bewteen smart, complete, cycle
+
 
 [[layers]]
   name = "format"
   enable = true
+
+[[layers]]
+  name = 'lsp'
+  enabled_clients = ['pyright']
 
 [[layers]]
   name = "lang#python"
@@ -90,10 +104,10 @@
       '',
       ''
   ]
-  python_interpreter = '/opt/conda/bin/python'
-  format_on_save = true
-  enable_typeinfo = true
+# python_interpreter = '/opt/conda/bin/python'
   enabled_linters = ['python', 'pylint']
+  format_on_save = true
+  enable_typeinfo = false
 
 [[layers]]
   name = "lang#csharp"
@@ -130,12 +144,6 @@
   name = 'git'
 
 #[[layers]]
-#  name = "lsp"
-#  filetypes = [
-#    "python",
-#]
-
-#[[layers]]
 #  name = "chinese"
 
 [[layers]]
@@ -163,6 +171,9 @@
 # fzf can be installed using: conda install -c conda-forge fzf
 [[layers]]
   name = "fzf"
+
+# [[layers]]
+#   name = "lang#ipynb"
 
 # [[layers]]
 #   # Linters
@@ -216,6 +227,14 @@
 
 [[custom_plugins]]
   name = 'tell-k/vim-autoflake'
+  merged = false
+
+[[custom_plugins]]
+  name = 'untitled-ai/jupyter_ascending.vim'
+  merged = false
+
+[[custom_plugins]]
+  name = 'dense-analysis/ale'
   merged = false
 
 # [[custom_plugins]]
