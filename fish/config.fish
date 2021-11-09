@@ -1,16 +1,29 @@
 #!/usr/bin/env fish
 
-if not functions -q fundle; eval (curl -sfL https://git.io/fundle-install); end
+set fish_greeting ""
 
-# Load Fish Plugins
-fundle plugin 'danhper/fish-theme-afowler'
-fundle plugin 'franciscolourenco/done'
-fundle plugin 'junegunn/fzf'
+set -gx TERM xterm-256color
 
-fundle init
+# theme
+# set -g theme_color_scheme terminal-dark
+# set -g fish_prompt_pwd_dir_length 1
+# set -g theme_display_user yes
+# set -g theme_hide_hostname no
+# set -g theme_hostname always
 
-# Init Starship
-starship init fish | source
+switch (uname)
+  case Darwin
+    source (dirname (status --current-filename))/config-osx.fish
+  case Linux
+    # Do nothing
+  case '*'
+    source (dirname (status --current-filename))/config-windows.fish
+end
+
+set LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
+if test -f $LOCAL_CONFIG
+  source $LOCAL_CONFIG
+end
 
 # Init Conda
 eval /opt/conda/bin/conda "shell.fish" "hook" $argv | source
@@ -28,8 +41,10 @@ set fish_greeting
 
 ############################## My Settings #############################
 fish_vi_key_bindings  # vi-mode
+# Init Starship
+starship init fish | source
+
 set -gx PROJECT_PATHS ~/lab/paper ~/project
-bind \cf forward-char
 
 ############################## PATHS #############################
 set -x PATH $PATH /usr/bin
@@ -41,10 +56,7 @@ set -x PATH $PATH /lab/lib/finclab/sh/zsh
 set -x PATH $PATH /lab/lib/finclab/sh/fish
 set -x PATH $PATH /home/peter/.local/bin
 set -x PATH $PATH /home/peter/.files/bin
-set -x PATH $PATH /Users/peter/.files/bin
-set -x PATH $PATH /Users/peter/lab/lib/finclab/sh/bash
-set -x PATH $PATH /Users/peter/lab/lib/finclab/sh/zsh
-set -x PATH $PATH /Users/peter/lab/lib/finclab/sh/fish
+
 
 ############################## Abbr #############################
 # gitpush to main
@@ -58,6 +70,7 @@ abbr -a ssh_ts 'ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=
 abbr -a pjo pj open
 
 ############################## ALIAS #############################
+alias g=git
 alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v /home/peter/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker'
 alias pip2=pip
 alias pip2=pip
@@ -68,9 +81,10 @@ alias sshp='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" 
 alias ssha='autossh -M 0 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 10" -p 55555 -L 1969:10.1.1.100:1969 -L 10000:10.1.1.100:10000 -L 50000:10.1.1.100:50000 -L 55000:10.1.1.100:55000 peter@vpn.finclab.com'
 alias update_prezto='cd $ZPREZTODIR;git pull;git submodule update --init --recursive'
 if type -q exa
-    alias ls='exa --group-directories-first'
-    alias ll='exa -lhg --group-directories-first'
-    alias la='exa -lahg --group-directories-first'
+    # alias ls='exa --group-directories-first --icons'
+    alias ll='exa -lhg --group-directories-first --icons'
+    alias lt='exa -lhg --group-directories-first --icons --tree --level=2 -a'
+    alias la='exa -lahg --group-directories-first --icons'
 end
 if type -q batcat
     alias cat='batcat'
@@ -202,6 +216,4 @@ alias mux='tmuxinator'
 # ssh copy back to local
 # https://stackoverflow.com/questions/1152362/how-to-send-data-to-local-clipboard-from-a-remote-ssh-session
 alias cb='ssh -p 2222 127.0.0.1 pbcopy'
-
-
 
