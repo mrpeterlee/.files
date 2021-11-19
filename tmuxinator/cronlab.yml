@@ -1,0 +1,62 @@
+name: cronlab
+root: ~/
+
+windows:
+  - Exec-Engine:
+      layout: even-vertical
+      panes:
+        - workspace1:
+          - cd /lab/lib/finclab/sh/bin
+          - exec_engine
+  - Cron-US:
+      layout: even-vertical
+      panes:
+        - workspace1:
+          - cd /lab/lib/ts/cronlab
+          - ipython
+          - run cron_us_est.py
+  - Cron-CN:
+      layout: even-vertical
+      panes:
+        - workspace1:
+          - cd /lab/lib/ts/cronlab
+          - ipython
+          - run cron_cn.py
+  - Cron-GB:
+      layout: even-vertical
+      panes:
+        - workspace1:
+          - cd /lab/lib/ts/cronlab
+          - ipython
+          - run cron_gb.py
+  - Cron-FR:
+      layout: even-vertical
+      panes:
+        - workspace1:
+          - cd /lab/lib/ts/cronlab
+          - ipython
+          - run cron_fr.py
+  - Cron-DE:
+      layout: even-vertical
+      panes:
+        - workspace1:
+          - cd /lab/lib/ts/cronlab
+          - ipython
+          - run cron_de.py
+  - Cron-Misc:
+      layout: even-vertical
+      panes:
+        - AU:
+          - cd /lab/lib/ts/cronlab
+          - ipython
+          - run cron_au.py
+        - JP:
+          - cd /lab/lib/ts/cronlab
+          - ipython
+          - run cron_jp.py
+        - HK:
+          - cd /lab/lib/ts/cronlab
+          - ipython
+          - run cron_hk.py
+
+

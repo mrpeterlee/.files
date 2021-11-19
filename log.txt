@@ -1,9 +1,0 @@
-2020-05-07T18:46:39.1840510Z TRACE:: Config.Get(): Configuration key not found. Key: data-directory - Using default value: ../../../Data/
-2020-05-07T18:46:39.1861280Z TRACE:: Config.Get(): Configuration key not found. Key: version-id - Using default value: 
-2020-05-07T18:46:39.1862250Z TRACE:: Config.Get(): Configuration key not found. Key: cache-location - Using default value: ../../../Data/
-2020-05-07T18:46:39.1866730Z TRACE:: Engine.Main(): LEAN ALGORITHMIC TRADING ENGINE v2.4.0.0 Mode: DEBUG (64bit)
-2020-05-07T18:46:39.1889460Z TRACE:: Engine.Main(): Started 6:46 PM
-2020-05-07T18:46:39.2077470Z TRACE:: Config.Get(): Configuration key not found. Key: api-access-token - Using default value: 
-2020-05-07T18:46:39.2107940Z TRACE:: Config.GetValue(): job-user-id - Using default value: 0
-2020-05-07T18:46:39.2108640Z TRACE:: Config.GetValue(): job-project-id - Using default value: 0
-2020-05-07T18:46:39.2111630Z TRACE:: Config.Get(): Configuration key not found. Key: algorithm-language - Using default value: 

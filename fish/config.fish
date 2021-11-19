@@ -11,6 +11,10 @@ set -gx TERM screen-256color
 # set -g theme_display_user yes
 # set -g theme_hide_hostname no
 # set -g theme_hostname always
+# set fish_function_path $fish_function_path "/usr/share/powerline/bindings/fish"
+# source /usr/share/powerline/bindings/fish/powerline-setup.fish
+# powerline-setup
+
 
 switch (uname)
   case Darwin

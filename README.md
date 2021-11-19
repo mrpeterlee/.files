@@ -1,12 +1,14 @@
-Personal Development Environment
---------------------------------
+My Environment
+==============
+Author:        Peter Lee (peter.lee@finclab.com)
+last_update:   2021-11-13 20:51:45 UTC
+description:   This repo holds a collection of configuration files for my preferred development environment in Linux / MacOS.
 
-This repo holds a collection of configuration files for my preferred development environment in Linux / MacOS.
 # Prerequisite
-- bash
+
+- fish
 - Neovim
 - Powerline
-
 
 To install the prerequisites, one can execute the below after a fresh linux installation:
 
