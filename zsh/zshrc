@@ -324,6 +324,7 @@ alias mux='tmuxinator'
 # ssh copy back to local
 # https://stackoverflow.com/questions/1152362/how-to-send-data-to-local-clipboard-from-a-remote-ssh-session
 alias cb='ssh -p 2222 127.0.0.1 pbcopy'
+alias ww='curl wttr.in'
 
 # Connect to DB services
 alias connect_tickstore='make -C ~/project/tickstore connect'
@@ -473,6 +474,10 @@ if [[ ${os_type} == "mac" ]]; then
     # Do something under Mac OS X platform
     export HOUSTON_URL=http://houston.finclab.com:1969
 fi
+
+# Cowsay
+cow=$(shuf -n 1 -e $(cowsay -l))
+fortune | cowsay -f "$cow" | lolcat --spread 1.0
 
 # Launch fish
 fish

@@ -296,7 +296,7 @@ tmux_conf_battery_bar_length="auto"
 #   - heat
 #   - "colour_full_fg,colour_empty_fg,colour_bg"
 tmux_conf_battery_bar_palette="gradient"
-#tmux_conf_battery_bar_palette="#d70000,#e4e4e4,#000000"   # red, white, black
+tmux_conf_battery_bar_palette="#d70000,#e4e4e4,#000000"   # red, white, black
 
 # battery hbar palette, possible values are:
 #   - gradient (default)
@@ -459,9 +459,8 @@ bind-key -n C-M-r source-file ~/.tmux.conf \; display "Tmux settings reloaded!"
 # URLview
 bind-key -n C-M-o capture-pane \; save-buffer /tmp/tmux-buffer \; new-window -n "urlview" '$SHELL -c "urlview < /tmp/tmux-buffer"'
 
-
 # move status line to top
-#set -g status-position top
+# set -g status-position top
 
 # -- tpm -----------------------------------------------------------------------
 
@@ -487,15 +486,12 @@ tmux_conf_update_plugins_on_reload=true
 
 # to enable a plugin, use the 'set -g @plugin' syntax:
 # visit https://github.com/tmux-plugins for available plugins
-#set -g @plugin 'tmux-plugins/tmux-copycat'
-#set -g @plugin 'tmux-plugins/tmux-cpu'
-#set -g @plugin 'tmux-plugins/tmux-resurrect'
-#set -g @plugin 'tmux-plugins/tmux-continuum'
-#set -g @continuum-restore 'on'
-#
+set -g @plugin 'tmux-plugins/tmux-copycat'
+set -g @plugin 'tmux-plugins/tmux-cpu'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
 
 # tmux-sensible - baseline settings that get overwritten from .tmux.conf
-# set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-sensible'
 
 ## tmux-continuum - auto save and restore tmux sessions
 #set -g @plugin 'tmux-plugins/tmux-continuum'
@@ -503,12 +499,12 @@ tmux_conf_update_plugins_on_reload=true
 #set -g @continuum-restore 'on'
 ## Set autosave interval
 #set -g @continuum-save-interval '5'
-#
+
 ## tmux-yank - advanced copy mode
-#set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'tmux-plugins/tmux-yank'
 ## set -g @yank_with_mout on
-#set -g @shell_mode 'vi'
-#
+set -g @shell_mode 'vi'
+
 
 # -- custom variables ----------------------------------------------------------
 

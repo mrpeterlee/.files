@@ -1,4 +1,12 @@
+
 func! myspacevim#before() abort
+  " Map default leader from '\' to ','
+  let g:mapleader = '.'
+
+  " Change the default search tool to rg
+  let profile = SpaceVim#mapping#search#getprofile('rg')
+  let default_opt = profile.default_opts + ['--no-ignore-vcs']
+  call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
 
   " =========== Custom SPC Hotkey ===========
   " If you want to add custom SPC prefix key bindings,
@@ -35,7 +43,8 @@ func! myspacevim#before() abort
   nmap <space><space>x <Plug>JupyterExecute
   nmap <space><space>X <Plug>JupyterExecuteAll
 
-
+  " =tm -> Table Mode (see: https://github.com/dhruvasagar/vim-table-mode)
+  call SpaceVim#custom#SPC('nnoremap', ['=', "t"], ':Tableize/\t<CR>', 'Format to Table', 0)
 
 endf
 
@@ -52,13 +61,14 @@ func! myspacevim#after() abort
 
   " =========== Python Layer ===========
   " Disable formatter as COC handles it
-  let g:neoformat_python_black = {
-      \ 'exe': 'black',
-      \ 'stdin': 1,
-      \ 'args': ['-q', '-'],
-      \ }
-  let g:neoformat_enabled_python = ['black']
+  "let g:neoformat_python_black = {
+  "    \ 'exe': 'black',
+  "    \ 'stdin': 1,
+  "    \ 'args': ['-q', '-'],
+  "    \ }
+  "let g:neoformat_enabled_python = ['black']
   let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-pyright']
+  let g:coc_config_home = '~/.SpaceVim.d/'
 
   " " =========== Vim-Rooter ===========
   " let g:rooter_patterns = ['=paper', '=prod', '=lib']
@@ -74,6 +84,17 @@ func! myspacevim#after() abort
     au BufRead,BufNewFile *.txt,*.tex,*.md set wrap linebreak nolist textwidth=0 wrapmargin=0
   augroup END
 
+  " " alternative files
+  " augroup myspacevim
+  "   autocmd!
+  "   autocmd BufNewFile,BufEnter *.py let b:alternate_file_config = {
+  "       \ "src/*.py" : {
+  "           \ "doc" : "docs/{}.md",
+  "           \ "alternate" : "test/{}.py",
+  "           \ }
+  "       \ }
+  "  augroup END
+
   " =========== SpaceVim General Settings ===========
   " Copy to remote clipboard
   set clipboard=unnamed
@@ -81,6 +102,12 @@ func! myspacevim#after() abort
 
   " =========== NerdTree ===========
   let g:NERDTreeQuitOnOpen = 1
+  " Make all nerdtree instance to be the same
+  function! ToggleNERDTree()
+    NERDTreeToggle
+    silent NERDTreeMirror
+  endfunction
+  " TODO - MAP the new functino to SPC
 
   " =========== PyDocString DOQ ===========
   let g:pydocstring_doq_path = '/opt/conda/bin/doq'

@@ -1,7 +1,5 @@
 #!/usr/bin/env fish
 
-set fish_greeting ""
-
 # set -gx TERM xterm-256color
 set -gx TERM screen-256color
 
@@ -14,7 +12,6 @@ set -gx TERM screen-256color
 # set fish_function_path $fish_function_path "/usr/share/powerline/bindings/fish"
 # source /usr/share/powerline/bindings/fish/powerline-setup.fish
 # powerline-setup
-
 
 switch (uname)
   case Darwin
@@ -66,7 +63,7 @@ set -x PATH $PATH /home/peter/.files/bin
 ############################## Abbr #############################
 # gitpush to main
 abbr -a qr 'quantrocket'
-abbr -a gpm 'set -lx _git_msg (read) && cd (git rev-parse --show-toplevel) && git submodule foreach \'git stash; git checkout main; git pull origin main\' && pytest && nb_rm_output && git add . && git commit -m $_git_msg && git push origin main && set -e _git_msg && cd -'
+abbr -a gpm 'set -lx _git_msg (read) && cd (git rev-parse --show-toplevel) && git submodule foreach \'git stash; git checkout main; git pull origin main\' && coverage run -m pytest && nb_rm_output && git add . && git commit -m $_git_msg && git push origin main && set -e _git_msg && cd -'
 # switch to prod folder && git merge && git push
 abbr -a gpp 'set -lx _current_folder (pwd) && cd (git rev-parse --show-toplevel) && git merge -s ours prod && cd (string replace /lab/paper /lab/prod $_current_folder) && git submodule foreach \'git stash; git checkout prod; git pull origin prod\' && git merge main && git push origin prod && cd $_current_folder && set -e _current_folder'
 abbr -a paper 'set -lx _current_folder (pwd) && set _current_folder (string replace /lab/prod /lab/paper $_current_folder) && cd $_current_folder && set -e _current_folder'
@@ -217,6 +214,8 @@ alias wanip='curl -s icanhazip.com'
 alias news='newsbeuter'
 alias www='w3m'
 alias mux='tmuxinator'
+
+alias ww='curl "wttr.in/?m"'
 
 # ssh copy back to local
 # https://stackoverflow.com/questions/1152362/how-to-send-data-to-local-clipboard-from-a-remote-ssh-session

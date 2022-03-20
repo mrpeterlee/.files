@@ -10,7 +10,7 @@
     # set spacevim theme. by default colorscheme layer is not loaded,
     # if you want to use more colorscheme, please load the colorscheme
     # layer
-    colorscheme = "gruvbox"
+    colorscheme = "onedark"
     colorscheme_bg = "dark"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
@@ -21,9 +21,14 @@
 
     filemanager = "nerdtree"
 
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+    enable_projects_cache = true
+    projects_cache_num = 20
+
+
     # statusline:nerd fonts required
-    statusline_separator = "arrow"
-    statusline_inactive_separator = "arrow"
+    statusline_separator = "nil"
+    statusline_inactive_separator = "fire"
     statusline_left_sections = [
         'winnr',
         'filename',
@@ -99,13 +104,23 @@
 [[layers]]
   name = "lang#python"
   python_file_head = [
-      '#!/usr/bin/env python',
-      '# -*- coding: utf-8 -*-',
-      '',
-      ''
+    '""" {Module Name}',
+    '',
+    'id:            Peter Lee (peter.lee@finclab.com)',
+    'last_update:   {Datetime}',
+    'type:          lib',
+    'sensitivity:   datalab@finclab.com',
+    'platform:      any',
+    'description:   {Description}',
+    '"""'
+    '',
+    '',
+    'if __name__=="__main__":',
+    '    print("Done...")',
   ]
-# python_interpreter = '/opt/conda/bin/python'
-  enabled_linters = ['python', 'pylint']
+  python_interpreter = '/opt/conda/bin/python'
+#  enabled_linters = ['pylint']
+  enabled_linters = []
   format_on_save = true
   enable_typeinfo = false
 
@@ -153,16 +168,16 @@
   name = "ui"
   enable_sidebar = true
 
-# [[layers]]
-#   name = "colorscheme"
-#   random_theme = true
-#   frequency = "1h"
+[[layers]]
+  name = "colorscheme"
+  random_theme = false
+  frequency = "1h"
 
 # [[layers]]
 #   name = "VersionControl"
 
-[[layers]]
-  name = "denite"
+# [[layers]]
+#   name = "denite"
 
 [[layers]]
   # Enable bookmarks
@@ -191,60 +206,60 @@
   name = "tmux-plugins/vim-tmux-focus-events"
   merged = false
 
-[[custom_plugins]]
-  name = "ntpeters/vim-better-whitespace"
-  merged = false
-
-[[custom_plugins]]
-    name = "editorconfig/editorconfig-vim"
-    merged = false
-
-[[custom_plugins]]
-  name = "rkitover/vimpager"
-  merged = false
-
-[[custom_plugins]]
-  name = "wincent/ferret"
-  merged = false
-
-[[custom_plugins]]
-  name = "nelstrom/vim-visual-star-search"
-  merged = false
-
+# [[custom_plugins]]
+  # name = "ntpeters/vim-better-whitespace"
+  # merged = false
+#
+# [[custom_plugins]]
+    # name = "editorconfig/editorconfig-vim"
+    # merged = false
+#
+# [[custom_plugins]]
+  # name = "rkitover/vimpager"
+  # merged = false
+#
+# [[custom_plugins]]
+  # name = "wincent/ferret"
+  # merged = false
+#
+# [[custom_plugins]]
+  # name = "nelstrom/vim-visual-star-search"
+  # merged = false
+#
 [[custom_plugins]]
   name = "neomake/neomake"
   merged = false
 
+# [[custom_plugins]]
+  # name = "tomlion/vim-solidity"
+  # merged = false
+#
+# [[custom_plugins]]
+#  This allows jumping to test files
+#  Check out: https://www.dev-log.me/Jump_between_test_files_and_implementation_in_Vim/
+  # name = 'tpope/vim-projectionist'
+  # merged = false
+#
+# [[custom_plugins]]
+  # name = 'tell-k/vim-autoflake'
+  # merged = false
+#
+# [[custom_plugins]]
+#   name = 'untitled-ai/jupyter_ascending.vim'
+#   merged = false
+#
+# [[custom_plugins]]
+#   name = 'dense-analysis/ale'
+#   merged = false
+#
 [[custom_plugins]]
-  name = "tomlion/vim-solidity"
-  merged = false
+  name = 'dhruvasagar/vim-table-mode'
+  on_ft= "markdown"
 
-[[custom_plugins]]
-  # This allows jumping to test files
-  # Check out: https://www.dev-log.me/Jump_between_test_files_and_implementation_in_Vim/
-  name = 'tpope/vim-projectionist'
-  merged = false
-
-[[custom_plugins]]
-  name = 'tell-k/vim-autoflake'
-  merged = false
-
-[[custom_plugins]]
-  name = 'untitled-ai/jupyter_ascending.vim'
-  merged = false
-
-[[custom_plugins]]
-  name = 'dense-analysis/ale'
-  merged = false
 
 # [[custom_plugins]]
 #   # required for fzf as it changes working directory to project root
 #   name = "airblade/vim-rooter"
-#   merged = false
-
-
-# [[custom_plugins]]
-#   name = 'Shougo/vimfiler.vim'
 #   merged = false
 
 # [[custom_plugins]]

@@ -15,14 +15,9 @@ windows:
           - cd $HOME/lab/paper/tradestation && git pull
           - cd $HOME/lab/paper/lab && git pull
           - cd $HOME/lab/paper
-          # - conda deactivate && conda activate finclab
-        - workspace2:
-          - cd $HOME/lab/paper
-          # - conda deactivate && conda activate finclab
-            #- fswatch:
-            #  - cd $HOME/project
-            #  - conda deactivate && conda activate finclab
-            #  - fswatch $HOME/lab/paper true
+          - /usr/bin/screenfetch
+          - /usr/bin/inxi
+          - curl wttr.in
   - finclab:
       layout: even-horizontal
       panes:
