@@ -175,8 +175,9 @@
   name = "debug"
   debugger_plugin = "vimspector"
 
-[[layers]]
-  name = "floobits"
+# [[layers]]
+# This plugin is not working with py3
+#   name = "floobits"
 
 
 [[layers]]
