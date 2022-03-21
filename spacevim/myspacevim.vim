@@ -53,6 +53,9 @@ endf
 func! myspacevim#after() abort
   " Script that dominates SpaceVim settings
 
+  " =========== CtrlSpace ===========
+  set showtabline=1
+
   " =========== Python Linter ===========
   " when to activate neomake
   call neomake#configure#automake('nrw', 50)
@@ -65,6 +68,7 @@ func! myspacevim#after() abort
       \ 'args': ['-c', '"FN=\$(mktemp); cp \"%:p\" \$FN; autoflake --remove-all-unused-imports --remove-duplicate-keys --expand-star-imports --in-place \$FN; cat \$FN; rm \$FN"'],
       \ 'stdin': 0,
       \ }
+
   " =========== Python Layer ===========
   " Disable formatter as COC handles it
   "let g:neoformat_python_black = {
