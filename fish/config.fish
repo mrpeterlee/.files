@@ -70,6 +70,7 @@ abbr -a paper 'set -lx _current_folder (pwd) && set _current_folder (string repl
 abbr -a prod 'set -lx _current_folder (pwd) && set _current_folder (string replace /lab/paper /lab/prod $_current_folder) && cd $_current_folder && set -e _current_folder'
 abbr -a ssh_ts 'ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 50000 peter@10.1.1.100'
 abbr -a pjo pj open
+abbr -a tm 'tmate -k $finclab_tmate_api_key -n finclab-peter'
 
 ############################## ALIAS #############################
 alias g=git
@@ -78,10 +79,12 @@ alias pip2=pip
 alias pip2=pip
 alias pip=pip3
 alias vim=nvim
+alias v=nvim
 alias vpn='sudo /usr/local/Cellar/openvpn/2.5.2/sbin/openvpn --config ~/.ssh/peter.ovpn'
 alias sshp='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 55555 -L 1969:10.1.1.100:1969 -L 10000:10.1.1.100:10000 -L 50000:10.1.1.100:50000 peter@vpn.finclab.com'
 alias ssha='autossh -M 0 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 10" -p 55555 -L 1969:10.1.1.100:1969 -L 10000:10.1.1.100:10000 -L 50000:10.1.1.100:50000 -L 55000:10.1.1.100:55000 peter@vpn.finclab.com'
 alias update_prezto='cd $ZPREZTODIR;git pull;git submodule update --init --recursive'
+
 if type -q exa
     # alias ls='exa --group-directories-first --icons'
     alias ll='exa -lhg --group-directories-first --icons'

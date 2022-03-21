@@ -10,6 +10,11 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+if [ -f "$HOME/.files/bash/function" ]; then
+    source "$HOME/.files/bash/function"
+fi
+
+
 # Customize to your needs...
 # Powerline Theme
 # if [[ -f "/usr/share/powerline/bindings/zsh/powerline.zsh" ]]; then
