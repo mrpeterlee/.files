@@ -57,8 +57,14 @@ func! myspacevim#after() abort
   " when to activate neomake
   call neomake#configure#automake('nrw', 50)
   " which linter to enable for Python source file linting
-  let g:neomake_python_enabled_makers = ['pylint']
+  " let g:neomake_python_enabled_makers = ['pylint']
 
+  " Temporary fix the SPC l i r
+  let g:neoformat_python_autoflake = {
+      \ 'exe': 'bash',
+      \ 'args': ['-c', '"FN=\$(mktemp); cp \"%:p\" \$FN; autoflake --remove-all-unused-imports --remove-duplicate-keys --expand-star-imports --in-place \$FN; cat \$FN; rm \$FN"'],
+      \ 'stdin': 0,
+      \ }
   " =========== Python Layer ===========
   " Disable formatter as COC handles it
   "let g:neoformat_python_black = {
@@ -67,7 +73,7 @@ func! myspacevim#after() abort
   "    \ 'args': ['-q', '-'],
   "    \ }
   "let g:neoformat_enabled_python = ['black']
-  let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-pyright']
+  let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-pyright', 'coc-sh']
   let g:coc_config_home = '~/.SpaceVim.d/'
 
   " " =========== Vim-Rooter ===========

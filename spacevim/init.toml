@@ -73,15 +73,20 @@
     lint_engine = "neomake"
 
 [[layers]]
-  name = "gtags"
-  gtagslabel = "pygments"
+  name = "ctrlspace"
+  home-mapping-key = "<M-Space>"
+  enable-spacevim-styled-keys = true
+
+# [[layers]]
+  # name = "gtags"
+  # gtagslabel = "pygments"
 
 
-[[layers]]
-    name = "checkers"
-    lint_on_the_fly = false
-    lint_on_save = true
-    show_cursor_error = true
+# [[layers]]
+    # name = "checkers"
+    # lint_on_the_fly = false
+    # lint_on_save = false
+    # show_cursor_error = false
 
 [[layers]]
   name = "autocomplete"
@@ -98,8 +103,13 @@
   enable = true
 
 [[layers]]
+  # Provide LSP for Python
   name = 'lsp'
-  enabled_clients = ['pyright']
+  enabled_clients = ['pyright',]
+
+[[layers]]
+  # Provide LSP for Bash
+  name = "lang#sh"
 
 [[layers]]
   name = "lang#python"
@@ -163,6 +173,11 @@
 
 [[layers]]
   name = "debug"
+  debugger_plugin = "vimspector"
+
+[[layers]]
+  name = "floobits"
+
 
 [[layers]]
   name = "ui"
@@ -198,9 +213,9 @@
   name = "christoomey/vim-tmux-navigator"
   merged = false
 
-[[custom_plugins]]
-  name = "fisadev/vim-isort"
-  merged = false
+# [[custom_plugins]]
+#   name = "fisadev/vim-isort"
+#   merged = false
 
 [[custom_plugins]]
   name = "tmux-plugins/vim-tmux-focus-events"

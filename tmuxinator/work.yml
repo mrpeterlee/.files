@@ -17,7 +17,7 @@ windows:
           - cd $HOME/lab/paper
           - /usr/bin/screenfetch
           - /usr/bin/inxi
-          - curl wttr.in
+          - curl "wttr.in/newyork?m&lang=zh-cn"
   - finclab:
       layout: even-horizontal
       panes:
