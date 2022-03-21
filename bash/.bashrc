@@ -176,6 +176,10 @@ source "$BASH_IT"/bash_it.sh
 if [ -f "/lab/prod/lib/finclab/sh/bash/function" ]; then
     source "/lab/prod/lib/finclab/sh/bash/function"
 fi
+if [ -f "$HOME/.files/bash/function" ]; then
+    source "$HOME/.files/bash/function"
+fi
+
 
 # Grab env variables
 parse_yaml_env "${HOME}/.lab/labenv.yml"
