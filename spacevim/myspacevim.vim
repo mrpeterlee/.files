@@ -1,6 +1,7 @@
 
 func! myspacevim#before() abort
   " Map default leader from '\' to ','
+
   let g:mapleader = '.'
 
   " Change the default search tool to rg
