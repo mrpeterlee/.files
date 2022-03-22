@@ -37,26 +37,29 @@
 
     # statusline:nerd fonts required
     statusline_separator = "nil"
+    statusline_iseparator = "bar"
     statusline_inactive_separator = "fire"
     statusline_left_sections = [
         'winnr',
         'filename',
         'version control info'
+        'search status',
     ]
     statusline_right_sections = [
         'major mode',
         'minor mode lighters'
         'fileformat',
+        'input method',
         'cursorpos',
         'percentage'
     ]
-    enable_statusline_display_mode = false
+    enable_statusline_display_mode = true
     enable_statusline_mode = false
 
     # snippet_engine = 'ultisnips'
 
     # Buffer
-    buffer_index_type = 1
+    buffer_index_type = 4
     enable_os_fileformat_icon = 1
     enable_tabline_filetype_icon = true
 

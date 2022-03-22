@@ -461,7 +461,7 @@ bind-key -n C-M-r source-file ~/.tmux.conf \; display "Tmux settings reloaded!"
 bind-key -n C-M-o capture-pane \; save-buffer /tmp/tmux-buffer \; new-window -n "urlview" '$SHELL -c "urlview < /tmp/tmux-buffer"'
 
 # move status line to top
-# set -g status-position top
+# set -g status-position bottom
 
 # -- tpm -----------------------------------------------------------------------
 

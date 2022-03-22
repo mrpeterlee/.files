@@ -1,8 +1,33 @@
 
 func! myspacevim#before() abort
   " Map default leader from '\' to ','
-
   let g:mapleader = '.'
+
+  set noswapfile
+
+  " =========== CtrlSpace ===========
+  set showtabline=0
+  let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
+  let g:CtrlSpaceLoadLastWorkspaceOnStart=1
+  let g:CtrlSpaceSaveWorkspaceOnExit=1
+  if executable('rg')
+    let g:CtrlSpaceGlobCommand = 'rg --color=never --files'
+  endif
+  " Speed up file engine
+  if has('win32')
+    let s:vimfiles = '~/vimfiles'
+    let s:os   = 'windows'
+  else
+    let s:vimfiles = '~/.vim'
+    if has('mac') || has('gui_macvim')
+      let s:os = 'darwin'
+    else
+      " elseif has('gui_gtk2') || has('gui_gtk3')
+      let s:os = 'linux'
+    endif
+  endif
+  let g:CtrlSpaceFileEngine = s:vimfiles . '/plugged/vim-ctrlspace' . '/bin/file_engine_' . s:os . '_amd64'
+
 
   " Change the default search tool to rg
   let profile = SpaceVim#mapping#search#getprofile('rg')
@@ -53,33 +78,6 @@ endf
 
 func! myspacevim#after() abort
   " Script that dominates SpaceVim settings
-
-  " =========== CtrlSpace ===========
-  set showtabline=1
-  let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
-  if executable('rg')
-      let g:CtrlSpaceGlobCommand = 'rg --color=never --files'
-  elseif executable('fd')
-      let g:CtrlSpaceGlobCommand = 'fd --type=file --color=never'
-  elseif executable('ag')
-      let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
-  endif
-  " Speed up file engine
-  if has('win32')
-      let s:vimfiles = '~/vimfiles'
-      let s:os   = 'windows'
-  else
-      let s:vimfiles = '~/.vim'
-      if has('mac') || has('gui_macvim')
-          let s:os = 'darwin'
-      else
-      " elseif has('gui_gtk2') || has('gui_gtk3')
-          let s:os = 'linux'
-      endif
-  endif
-
-  let g:CtrlSpaceFileEngine = s:vimfiles . '/plugged/vim-ctrlspace' . '/bin/file_engine_' . s:os . '_amd64'
-
 
   " =========== Python Linter ===========
   " when to activate neomake
