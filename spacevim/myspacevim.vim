@@ -33,11 +33,11 @@ func! myspacevim#before() abort
 
   call SpaceVim#custom#SPC('nnoremap', ['f', "="], '<C-U>call spacevim#lang#python#autoflake()<CR>', 'find-files', 0)
 
-  " Swap `;` with `:`
-  nnoremap ; :
-  " nnoremap : ;
-  vnoremap ; :
-  " vnoremap : ;
+  " " Swap `;` with `:`
+  " nnoremap ; :
+  " " nnoremap : ;
+  " vnoremap ; :
+  " " vnoremap : ;
 
   " test - map for jupyter ascending
   nmap <space><space>x <Plug>JupyterExecute
@@ -54,7 +54,38 @@ func! myspacevim#after() abort
   " Script that dominates SpaceVim settings
 
   " =========== CtrlSpace ===========
-  " set showtabline=1
+  set showtabline=1
+  let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
+  if executable('rg')
+      let g:CtrlSpaceGlobCommand = 'rg --color=never --files'
+  elseif executable('fd')
+      let g:CtrlSpaceGlobCommand = 'fd --type=file --color=never'
+  elseif executable('ag')
+      let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
+  endif
+  let g:CtrlSpaceProjectRootMarkers = ['.git/',
+                                       '_darcs/',
+                                       '.hg/',
+                                       '.bzr/',
+                                       '.svn/',
+                                       '.cs_workspaces/',
+                                       '.root/']
+  " Speed up file engine
+  if has('win32')
+      let s:vimfiles = '~/vimfiles'
+      let s:os   = 'windows'
+  else
+      let s:vimfiles = '~/.vim'
+      if has('mac') || has('gui_macvim')
+          let s:os = 'darwin'
+      else
+      " elseif has('gui_gtk2') || has('gui_gtk3')
+          let s:os = 'linux'
+      endif
+  endif
+
+  let g:CtrlSpaceFileEngine = s:vimfiles . '/plugged/vim-ctrlspace' . '/bin/file_engine_' . s:os . '_amd64'
+
 
   " =========== Python Linter ===========
   " when to activate neomake
