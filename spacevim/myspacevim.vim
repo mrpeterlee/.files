@@ -63,13 +63,6 @@ func! myspacevim#after() abort
   elseif executable('ag')
       let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
   endif
-  let g:CtrlSpaceProjectRootMarkers = ['.git/',
-                                       '_darcs/',
-                                       '.hg/',
-                                       '.bzr/',
-                                       '.svn/',
-                                       '.cs_workspaces/',
-                                       '.root/']
   " Speed up file engine
   if has('win32')
       let s:vimfiles = '~/vimfiles'
