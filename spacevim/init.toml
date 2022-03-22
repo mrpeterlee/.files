@@ -83,11 +83,11 @@
 
 
 # ==================== User Interface ==================== 
-[[layers]]
-  # For managing workspaces
-  name = "ctrlspace"
-  home-mapping-key = "<M-Space>"
-  enable-spacevim-styled-keys = true
+# [[layers]]
+#   # For managing workspaces
+#   name = "ctrlspace"
+#   home-mapping-key = "<M-Space>"
+#   enable-spacevim-styled-keys = true
 
 [[layers]]
   # Search index shows the number of occurrences when performing a search via / or ?. SpaceVim integrates the search status nicely by displaying it temporarily when n or N are being pressed. See the 20/22 segment in the screenshot below.

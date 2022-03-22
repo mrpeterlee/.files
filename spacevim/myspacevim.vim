@@ -54,7 +54,7 @@ func! myspacevim#after() abort
   " Script that dominates SpaceVim settings
 
   " =========== CtrlSpace ===========
-  set showtabline=1
+  " set showtabline=1
 
   " =========== Python Linter ===========
   " when to activate neomake
