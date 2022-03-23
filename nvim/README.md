@@ -1,4 +1,29 @@
-# Vim configuration
+NeoVim Configuration
+--------------------
+
+- Last Update: 2022-Mar
+
+The NeoVim IDE is built on top of SpaceVim with few additional plugins. Namely,
+
+  - SpaceVim
+  - Coc: LSP support for Python
+  - Treesitter: Fast & better syntax highlighting
+
+## How to update
+
+Execute the below in sequance will update all Plugins incl Spacevim.
+
+```vim
+:SPUpdate SpaceVim
+:TSUpdate
+```
+
+
+The below is an old setup and is deprecated.
+
+DEPRECATED BELOW
+----------------
+
 
 Shameless taken the built from [Gerard's VIM configuation](https://github.com/gerardbm/vimrc). All credits go to Gerard.
 

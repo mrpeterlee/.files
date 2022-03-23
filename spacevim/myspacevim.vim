@@ -5,6 +5,7 @@ func! myspacevim#before() abort
 
   set noswapfile
 
+  " =========== Tree-Sitter (Fast Syntax Highlighting ===========
   " =========== CtrlSpace ===========
   " set showtabline=0
   " let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
@@ -92,6 +93,37 @@ func! myspacevim#after() abort
       \ 'stdin': 0,
       \ }
 
+
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  -- One of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = "maintained",
+
+  -- Install languages synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- List of parsers to ignore installing
+  ignore_install = { "javascript" },
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    disable = { "c", "rust" },
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+
   " =========== Python Layer ===========
   " Disable formatter as COC handles it
   "let g:neoformat_python_black = {
@@ -100,7 +132,7 @@ func! myspacevim#after() abort
   "    \ 'args': ['-q', '-'],
   "    \ }
   "let g:neoformat_enabled_python = ['black']
-  let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-pyright', 'coc-sh']
+  let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-pyright', 'coc-sh', 'coc-ultisnips']
   let g:coc_config_home = '~/.SpaceVim.d/'
 
   " " =========== Vim-Rooter ===========

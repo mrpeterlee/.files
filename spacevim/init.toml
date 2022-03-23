@@ -78,7 +78,7 @@
     # Snippet
 
     # Misc
-    vim_help_language = "cn"
+    # vim_help_language = "cn"
 
     # Linter
     # lint_engine = "ale"
@@ -99,6 +99,21 @@
   name = "incsearch"
 
 
+# ==================== Python IDE ==================== 
+[[layers]]
+  # Fast syntax highlighting
+  name = "treesitter"
+
+[[layers]]
+  name = "autocomplete"
+  auto_completion_delay = 50
+  auto_completion_complete_with_key_sequence = "jj"
+  auto_completion_complete_with_key_sequence_delay = 0.1
+  autocomplete_parens = true
+  auto_completion_return_key_behavior = "complete"  # choose between complete, smart
+  auto_completion_tab_key_behavior = "smart"  # choose bewteen smart, complete, cycle
+
+
 # [[layers]]
   # name = "gtags"
   # gtagslabel = "pygments"
@@ -109,15 +124,6 @@
     # lint_on_the_fly = false
     # lint_on_save = false
     # show_cursor_error = false
-
-[[layers]]
-  name = "autocomplete"
-  auto_completion_delay = 50
-  auto_completion_complete_with_key_sequence = "jj"
-  auto_completion_complete_with_key_sequence_delay = 0.1
-  autocomplete_parens = true
-  auto_completion_return_key_behavior = "complete"  # choose between complete, smart
-  auto_completion_tab_key_behavior = "smart"  # choose bewteen smart, complete, cycle
 
 
 [[layers]]
