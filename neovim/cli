@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 
-
-
 import os
+import os.path
+import shutil
 import typing
 from dataclasses import dataclass
 from pathlib import Path
@@ -14,30 +14,27 @@ import finclab.cli.build
 import finclab.cli.build.util
 import finclab.config.helper
 import finclab.config.main
+import finclab.io.file
 from finclab.logger import init_logger
 from simple_parsing import ArgumentParser
 
-import shutil
-from pathlib import Path
-import os.path
-import finclab.io.file
-
-
-app_name = 'NeoVim'
-logger = init_logger(f"Install.Files")
+app_name = "NeoVim"
+logger = init_logger("Install.Files")
 
 DIR_DOTFILES = Path(Path.home(), ".files")
 
 # SYMLINKS
 SYMLINKS = {
     # LunarVim user folder
-    Path(Path.home(), ".config", "lvim"): Path(DIR_DOTFILES, 'neovim', 'lvim'),
+    Path(Path.home(), ".config", "lvim"): Path(DIR_DOTFILES, "neovim", "lvim"),
     # SpaceVim user folder
-    Path(Path.home(), ".SpaceVim.d"): Path(DIR_DOTFILES, 'neovim', '.SpaceVim.d'),
+    Path(Path.home(), ".SpaceVim.d"): Path(DIR_DOTFILES, "neovim", ".SpaceVim.d"),
     # pylintrc
-    Path(Path.home(), '.pylintrc'): Path(DIR_DOTFILES, 'neovim', '.pylintrc'),
+    Path(Path.home(), ".pylintrc"): Path(DIR_DOTFILES, "neovim", ".pylintrc"),
     # pydocstyle
-    Path(Path.home(), '.config', 'pycodestyle'): Path(DIR_DOTFILES, 'neovim', 'pycodestyle'),
+    Path(Path.home(), ".config", "pycodestyle"): Path(
+        DIR_DOTFILES, "neovim", "pycodestyle"
+    ),
 }
 
 
@@ -51,22 +48,27 @@ def update_symlink():
 
 def force_install():
     """For fresh installation (the 1st time)."""
-    # Install LunarVim - Stable Branch
-    # Additional installation branches please see: https://www.lunarvim.org/01-installing.html#prerequisites
-    cmd = "bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)"
+    # Remove the current config
+    if Path(Path.home(), ".config", "lvim").exists():
+        Path(Path.home(), ".config", "lvim").unlink()
 
+    # if macos
+
+    # Install LunarVim - Rolling Branch
+    cmd = "LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) -y"
+    os.system(f'/bin/bash -c "{cmd}"')
 
 
 @dataclass
 class Install:
     f"""CLI Tool to Configure / Install {app_name}
-    
+
     Usage
     -----
     ```bash
         # Install
         >>> ts cli install
-    
+
         # Reinstall
         >>> ts cli install --force
     ```
@@ -83,13 +85,13 @@ class Install:
 @dataclass
 class Update:
     f"""CLI Tool to Update {app_name} to latest
-    
+
     Usage
     -----
     ```bash
         # Update to latest stable
         >>> ts cli update
-    
+
         # Update to latest edge
         >>> ts cli update --edge
     ```
@@ -100,7 +102,6 @@ class Update:
         if self.edge:
             raise ValueError("@todo sorry not-supported yet.")
         raise ValueError("@todo sorry update is not-supported yet.")
-
 
 
 @dataclass
