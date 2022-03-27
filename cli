@@ -1,0 +1,152 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""CLI Tool to Configure / Install Terminal Packages
+
+
+Usage
+-----
+```bash
+    # Update a single package
+    >>> ts cli install neovim --force
+
+    # Reinstall / Install the first time a single package
+    >>> ts cli install neovim --force
+
+    # Install all packages
+    >>> ts cli install --all
+
+    # Reinstall all packages
+    >>> ts cli install --all --force
+```
+"""
+
+import os
+import typing
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Optional
+
+import finclab.cli.build.util
+import finclab.config.helper
+import finclab.config.main
+from finclab.logger import init_logger
+from simple_parsing import ArgumentParser
+
+# Docker Reigistry
+#   Github Packages Registry: # <org_name>/<repo_name>/<image_name>
+
+logger = init_logger(f"Install.Files")
+
+DIR_DOTFILES = Path(Path.home(), ".files")
+
+ALL_SERVICES = ['neovim']
+
+
+@dataclass
+class Install:
+    """Install a particular service
+    Usage
+    -----
+        # Update a single package
+        >>> ts cli install neovim --force
+    
+        # Reinstall / Install the first time a single package
+        >>> ts cli install neovim --force
+    
+        # Install all packages
+        >>> ts cli install --all
+    
+        # Reinstall all packages
+        >>> ts cli install --all --force
+    """
+
+    service: Optional[str] = None  # Specify individual service name
+    all: bool = False  # True to include all possible services
+    force: bool = False  # True to force reinstall the package
+    delimiter: str = ","
+
+    def execute(self):
+        print("Welcome to DotFiles Installation Script...")
+
+        # Construct list of services if input is a list
+        services = []
+
+        if self.all:
+            services = ALL_SERVICES
+        elif self.service is not None:
+            services = self.service.split(self.delimiter)
+        else:
+            raise ValueError("You must provide at least one service name or set `all` parameter to True")
+
+        # Iterate through services
+        for service in services:
+            cmd = """
+            cd {_path} && ts cli install
+            """.format(_path = Path(DIR_DOTFILES , service).absolute(),
+                       _service=service)
+            if self.force:
+                cmd += " --force"
+            print(cmd)
+            os.system(cmd)
+
+
+@dataclass
+class Update:
+    """Update a particular service
+    Usage
+    -----
+        # Update a single package
+        >>> ts cli update neovim
+    
+        # Update all packages
+        >>> ts cli update --all
+    
+        # Update all packages to latest edge (non-stable)
+        >>> ts cli update --all --edge
+    """
+
+    service: Optional[str] = None  # Specify individual service name
+    all: bool = False  # True to include all possible services
+    edge: bool = False  # True to target non-stable edge release
+    delimiter: str = ","
+
+    def execute(self):
+        # Construct list of services if input is a list
+        services = []
+        if self.all:
+            services = ALL_SERVICES
+        elif self.service is not None:
+            services = self.service.split(self.delimiter)
+        else:
+            raise ValueError("You must provide at least one service name or set `all` parameter to True")
+
+        # Iterate through services
+        for service in services:
+            cmd = """
+            cd {_path} & ts cli update
+            """.format(_path = Path(DIR_DOTFILES , service).absolute(),
+                       _service=service)
+            if self.edge:
+                cmd += " --edge"
+            os.system(cmd)
+
+
+@dataclass
+class MainMenu:
+    """DotFiles Install CLI Main Menu"""
+
+    command: typing.Union[Install, Update]
+
+    def execute(self):
+        """Main entry point"""
+        return self.command.execute()
+
+
+parser = ArgumentParser()
+parser.add_arguments(MainMenu, dest="PodBuilderCLI")
+
+if __name__ == "__main__":
+    args = parser.parse_args()
+    PodBuilderCLI: MainMenu = args.PodBuilderCLI
+    PodBuilderCLI.execute()

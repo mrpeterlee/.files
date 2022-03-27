@@ -3,6 +3,10 @@ NeoVim Configuration
 
 - Last Update: 2022-Mar
 
+
+The setup of NeoVim is based on (LunarVim)[]
+
+
 The NeoVim IDE is built on top of SpaceVim with few additional plugins. Namely,
 
   - SpaceVim

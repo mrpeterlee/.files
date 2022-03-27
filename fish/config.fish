@@ -56,8 +56,9 @@ set -x PATH $PATH /opt/conda/bin
 set -x PATH $PATH /lab/lib/finclab/sh/bash
 set -x PATH $PATH /lab/lib/finclab/sh/zsh
 set -x PATH $PATH /lab/lib/finclab/sh/fish
-set -x PATH $PATH /home/peter/.local/bin
-set -x PATH $PATH /home/peter/.files/bin
+set -x PATH $PATH $HOME/.local/bin
+set -x PATH $PATH $HOME/.files/bin
+
 
 
 ############################## Abbr #############################
@@ -78,8 +79,8 @@ alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v /
 alias pip2=pip
 alias pip2=pip
 alias pip=pip3
-alias vim=nvim
-alias v=nvim
+alias vim=lvim
+alias v=lvim
 alias vpn='sudo /usr/local/Cellar/openvpn/2.5.2/sbin/openvpn --config ~/.ssh/peter.ovpn'
 alias sshp='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 55555 -L 1969:10.1.1.100:1969 -L 10000:10.1.1.100:10000 -L 50000:10.1.1.100:50000 peter@vpn.finclab.com'
 alias ssha='autossh -M 0 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 10" -p 55555 -L 1969:10.1.1.100:1969 -L 10000:10.1.1.100:10000 -L 50000:10.1.1.100:50000 -L 55000:10.1.1.100:55000 peter@vpn.finclab.com'

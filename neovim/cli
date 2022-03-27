@@ -1,0 +1,124 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
+
+
+import os
+import typing
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Optional
+
+import finclab.cli.build
+import finclab.cli.build.util
+import finclab.config.helper
+import finclab.config.main
+from finclab.logger import init_logger
+from simple_parsing import ArgumentParser
+
+import shutil
+from pathlib import Path
+import os.path
+import finclab.io.file
+
+
+app_name = 'NeoVim'
+logger = init_logger(f"Install.Files")
+
+DIR_DOTFILES = Path(Path.home(), ".files")
+
+# SYMLINKS
+SYMLINKS = {
+    # LunarVim user folder
+    Path(Path.home(), ".config", "lvim"): Path(DIR_DOTFILES, 'neovim', 'lvim'),
+    # SpaceVim user folder
+    Path(Path.home(), ".SpaceVim.d"): Path(DIR_DOTFILES, 'neovim', '.SpaceVim.d'),
+    # pylintrc
+    Path(Path.home(), '.pylintrc'): Path(DIR_DOTFILES, 'neovim', '.pylintrc'),
+    # pydocstyle
+    Path(Path.home(), '.config', 'pycodestyle'): Path(DIR_DOTFILES, 'neovim', 'pycodestyle'),
+}
+
+
+def update_symlink():
+    """Re-link the config files from dotfiles repo."""
+    # Ensure the data folders exist
+    for nonexist, exist in SYMLINKS.items():
+        print(f"Creating symlink from {exist} to {nonexist}...")
+        finclab.io.file.update_symlink(nonexist, exist)
+
+
+def force_install():
+    """For fresh installation (the 1st time)."""
+    # Install LunarVim - Stable Branch
+    # Additional installation branches please see: https://www.lunarvim.org/01-installing.html#prerequisites
+    cmd = "bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)"
+
+
+
+@dataclass
+class Install:
+    f"""CLI Tool to Configure / Install {app_name}
+    
+    Usage
+    -----
+    ```bash
+        # Install
+        >>> ts cli install
+    
+        # Reinstall
+        >>> ts cli install --force
+    ```
+    """
+    force: bool = False  # True force reinstall the NeoVim
+
+    def execute(self):
+        print(f"Welcome to {app_name} Installation Script...")
+        if self.force:
+            force_install()
+        update_symlink()
+
+
+@dataclass
+class Update:
+    f"""CLI Tool to Update {app_name} to latest
+    
+    Usage
+    -----
+    ```bash
+        # Update to latest stable
+        >>> ts cli update
+    
+        # Update to latest edge
+        >>> ts cli update --edge
+    ```
+    """
+    edge: bool = False  # True Update to the latest edge release (nonstable)
+
+    def execute(self):
+        if self.edge:
+            raise ValueError("@todo sorry not-supported yet.")
+        raise ValueError("@todo sorry update is not-supported yet.")
+
+
+
+@dataclass
+class MainMenu:
+    f"""{app_name} CLI Main Menu"""
+
+    command: typing.Union[Install, Update]
+
+    def execute(self):
+        """Main entry point"""
+        return self.command.execute()
+
+
+parser = ArgumentParser()
+parser.add_arguments(MainMenu, dest="PodBuilderCLI")
+
+if __name__ == "__main__":
+    args = parser.parse_args()
+    PodBuilderCLI: MainMenu = args.PodBuilderCLI
+
+    PodBuilderCLI.execute()
