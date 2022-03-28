@@ -88,6 +88,30 @@ lvim.plugins = {
     -- Python - AutoFlake to remove unused imports
     { "tell-k/vim-autoflake", },
 
+    -- Python - Identation needed when writing code
+    { "Vimjas/vim-python-pep8-indent" },
+
+    -- =========== Python - Debugger ===========
+    { "mfussenegger/nvim-dap-python" ,
+      config = function()
+        -- require("dap-python").setup('/opt/conda/bin/python')
+        require("dap-python").setup('python', {})
+      end,
+    },
+    { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"},
+      config = function()
+        require("dapui").setup()
+      end,
+    },
+    {"theHamsta/nvim-dap-virtual-text",
+      config = function()
+        require("nvim-dap-virtual-text").setup()
+      end,
+    },
+    {"nvim-telescope/telescope-dap.nvim"},
+
+    -- =========== Lua - Debugger ===========
+    {"jbyuki/one-small-step-for-vimkind", module = "osv"},
 }
 
 ---------------------------------------- LVIM - General Settings ----------------------------------------
@@ -105,7 +129,9 @@ lvim.builtin.terminal.active = true
 
 lvim.builtin.bufferline.active = true
 lvim.builtin.lualine.active = true
+
 lvim.builtin.dap.active = true
+
 lvim.builtin.terminal.active = true
 lvim.builtin.bufferline.active = true -- this is actually using romgrk/barbar.nvim
 
@@ -116,9 +142,9 @@ vim.api.nvim_set_keymap("v", ";", ":", { noremap = true })
 vim.api.nvim_set_keymap("v", ":", ";", { noremap = true })
 
 -- SmartClose
-vim.api.nvim_set_keymap("n", "<F3>", ":SmartClose<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<F3>", ":SmartClose<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<F3>", "<C-[>:SmartClose<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<F4>", ":SmartClose<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<F4>", ":SmartClose<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "<F4>", "<C-[>:SmartClose<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-x>", ":SmartClose<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "<S-x>", ":SmartClose<CR>", { noremap = true, silent = true })
 
@@ -140,7 +166,7 @@ lvim.builtin.treesitter.ensure_installed = {
   "yaml",
 }
 
-lvim.builtin.treesitter.ignore_install = { "haskell" }
+-- lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
 
 ---------------------------------------- LVIM - Key Bindings ----------------------------------------
@@ -163,13 +189,13 @@ lvim.line_wrap_cursor_movement = true
 
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["p"] = { "<cmd>Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings["q"] = {
+lvim.builtin.which_key.mappings["u"] = {
   name = "Update",
     c = { "<cmd>PackerCompile<cr>", "Compile" },
     i = { "<cmd>PackerInstall<cr>", "Install" },
     r = { "<cmd>lua require('lvim.plugin-loader').recompile()<cr>", "Re-compile" },
     s = { "<cmd>PackerSync<cr>", "Sync" },
-    S = { "<cmd>PackerStatus<cr>", "Status" },
+    l = { "<cmd>PackerStatus<cr>", "List" },
     u = { "<cmd>PackerUpdate<cr>", "Update" },
     x = { "<cmd>PackerClean<cr>", "Clean" },
   }
@@ -191,8 +217,17 @@ lvim.builtin.which_key.mappings["t"] = {
 
 -- vim.api.nvim_command('quit!')
 -- vim.api.nvim_command('close!')
-lvim.builtin.which_key.mappings["c"] = { "<cmd>SmartClose<CR>", "Close", noremap=true, silent=true }
+lvim.builtin.which_key.mappings["q"] = { "<cmd>SmartClose<CR>", "Quit", noremap=true, silent=true }
 -- lvim.builtin.which_key.mappings["q"] = { "<cmd>q!<CR>", "Quit" }
+
+-- Extra message template for python IDE
+lvim.builtin.which_key.mappings["lb"] = { "<cmd>let blank=''|put=blank|let debug_comment='# ----------  temporary debug code ---------- #'|put=debug_comment|let a='import sys'|put=a|let a='from pprint import pprint'|put=a|let a='print(" .. '"' .. "\\n" .. '"' .. "*2, " .. '"' .. "=" .. '"' .. "*40, " .. '"' .. " temporary debug code " .. '"' .. ", " .. '"' .. "=" .. '"' .. "*40, " .. '"' .. "\\n" .. '"' .. "*2)'|put=a|put=blank|put=a|let a='sys.exit(1)'|put=a|put=debug_comment|put=blank" .. "<CR>", "Debug Snippet" }
+lvim.builtin.which_key.mappings["lm"] = { "<cmd>:0 | let blank=''|let t='\"\"\" {Module Name}'|put=t|put=blank|let t='id:            Peter Lee (peter.lee@finclab.com)'|put=t|let t='last_update:   ' . strftime('%Y-%m-%d %H:%M:%S %Z')|put=t|let t='type:          lib'|put=t|let t='sensitivity:   datalab@finclab.com'|put=t|let t='platform:      any'|put=t|let t='description:   {Description}'|put=t|let t='\"\"\"'|put=t<CR>", "Add Module Header" }
+
+
+-- Disable close buffer - reserve this key for something else
+lvim.builtin.which_key.mappings["c"] = { "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", "Comment" }
+
 
 ---------------------------------------- Search & Replace (nvim-spectre) ----------------------------------------
 -- Add new feature to do search current word in current file
@@ -321,12 +356,137 @@ linters.setup {
   },
 }
 
--- " =========== AutoFlake Settings ===========
+
+
+-- =========== AutoFlake Settings ===========
 -- " See https://github.com/tell-k/vim-autoflake
 vim.g.autoflake_remove_all_unused_imports = 1
 vim.g.autoflake_remove_all_unused_variables = 0
 vim.g.autoflake_disable_show_diff = 1
 lvim.builtin.which_key.mappings["lu"] = { "<cmd>call Autoflake()<CR><CR>", "Cleanse Imports" }
+
+
+-- =========== Debugger - DAP ===========
+local dap = require('dap')
+dap.adapters.python = {
+  type = 'executable',
+  command = '/opt/conda/bin/python', -- if $HOME: command = os.getenv('HOME') .. '/.virtualenvs/tools/bin/python',
+  args = { '-m', 'debugpy.adapter' },
+}
+
+dap.configurations.python = {
+  {
+    -- The first three options are required by nvim-dap
+    type = 'python', -- the type here established the link to the adapter definition: `dap.adapters.python`
+    request = 'launch',
+    name = "Launch file locally",
+
+    -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
+    program = "${file}", -- This configuration will launch the current file if used.
+    pythonPath = function()
+      -- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
+      -- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
+      -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
+      local cwd = vim.fn.getcwd()
+      if vim.fn.executable('/opt/conda/bin/python') == 1 then
+        return '/opt/conda/bin/python'
+      elseif vim.fn.executable(cwd .. '/venv/bin/python') == 1 then
+        return cwd .. '/venv/bin/python'
+      elseif vim.fn.executable(cwd .. '/.venv/bin/python') == 1 then
+        return cwd .. '/.venv/bin/python'
+      else
+        return '/usr/bin/python'
+      end
+    end
+  }
+}
+
+dap.configurations.lua = {
+  {
+    type = "nlua",
+    request = "attach",
+    name = "Attach to running Neovim instance",
+    host = function()
+      local value = vim.fn.input "Host [127.0.0.1]: "
+      if value ~= "" then
+        return value
+      end
+      return "127.0.0.1"
+    end,
+    port = function()
+      local val = tonumber(vim.fn.input("Port: ", "54321"))
+      assert(val, "Please provide a port number")
+      return val
+    end,
+  },
+}
+
+dap.adapters.nlua = function(callback, config)
+  callback { type = "server", host = config.host, port = config.port }
+end
+
+-- vim.api.nvim_set_keymap("v", "<S-t>", "<ESC>:lua require('dap-python').debug_selection()<CR>", { noremap = true })
+lvim.builtin.which_key.mappings["dm"] = { "<cmd>lua require('dap-python').test_method()<CR>", "Test Current Method" }
+lvim.builtin.which_key.mappings["dn"] = { "<cmd>lua require('dap-python').test_class()<CR>", "Test Current Class" }
+lvim.builtin.which_key.mappings["dv"] = { "<ESC>:lua require('dap-python').debug_selection()<CR>", "Debug Selection" }
+vim.api.nvim_set_keymap("v", "<M-e>", "<ESC>:lua require('dap-python').eval()<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<M-e>", "<cmd>lua require('dap-python').eval()<CR>", { noremap = true })
+
+
+-- =========== Debugger - DAP-UI ===========
+-- Disabled as it seems buggy
+-- Launch DAP-UI automatically on events
+local dapui = require("dapui")
+dap.listeners.after.event_initialized["dapui_config"] = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+  dapui.close()
+end
+
+lvim.builtin.which_key.mappings["d"] = {
+  name = "Debug",
+  t = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
+  b = { "<cmd>lua require'dap'.step_back()<cr>", "Step Back" },
+  n = { "<cmd>lua require'dap'.continue()<cr>", "Next" },
+  C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "Run To Cursor" },
+  d = { "<cmd>lua require'dap'.disconnect()<cr>", "Disconnect" },
+  g = { "<cmd>lua require'dap'.session()<cr>", "Get Session" },
+  i = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
+  o = { "<cmd>lua require'dap'.step_over()<cr>", "Step Over" },
+  u = { "<cmd>lua require'dap'.step_out()<cr>", "Step Out" },
+  p = { "<cmd>lua require'dap'.pause.toggle()<cr>", "Pause" },
+  r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
+  s = { "<cmd>lua require'dap'.continue()<cr>", "Start" },
+  q = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
+  h = { "<cmd>lua require('dapui').toggle()<CR>", "DAP-UI" },
+  e = { "<cmd>lua require('dapui').eval()<CR>", "Eval Expression" },
+  m = { "<cmd>lua require('dap-python').test_method()<CR>", "Test Current Method" },
+  c = { "<cmd>lua require('dap-python').test_class()<CR>", "Test Current Class" },
+  v = { "<ESC>:lua require('dap-python').debug_selection()<CR>", "Debug Selection" },
+}
+
+vim.api.nvim_set_keymap("n", "tt", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { noremap = true })
+vim.api.nvim_set_keymap("n", "tb", "<cmd>lua require'dap'.step_back()<cr>",{ noremap = true })
+vim.api.nvim_set_keymap("n", "tn", "<cmd>lua require'dap'.continue()<cr>",{ noremap = true })
+vim.api.nvim_set_keymap("n", "tC", "<cmd>lua require'dap'.run_to_cursor()<cr>",{ noremap = true })
+vim.api.nvim_set_keymap("n", "td", "<cmd>lua require'dap'.disconnect()<cr>", { noremap = true })
+vim.api.nvim_set_keymap("n", "tg", "<cmd>lua require'dap'.session()<cr>", { noremap = true })
+vim.api.nvim_set_keymap("n", "ti", "<cmd>lua require'dap'.step_into()<cr>",{ noremap = true })
+vim.api.nvim_set_keymap("n", "to", "<cmd>lua require'dap'.step_over()<cr>",{ noremap = true })
+vim.api.nvim_set_keymap("n", "tu", "<cmd>lua require'dap'.step_out()<cr>",{ noremap = true })
+vim.api.nvim_set_keymap("n", "tp", "<cmd>lua require'dap'.pause.toggle()<cr>", { noremap = true })
+vim.api.nvim_set_keymap("n", "tr", "<cmd>lua require'dap'.repl.toggle()<cr>", { noremap = true })
+vim.api.nvim_set_keymap("n", "ts", "<cmd>lua require'dap'.continue()<cr>", { noremap = true })
+vim.api.nvim_set_keymap("n", "tq", "<cmd>lua require'dap'.close()<cr>", { noremap = true })
+vim.api.nvim_set_keymap("n", "th", "<cmd>lua require('dapui').toggle()<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "te", "<cmd>lua require('dapui').eval()<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "tm", "<cmd>lua require('dap-python').test_method()<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "tc", "<cmd>lua require('dap-python').test_class()<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "tv", "<ESC>:lua require('dap-python').debug_selection()<CR>", { noremap = true })
 
 ---------------------------------------- Other - Misc ----------------------------------------
 

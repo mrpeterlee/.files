@@ -1,5 +1,12 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+""" CLI Installation for NeoVim
+
+id:            Peter Lee (peter.lee@finclab.com)
+last_update:   2022-03-28 09:31:43 EDT
+type:          lib
+sensitivity:   datalab@finclab.com
+platform:      any
+description:   This module intends for reinstalling NeoVim in terminal environment.
+"""
 
 
 import os
@@ -8,7 +15,6 @@ import shutil
 import typing
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
 import finclab.cli.build
 import finclab.cli.build.util
@@ -26,7 +32,9 @@ DIR_DOTFILES = Path(Path.home(), ".files")
 # SYMLINKS
 SYMLINKS = {
     # LunarVim user folder
-    Path(Path.home(), ".config", "lvim", "config.lua"): Path(DIR_DOTFILES, "neovim", "lvim", "config.lua"),
+    Path(Path.home(), ".config", "lvim", "config.lua"): Path(
+        DIR_DOTFILES, "neovim", "lvim", "config.lua"
+    ),
     # SpaceVim user folder
     Path(Path.home(), ".SpaceVim.d"): Path(DIR_DOTFILES, "neovim", ".SpaceVim.d"),
     # pylintrc
@@ -49,12 +57,10 @@ def update_symlink():
 def force_install():
     """For fresh installation (the 1st time)."""
     # Remove the current config
+    if Path(Path.home(), ".config/lvim").is_dir():
+        shutil.rmtree(Path(Path.home(), ".config/lvim"))
     if not Path(Path.home(), ".config", "lvim").exists():
         Path(Path.home(), ".config", "lvim").mkdir(parents=True)
-
-    # Delete the compiled plugin
-    if Path(Path.home(), ".config/lvim/plugin").is_dir():
-        shutil.rmtree(Path(Path.home(), ".config/lvim/plugin"))
 
     # Install LunarVim - Rolling Branch
     cmd = "LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) -y"
@@ -63,7 +69,7 @@ def force_install():
 
 @dataclass
 class Install:
-    f"""CLI Tool to Configure / Install {app_name}
+    """CLI Tool to Configure / Install Neovim
 
     Usage
     -----
@@ -75,9 +81,11 @@ class Install:
         >>> ts cli install --force
     ```
     """
+
     force: bool = False  # True force reinstall the NeoVim
 
     def execute(self):
+        """Execute"""
         print(f"Welcome to {app_name} Installation Script...")
         if self.force:
             force_install()
@@ -86,7 +94,7 @@ class Install:
 
 @dataclass
 class Update:
-    f"""CLI Tool to Update {app_name} to latest
+    """CLI Tool to Update Neovim to latest
 
     Usage
     -----
@@ -98,9 +106,11 @@ class Update:
         >>> ts cli update --edge
     ```
     """
+
     edge: bool = False  # True Update to the latest edge release (nonstable)
 
     def execute(self):
+        """Execute"""
         if self.edge:
             raise ValueError("@todo sorry not-supported yet.")
         raise ValueError("@todo sorry update is not-supported yet.")
@@ -108,7 +118,7 @@ class Update:
 
 @dataclass
 class MainMenu:
-    f"""{app_name} CLI Main Menu"""
+    """NeoVim Installation CLI Main Menu"""
 
     command: typing.Union[Install, Update]
 

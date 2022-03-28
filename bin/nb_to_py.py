@@ -16,7 +16,7 @@ def fix_model_params(codes):
 
     params_cell = codes.pop(0)
 
-    new_cell = '''
+    new_cell = """
 # Code block needed for nb_to_py.py and parallel_run.py
 try:
     if isinstance(params, dict): # see if params is passed in from upper level
@@ -26,9 +26,9 @@ try:
 except NameError:
     is_params = False
 
-'''
+"""
     # Get the param lines
-    p = re.compile(r'^.*=.*$', re.MULTILINE)
+    p = re.compile(r"^.*=.*$", re.MULTILINE)
     lines = p.findall(params_cell)
     lines_res = []
     for line in lines:
@@ -46,9 +46,10 @@ except NameError:
     new_cell += "\nif is_params:\n"
     is_params_lines = []
     for line in lines:
-        param = line.split('=')[0].strip()
+        param = line.split("=")[0].strip()
         new_line = "    if '{param}' in params: {param} = params['{param}']".format(
-            param=param)
+            param=param
+        )
         is_params_lines.append(new_line)
     new_cell += "\n".join(is_params_lines)
 
@@ -61,7 +62,7 @@ def fix_up_code(py_code, nb_filepath):
     """To fix up the converted code by addressing some formatting issues"""
 
     # Format the code so that it has a main()
-    py_code = '    '.join(py_code.splitlines(True))
+    py_code = "    ".join(py_code.splitlines(True))
 
     block_top = '''"""
 Model:       {nb_name}
@@ -106,8 +107,9 @@ start_datetime = pd.Timestamp.now()
 
 
 def _main(params=None):
-    '''.format(nb_name=nb_filepath.stem,
-               nb_filepath=str(nb_filepath.absolute()))
+    '''.format(
+        nb_name=nb_filepath.stem, nb_filepath=str(nb_filepath.absolute())
+    )
 
     block_bottom = '''
 def main(params=None):
@@ -197,23 +199,22 @@ if __name__=='__main__':
 
     # To remove magic ipython commands
     lines = py_code.splitlines(True)
-    lines = ['' if 'get_ipython' in line else line for line in lines]
+    lines = ["" if "get_ipython" in line else line for line in lines]
     py_code = "".join(lines)
 
     # replace display as print
-    py_code = py_code.replace('display(', 'print(')
-    py_code = py_code.replace('Markdown(', 'print(')
-    py_code = py_code.replace('md(', 'print(')
+    py_code = py_code.replace("display(", "print(")
+    py_code = py_code.replace("Markdown(", "print(")
+    py_code = py_code.replace("md(", "print(")
 
     # replace raise to return
-    py_code = py_code.replace('exit()', 'return')
-    py_code = py_code.replace('raise', 'return')
+    py_code = py_code.replace("exit()", "return")
+    py_code = py_code.replace("raise", "return")
 
     # Place a few lines of code to the top of the script
     place_to_top = []
     place_to_top.append("from __future__ import (absolute_import, division)")
-    place_to_top.append(
-        "from __future__ import (print_function, unicode_literals)")
+    place_to_top.append("from __future__ import (print_function, unicode_literals)")
     place_to_top.append("import pandas as pd")
     place_to_top.append("import numpy as np")
     for line in place_to_top:
@@ -235,16 +236,16 @@ def export_notebook_to_python(nb_filepath, py_filepath=None):
 
     # Figure out the output python filename
     if py_filepath is None:
-        py_filepath = Path(nb_filepath.parent, nb_filepath.stem + '.py')
+        py_filepath = Path(nb_filepath.parent, nb_filepath.stem + ".py")
     else:
         py_filepath = Path(py_filepath)
 
-    with io.open(nb_filepath, 'r', encoding='utf-8') as filename:
+    with io.open(nb_filepath, "r", encoding="utf-8") as filename:
         nb = read(filename, 4)
 
     codes = []
     for cell in nb.cells:
-        if cell.cell_type == 'code':
+        if cell.cell_type == "code":
 
             # Transform any ipython magics to proper Python codes
             shell = InteractiveShell.instance()
@@ -254,35 +255,37 @@ def export_notebook_to_python(nb_filepath, py_filepath=None):
 
     codes = fix_model_params(codes)
 
-    py_code = '\n'.join(codes)
+    py_code = "\n".join(codes)
 
     py_code = fix_up_code(py_code, nb_filepath)
 
-    py_filepath.write_text(py_code)
+    py_filepath.write_text(py_code, encoding="utf-8")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(
-        description='Convert the target Notebook into a Python .py file')
+        description="Convert the target Notebook into a Python .py file"
+    )
 
     parser.add_argument(
-        '-n',
-        '--nb_filepath',
-        help='Specify the full/relative path of the target Notebook file',
+        "-n",
+        "--nb_filepath",
+        help="Specify the full/relative path of the target Notebook file",
         required=True,
         action="store",
     )
 
     parser.add_argument(
-        '-p',
-        '--py_filepath',
-        help='Specify the full/relative path of the output Python .py file',
+        "-p",
+        "--py_filepath",
+        help="Specify the full/relative path of the output Python .py file",
         required=False,
         action="store",
     )
 
     args = vars(parser.parse_args())
 
-    export_notebook_to_python(nb_filepath=args['nb_filepath'],
-                              py_filepath=args['py_filepath'])
+    export_notebook_to_python(
+        nb_filepath=args["nb_filepath"], py_filepath=args["py_filepath"]
+    )
