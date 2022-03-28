@@ -52,7 +52,9 @@ def force_install():
     if not Path(Path.home(), ".config", "lvim").exists():
         Path(Path.home(), ".config", "lvim").mkdir(parents=True)
 
-    # if macos
+    # Delete the compiled plugin
+    if Path(Path.home(), ".config/lvim/plugin").is_dir():
+        shutil.rmtree(Path(Path.home(), ".config/lvim/plugin"))
 
     # Install LunarVim - Rolling Branch
     cmd = "LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) -y"
