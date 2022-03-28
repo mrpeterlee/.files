@@ -91,6 +91,21 @@ lvim.plugins = {
     -- Python - Identation needed when writing code
     { "Vimjas/vim-python-pep8-indent" },
 
+    -- Python - Provides code signature when adding a function
+    {"neovim/nvim-lspconfig",},
+    {"ray-x/lsp_signature.nvim",
+        -- config = function()
+            -- require "lsp_signature".on_attach()
+          -- require("lsp_signature").setup {
+          --     log_path = vim.fn.expand("$HOME") .. "/temp/lsp_signature.log",
+          --     debug = true,
+          --     hint_enable = true,
+          --     handler_opts = { border = "single" },
+          --     max_width = 80,
+          -- }
+        -- end
+    },
+
     -- =========== Python - Debugger ===========
     { "mfussenegger/nvim-dap-python" ,
       config = function()
@@ -356,7 +371,8 @@ linters.setup {
   },
 }
 
-
+-- =========== LSP-Signature ===========
+require('lsp_signature').on_attach()
 
 -- =========== AutoFlake Settings ===========
 -- " See https://github.com/tell-k/vim-autoflake
