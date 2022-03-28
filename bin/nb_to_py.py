@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 """This utility convert jupyter notebook into a python .py file"""
 
-import io
-import pandas as pd
-import re
 import argparse
+import io
+import re
 from pathlib import Path
-from nbformat import read
+
+import pandas as pd
 from IPython.core.interactiveshell import InteractiveShell
+from nbformat import read
 
 
 def fix_model_params(codes):
@@ -66,7 +67,7 @@ def fix_up_code(py_code, nb_filepath):
 Model:       {nb_name}
 Description: This is an automatically generated file by function nb_to_py.py (FincLab Library)
 
-WARNING: DO NOT MODIFY THIS FILE.
+Warning - DO NOT MODIFY THIS FILE.
 
     >>>    Please modify in the original Jupyter Notebook:
     >>>        {nb_filepath}

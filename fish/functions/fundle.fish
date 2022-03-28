@@ -133,7 +133,7 @@ function __fundle_plugin_index -d "returns the index of the plugin" -a plugin
 			return $i
 		end
 	end
-	# NOTE: should never reach this point
+	# note: should never reach this point
 	echo "could not find plugin: $plugin"
 	exit 1
 end

@@ -1,33 +1,93 @@
---[[
-lvim is the global options object
-Linters should be filled in as strings with either a global executable or a path to an executable
-]]
+--
+-- ██╗░░░░░██╗░░░██╗███╗░░██╗░█████╗░██████╗░██╗░░░██╗██╗███╗░░░███╗
+-- ██║░░░░░██║░░░██║████╗░██║██╔══██╗██╔══██╗██║░░░██║██║████╗░████║
+-- ██║░░░░░██║░░░██║██╔██╗██║███████║██████╔╝╚██╗░██╔╝██║██╔████╔██║
+-- ██║░░░░░██║░░░██║██║╚████║██╔══██║██╔══██╗░╚████╔╝░██║██║╚██╔╝██║
+-- ███████╗╚██████╔╝██║░╚███║██║░░██║██║░░██║░░╚██╔╝░░██║██║░╚═╝░██║
+-- ╚══════╝░╚═════╝░╚═╝░░╚══╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝
+--
+--         @mrpeterlee
 
 ---------------------------------------- Plugins ----------------------------------------
 lvim.plugins = {
   -- {"folke/tokyonight.nvim"},
   -- {"folke/trouble.nvim", cmd = "TroubleToggle",},
+  -- Integrate all issues in the same panel
+  {
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("trouble").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  },
+
   -- rainbow parenthesis
   {"p00f/nvim-ts-rainbow"},
 
-  -- Ctrol-Space for Project Management
-  {"vim-ctrlspace/vim-ctrlspace",
-    setup = function()
-      vim.g.CtrlSpaceDefaultMappingKey = ";"
-      vim.g.CtrlSpaceLoadLastWorkspaceOnStart = 1
-      vim.g.CtrlSpaceSaveWorkspaceOnSwitch = 1
-      vim.g.CtrlSpaceSaveWorkspaceOnExit = 1
-   end
-  },
+  -- [Not Working with NeoVim]-- Ctrol-Space for Project Management
+  -- {"vim-ctrlspace/vim-ctrlspace",
+  --   setup = function()
+  --     vim.g.CtrlSpaceDefaultMappingKey = ";"
+  --     vim.g.CtrlSpaceLoadLastWorkspaceOnStart = 1
+  --     vim.g.CtrlSpaceSaveWorkspaceOnSwitch = 1
+  --     vim.g.CtrlSpaceSaveWorkspaceOnExit = 1
+  --     vim.g.CtrlSpaceProjectRootMarkers = ""
+  --  end
+  -- },
 
   -- Search & Replace
   {
   "windwp/nvim-spectre",
   event = "BufRead",
   config = function()
-    require("spectre").setup()
+    require("spectre").setup({
+         mapping={
+          ['toggle_line'] = {
+              map = "dd",
+              cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
+              desc = "toggle current item"
+          },
+        },
+      })
   end,
   },
+
+  -- Tmux integration
+  {"christoomey/vim-tmux-navigator"},
+  {"preservim/vimux"},
+
+  -- to-do integration
+  {
+    "folke/todo-comments.nvim",
+    event = "BufRead",
+    config = function()
+      require("todo-comments").setup()
+    end,
+  },
+
+    -- session management - persistence
+    {
+      "folke/persistence.nvim",
+        event = "BufReadPre", -- this will only start session saving when an actual file was opened
+        module = "persistence",
+        config = function()
+          require("persistence").setup {
+            dir = vim.fn.expand(vim.fn.stdpath "config" .. "/session/"),
+            options = { "buffers", "curdir", "tabpages", "winsize" },
+          }
+      end,
+    },
+
+    -- SmartClose: martClose plugin distinguishes two kinds of windows (the regular windows you use to work) and the auxiliary ones (a preview window, a NERDTree panel, a quickfix window, etc)
+    { "szw/vim-smartclose", },
+
+    -- Python - AutoFlake to remove unused imports
+    { "tell-k/vim-autoflake", },
+
 }
 
 ---------------------------------------- LVIM - General Settings ----------------------------------------
@@ -38,7 +98,7 @@ lvim.colorscheme = "onedarker"
 lvim.transparent_window = true
 
 lvim.builtin.alpha.active = true
-lvim.builtin.alpha.mode = "dashboard"
+lvim.builtin.alpha.mode = "startify"  -- "dashboard"; "startify"
 
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
@@ -48,6 +108,21 @@ lvim.builtin.lualine.active = true
 lvim.builtin.dap.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.bufferline.active = true -- this is actually using romgrk/barbar.nvim
+
+-- Swap `;` with `:`
+vim.api.nvim_set_keymap("n", ";", ":", { noremap = true })
+vim.api.nvim_set_keymap("n", ":", ";", { noremap = true })
+vim.api.nvim_set_keymap("v", ";", ":", { noremap = true })
+vim.api.nvim_set_keymap("v", ":", ";", { noremap = true })
+
+-- SmartClose
+vim.api.nvim_set_keymap("n", "<F3>", ":SmartClose<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<F3>", ":SmartClose<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "<F3>", "<C-[>:SmartClose<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<S-x>", ":SmartClose<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<S-x>", ":SmartClose<CR>", { noremap = true, silent = true })
+
+-- lvim.keys.normal_mode["<S-x>"] = ":BufferClose<CR>"
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -71,8 +146,14 @@ lvim.builtin.treesitter.highlight.enabled = true
 ---------------------------------------- LVIM - Key Bindings ----------------------------------------
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
--- add your own keymapping
+-- Move window pane & integrate with Tmux
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+-- The below is not working
+-- lvim.keys.normal_mode["<A-h>"] = "<cmd>lua require("tmux").move_left()<cr>"
+-- lvim.keys.normal_mode["<A-j>"] = "<cmd>lua require("tmux").move_bottom()<cr>"
+-- lvim.keys.normal_mode["<A-k>"] = "<cmd>lua require("tmux").move_top()<cr>"
+-- lvim.keys.normal_mode["<A-l>"] = "<cmd>lua require("tmux").move_right()<cr>"
+
 -- unmap a default keymapping
 -- lvim.keys.normal_mode["<C-Up>"] = false
 -- edit a default keymapping
@@ -80,10 +161,9 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- when pressing left/right cursor keys, Vim will move to the previous/next line after reaching first/last character in the line
 lvim.line_wrap_cursor_movement = true
 
-
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["p"] = { "<cmd>Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings["u"] = {
+lvim.builtin.which_key.mappings["q"] = {
   name = "Update",
     c = { "<cmd>PackerCompile<cr>", "Compile" },
     i = { "<cmd>PackerInstall<cr>", "Install" },
@@ -91,19 +171,47 @@ lvim.builtin.which_key.mappings["u"] = {
     s = { "<cmd>PackerSync<cr>", "Sync" },
     S = { "<cmd>PackerStatus<cr>", "Status" },
     u = { "<cmd>PackerUpdate<cr>", "Update" },
+    x = { "<cmd>PackerClean<cr>", "Clean" },
   }
-lvim.builtin.which_key.mappings["sa"] = { "<cmd>lua require('spectre.actions').run_replace()<CR>", "Replace All" }
+lvim.builtin.which_key.mappings["ss"] = { "<cmd>lua require('spectre').open()<CR>", "Search All" }
+-- lvim.builtin.which_key.mappings["ss"] = { "<cmd>lua require('spectre').open_file_search()<cr>", "Search" }
+-- lvim.builtin.which_key.mappings["sw"] = { "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", "Search Current Word" }
+-- lvim.builtin.which_key.mappings["sw"] = { "<cmd>lua require('spectre').open_file_search()<cr>", "Search Current Word" }
 
--- lvim.builtin.which_key.mappings["t"] = {
---   name = "+Trouble",
---   r = { "<cmd>Trouble lsp_references<cr>", "References" },
---   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
---   d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
---   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
---   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
---   w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
--- }
+lvim.builtin.which_key.mappings["t"] = {
+  name = "+Trouble",
+  r = { "<cmd>Trouble references<cr>", "References" },
+  f = { "<cmd>Trouble definitions<cr>", "Definitions" },
+  d = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnostics" },
+  -- d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+  w = { "<cmd>TodoQuickFix<cr>", "ToDos" },
+}
 
+-- vim.api.nvim_command('quit!')
+-- vim.api.nvim_command('close!')
+lvim.builtin.which_key.mappings["c"] = { "<cmd>SmartClose<CR>", "Close", noremap=true, silent=true }
+-- lvim.builtin.which_key.mappings["q"] = { "<cmd>q!<CR>", "Quit" }
+
+---------------------------------------- Search & Replace (nvim-spectre) ----------------------------------------
+-- Add new feature to do search current word in current file
+function OpenFileSearchCurrentWord()
+    require'spectre'.open({
+        path = vim.fn.expand("%"),
+        search_text = vim.fn.expand('<cword>'),
+    })
+end
+lvim.builtin.which_key.mappings["sw"] = { "<cmd>lua OpenFileSearchCurrentWord()<CR>", "Search Current Word" }
+
+
+---------------------------------------- Session Management - persistence ----------------------------------------
+lvim.builtin.which_key.mappings["m"]= {
+  name = "Mgmt Session",
+  c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
+  l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
+  Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
+}
 
 ---------------------------------------- StatusLine (LuaLine) Settings ----------------------------------------
 lvim.builtin.lualine.style = "lvim" -- "lvim" or "default" or "none"
@@ -126,6 +234,7 @@ lvim.builtin.cmp.completion.keyword_length = 2
 ---------------------------------------- Fuzzy Search - TeleScope ----------------------------------------
 lvim.builtin.telescope.defaults.layout_config.width = 0.95
 lvim.builtin.telescope.defaults.layout_config.preview_cutoff = 75
+
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
 local _, actions = pcall(require, "telescope.actions")
@@ -149,7 +258,6 @@ lvim.builtin.telescope.defaults.mappings = {
 lvim.builtin.nvimtree.setup.view.side = "right"
 lvim.builtin.nvimtree.show_icons.git = 1
 lvim.builtin.nvimtree.setup.actions.open_file.quit_on_open = true
-lvim.builtin.nvimtree.setup.auto_close = true
 -- Redefine some key mapping
 local nvim_tree = require'nvim-tree'
 local nvim_tree_cb = require'nvim-tree.config'.nvim_tree_callback
@@ -213,9 +321,14 @@ linters.setup {
   },
 }
 
+-- " =========== AutoFlake Settings ===========
+-- " See https://github.com/tell-k/vim-autoflake
+vim.g.autoflake_remove_all_unused_imports = 1
+vim.g.autoflake_remove_all_unused_variables = 0
+vim.g.autoflake_disable_show_diff = 1
+lvim.builtin.which_key.mappings["lu"] = { "<cmd>call Autoflake()<CR><CR>", "Cleanse Imports" }
 
-
----------------------------------------- Project Management - project ----------------------------------------
+---------------------------------------- Other - Misc ----------------------------------------
 
 -- generic LSP settings
 
@@ -242,10 +355,10 @@ linters.setup {
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 lvim.autocommands.custom_groups = {
---  -- On entering a lua file, set the tab spacing and shift width to 8
---  { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
---  -- On entering insert mode in any file, scroll the window so the cursor line is centered
---     {"InsertEnter", "*", ":normal zz"},
+ -- On entering a lua file, set the tab spacing and shift width to 8
+  { "BufWinEnter", "*.lua", "setlocal ts=4 sw=4" },
+ -- -- On entering insert mode in any file, scroll the window so the cursor line is centered
+ -- {"InsertEnter", "*", ":normal zz"},
 }
 
 ---------------------------------------- VIM - General Settings ----------------------------------------
