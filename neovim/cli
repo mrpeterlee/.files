@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """ CLI Installation for NeoVim
 
 id:            Peter Lee (peter.lee@finclab.com)
@@ -7,7 +8,6 @@ sensitivity:   datalab@finclab.com
 platform:      any
 description:   This module intends for reinstalling NeoVim in terminal environment.
 """
-
 
 import os
 import os.path
@@ -31,18 +31,23 @@ DIR_DOTFILES = Path(Path.home(), ".files")
 
 # SYMLINKS
 SYMLINKS = {
-    # LunarVim user folder
-    Path(Path.home(), ".config", "lvim", "config.lua"): Path(
-        DIR_DOTFILES, "neovim", "lvim", "config.lua"
-    ),
+    # LunarVim user config
+    Path(Path.home(), ".config", "lvim", "config.lua"):
+    Path(DIR_DOTFILES, "neovim", "lvim", "config.lua"),
+    # Additional config dir
+    Path(Path.home(), ".config", "lvim", "vimscript"): Path(DIR_DOTFILES, "neovim", "lvim", "vimscript"),
+    Path(Path.home(), ".config", "lvim", "lua"): Path(DIR_DOTFILES, "neovim", "lvim", "lua"),
+    Path(Path.home(), ".config", "lvim", "snippet"):
+    Path(DIR_DOTFILES, "neovim", "lvim", "snippet"),
     # SpaceVim user folder
-    Path(Path.home(), ".SpaceVim.d"): Path(DIR_DOTFILES, "neovim", ".SpaceVim.d"),
+    Path(Path.home(), ".SpaceVim.d"):
+    Path(DIR_DOTFILES, "neovim", ".SpaceVim.d"),
     # pylintrc
-    Path(Path.home(), ".pylintrc"): Path(DIR_DOTFILES, "neovim", ".pylintrc"),
+    Path(Path.home(), ".pylintrc"):
+    Path(DIR_DOTFILES, "neovim", ".pylintrc"),
     # pydocstyle
-    Path(Path.home(), ".config", "pycodestyle"): Path(
-        DIR_DOTFILES, "neovim", "pycodestyle"
-    ),
+    Path(Path.home(), ".config", "pycodestyle"):
+    Path(DIR_DOTFILES, "neovim", "pycodestyle"),
 }
 
 

@@ -9,6 +9,7 @@
 --         @mrpeterlee
 
 ---------------------------------------- Plugins ----------------------------------------
+
 lvim.plugins = {
   -- {"folke/tokyonight.nvim"},
   -- {"folke/trouble.nvim", cmd = "TroubleToggle",},
@@ -24,6 +25,34 @@ lvim.plugins = {
       }
     end
   },
+
+  -- Clever f search to free up key ; and ,
+  -- {"rhysd/clever-f.vim"},
+
+  -- Navigation plugin: Hop
+  {
+    "phaazon/hop.nvim",
+    event = "BufRead",
+    config = function()
+      require("hop").setup()
+    end,
+  },
+
+  -- Grammer Check; TODO: add hotkey to :GrammarousCheck
+  {"rhysd/vim-grammarous"},
+
+  -- NOTE: Learn to use this plugin -- add to OneNote!
+  {"machakann/vim-sandwich"},
+
+
+  -- Git - Display signs / number on the left bar for any git differences
+  {"mhinz/vim-signify"},
+
+  -- use jk to ESC from insert mode faster
+  {"jdhao/better-escape.vim"},
+
+  -- vim-yoink: keep a history of yanks
+  {"svermeulen/vim-yoink"},
 
   -- rainbow parenthesis
   {"p00f/nvim-ts-rainbow"},
@@ -92,7 +121,6 @@ lvim.plugins = {
     { "Vimjas/vim-python-pep8-indent" },
 
     -- Python - Provides code signature when adding a function
-    {"neovim/nvim-lspconfig",},
     {"ray-x/lsp_signature.nvim",
         -- config = function()
             -- require "lsp_signature".on_attach()
@@ -127,6 +155,26 @@ lvim.plugins = {
 
     -- =========== Lua - Debugger ===========
     {"jbyuki/one-small-step-for-vimkind", module = "osv"},
+
+    -- =========== Wilder - hinting when typing CMD ===========
+    
+    {
+      "gelguy/wilder.nvim",
+      -- event = { "CursorHold", "CmdlineEnter" },
+      -- rocks = { "luarocks-fetch-gitrec",  }, -- "pcre2" linux install: apt install pcre2-utils
+      requires = { "romgrk/fzy-lua-native" },
+      -- config = function()
+      --   vim.cmd(string.format("source %s", "~/.config/lvim/vimscript/wilder.vim"))
+      -- end,
+      run = ":UpdateRemotePlugins",
+    },
+
+
+    -- =========== Themes  ===========
+       { 'sainnhe/sonokai'},
+       { 'sainnhe/edge'},
+       { 'rebelot/kanagawa.nvim'},
+
 }
 
 ---------------------------------------- LVIM - General Settings ----------------------------------------
@@ -243,7 +291,6 @@ lvim.builtin.which_key.mappings["lm"] = { "<cmd>:0 | let blank=''|let t='\"\"\" 
 -- Disable close buffer - reserve this key for something else
 lvim.builtin.which_key.mappings["c"] = { "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", "Comment" }
 
-
 ---------------------------------------- Search & Replace (nvim-spectre) ----------------------------------------
 -- Add new feature to do search current word in current file
 function OpenFileSearchCurrentWord()
@@ -274,7 +321,7 @@ lvim.builtin.lualine.sections.lualine_y = {
   components.location,
 }
 -- lvim.builtin.lualine.options.theme = "gruvbox"
-lvim.builtin.lualine.options.theme = "onedarker"
+lvim.builtin.lualine.options.theme = "edge"
 
 ---------------------------------------- AutoCompletion - cmp ----------------------------------------
 lvim.builtin.cmp.completion.keyword_length = 2
@@ -538,6 +585,8 @@ lvim.autocommands.custom_groups = {
 }
 
 ---------------------------------------- VIM - General Settings ----------------------------------------
+vim.g.mapleader = ","
+vim.g.maplocalleader = ";"
 vim.opt.backup = false -- creates a backup file
 vim.opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
 vim.opt.cmdheight = 2 -- more space in the neovim command line for displaying messages
@@ -581,5 +630,22 @@ vim.opt.spell = false
 vim.opt.spelllang = "en"
 vim.opt.scrolloff = 8 -- is one of my fav
 vim.opt.sidescrolloff = 8
+
+--------------------==================== NeoVim - VimScripts ====================--------------------
+-- source core vim configs
+vim.cmd('source vimscript/globals.vim')
+vim.cmd('source vimscript/options.vim')
+vim.cmd('source vimscript/autocommands.vim')
+vim.cmd('source vimscript/mappings.vim')
+require('lua-init') -- init before installing vimscript plugin
+vim.cmd('source vimscript/plugins.vim')
+
+-- require("user.neovim").config()
+
+
+
+
+
+
 
 
