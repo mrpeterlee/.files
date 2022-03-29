@@ -54,7 +54,7 @@ set modelines=0
 set nomodeline
 
 " Reload .vimrc
-nnoremap <F12> :so $MYVIMRC<CR>
+nnoremap <F12> :so $MYVIMRC
 
 " Lines of memory to remember
 set history=10000
@@ -81,8 +81,8 @@ nnoremap Q <NOP>
 cnoreabbrev help vert help
 
 " Terminal
-nnoremap <silent> <F7> :call <SID>ToggleTerminal()<CR>
-tnoremap <silent> <F7> <C-\><C-n><Bar>:wincmd p<CR>
+nnoremap <silent> <F7> :call <SID>ToggleTerminal()
+tnoremap <silent> <F7> <C-\><C-n><Bar>:wincmd p
 tnoremap <Esc> <C-\><C-n>
 
 " Set inc/dec
@@ -347,22 +347,22 @@ let g:gitgutter_diff_args             = '--ignore-space-at-eol'
 
 nmap <Leader>j <Plug>(GitGutterNextHunk)zz
 nmap <Leader>k <Plug>(GitGutterPrevHunk)zz
-nnoremap <silent> <C-g> :call <SID>ToggleGGPrev()<CR>zz
-nnoremap <Leader>gs :GitGutterStageHunk<CR>
-nnoremap <Leader>gu :GitGutterUndoHunk<CR>
+nnoremap <silent> <C-g> :call <SID>ToggleGGPrev()zz
+nnoremap <Leader>gs :GitGutterStageHunk
+nnoremap <Leader>gu :GitGutterUndoHunk
 
 " Fugitive settings
-nnoremap <C-s> :Gstatus<CR>
-nnoremap <Leader>gh :Gsdiff<CR>
-nnoremap <Leader>gv :Gvdiff<CR>
-nnoremap <Leader>gb :Gblame<CR>
+nnoremap <C-s> :Gstatus
+nnoremap <Leader>gh :Gsdiff
+nnoremap <Leader>gv :Gvdiff
+nnoremap <Leader>gb :Gblame
 
 " Searching for text added or removed by a commit
-nnoremap <Leader>gg :call <SID>GrepWrapper('Glog', '-i -S', '--')<CR>
+nnoremap <Leader>gg :call <SID>GrepWrapper('Glog', '-i -S', '--')
 
 " GV settings
-nnoremap <silent> <C-z> :call <SID>PreventGV()<CR>
-vnoremap <silent> <C-z> :call <SID>PreventGV()<CR>
+nnoremap <silent> <C-z> :call <SID>PreventGV()
+vnoremap <silent> <C-z> :call <SID>PreventGV()
 
 " --- Sessions ---
 " Vim-session settings
@@ -370,7 +370,7 @@ let g:session_autosave  = 'no'
 let g:session_autoload  = 'no'
 let g:session_directory = '~/.config/nvim/sessions/'
 
-nnoremap <C-q> :OpenSession<CR>
+nnoremap <C-q> :OpenSession
 
 " --- Tools ---
 " NERDCommenter settings
@@ -383,12 +383,12 @@ let g:NERDCustomDelimiters      = {
 	\ 'python': {'left': '#'},
 	\ }
 
-nnoremap cc :call NERDComment(0,'toggle')<CR>
-vnoremap cc :call NERDComment(0,'toggle')<CR>
+nnoremap cc :call NERDComment(0,'toggle')
+vnoremap cc :call NERDComment(0,'toggle')
 
 " NERDTree settings
-nnoremap <silent> <C-n> :call <SID>ToggleNTree()<CR>
-nnoremap <silent> <leader>f :call <SID>ToggleNTree()<CR>
+nnoremap <silent> <C-n> :call <SID>ToggleNTree()
+nnoremap <silent> <leader>f :call <SID>ToggleNTree()
 let g:NERDTreeQuitOnOpen = 1  " Auto close NerdTree after openning a file
 let g:NERDTreeShowHidden=1
 
@@ -402,15 +402,15 @@ let g:ale_linters = {
 	\ }
 
 " Navigate between errors
-nnoremap <Leader>h :lprevious<CR>zz
-nnoremap <Leader>l :lnext<CR>zz
+nnoremap <Leader>h :lpreviouszz
+nnoremap <Leader>l :lnextzz
 
 " Listtoggle settings
 let g:lt_location_list_toggle_map = '<leader>e'
 let g:lt_quickfix_list_toggle_map = '<leader>w'
 
 " Tagbar toggle (custom function)
-nnoremap <silent> <C-t> :call <SID>ToggleTagbar()<CR>
+nnoremap <silent> <C-t> :call <SID>ToggleTagbar()
 let g:tagbar_autofocus        = 1
 let g:tagbar_show_linenumbers = 2
 let g:tagbar_sort             = 0
@@ -434,7 +434,7 @@ let g:ctrlp_prompt_mappings   = {
 	\ 'PrtDeleteWord()'      : ['<C-w>'],
 	\ 'PrtClear()'           : ['<C-u>'],
 	\ 'ToggleByFname()'      : ['<C-g>'],
-	\ 'AcceptSelection("e")' : ['<C-m>', '<CR>'],
+	\ 'AcceptSelection("e")' : ['<C-m>', ''],
 	\ 'AcceptSelection("h")' : ['<C-x>'],
 	\ 'AcceptSelection("t")' : ['<C-t>'],
 	\ 'AcceptSelection("v")' : ['<C-v>'],
@@ -442,7 +442,7 @@ let g:ctrlp_prompt_mappings   = {
 	\ }
 
 " Undotree toggle
-nnoremap <Leader>u :UndotreeToggle<CR>
+nnoremap <Leader>u :UndotreeToggle
 
 " --- Languages ---
 " Go settings
@@ -486,16 +486,16 @@ let g:config_Beautifier['html'].indent_style = 'tab'
 
 augroup beautify
 	autocmd!
-	autocmd FileType javascript nnoremap <buffer> <Leader>bf :call JsBeautify()<cr>
-	autocmd FileType javascript vnoremap <buffer> <Leader>bf :call RangeJsBeautify()<cr>
-	autocmd FileType json nnoremap <buffer> <Leader>bf :call JsonBeautify()<cr>
-	autocmd FileType json vnoremap <buffer> <Leader>bf :call RangeJsonBeautify()<cr>
-	autocmd FileType jsx nnoremap <buffer> <Leader>bf :call JsxBeautify()<cr>
-	autocmd FileType jsx vnoremap <buffer> <Leader>bf :call RangeJsxBeautify()<cr>
-	autocmd FileType html nnoremap <buffer> <Leader>bf :call HtmlBeautify()<cr>
-	autocmd FileType html vnoremap <buffer> <Leader>bf :call RangeHtmlBeautify()<cr>
-	autocmd FileType css nnoremap <buffer> <Leader>bf :call CSSBeautify()<cr>
-	autocmd FileType css vnoremap <buffer> <Leader>bf :call RangeCSSBeautify()<cr>
+	autocmd FileType javascript nnoremap <buffer> <Leader>bf :call JsBeautify()
+	autocmd FileType javascript vnoremap <buffer> <Leader>bf :call RangeJsBeautify()
+	autocmd FileType json nnoremap <buffer> <Leader>bf :call JsonBeautify()
+	autocmd FileType json vnoremap <buffer> <Leader>bf :call RangeJsonBeautify()
+	autocmd FileType jsx nnoremap <buffer> <Leader>bf :call JsxBeautify()
+	autocmd FileType jsx vnoremap <buffer> <Leader>bf :call RangeJsxBeautify()
+	autocmd FileType html nnoremap <buffer> <Leader>bf :call HtmlBeautify()
+	autocmd FileType html vnoremap <buffer> <Leader>bf :call RangeHtmlBeautify()
+	autocmd FileType css nnoremap <buffer> <Leader>bf :call CSSBeautify()
+	autocmd FileType css vnoremap <buffer> <Leader>bf :call RangeCSSBeautify()
 augroup end
 
 " --- Autocomplete ---
@@ -547,8 +547,8 @@ smap <expr><TAB>
 " For conceal markers
 if has('conceal')
 	set conceallevel=0 concealcursor=niv
-	nnoremap coo :set conceallevel=0<CR>
-	nnoremap coi :set conceallevel=2<CR>
+	nnoremap coo :set conceallevel=0
+	nnoremap coi :set conceallevel=2
 endif
 
 augroup all
@@ -619,7 +619,7 @@ let g:mta_filetypes = {
 let g:argwrap_tail_comma    = 1
 let g:argwrap_padded_braces = '[{'
 
-nnoremap <Leader>W :ArgWrap<CR>
+nnoremap <Leader>W :ArgWrap
 
 " --- Misc ---
 " Align GitHub-flavored Markdown tables
@@ -651,8 +651,8 @@ let g:vimwiki_list          = [
 	\ {'path': '~/Workspace/vimwiki/Unix'}
 	\ ]
 
-nnoremap <Leader>we :VimwikiToggleListItem<CR>
-vnoremap <Leader>we :VimwikiToggleListItem<CR>
+nnoremap <Leader>we :VimwikiToggleListItem
+vnoremap <Leader>we :VimwikiToggleListItem
 
 "----------------------------------------------------------------
 " 4. User interface
@@ -730,10 +730,10 @@ syntax enable
 colorscheme atomic
 
 " Reload the current colorscheme
-nnoremap <F11> :call <SID>ReloadColorscheme()<CR>
+nnoremap <F11> :call <SID>ReloadColorscheme()
 
 " Show syntax highlighting groups
-nnoremap <Leader>B :call <SID>SynStack()<CR>
+nnoremap <Leader>B :call <SID>SynStack()
 
 " Disable the blinking cursor
 set gcr=a:blinkon0
@@ -759,29 +759,29 @@ set autoread
 
 " Reload a file when it is changed from the outside
 let g:f5msg = 'Buffer reloaded.'
-nnoremap <F5> :e<CR>:echo g:f5msg<CR>
+nnoremap <F5> :e:echo g:f5msg
 
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
 
 " Save the current buffer
-nnoremap <Leader>s :update<CR>
+nnoremap <Leader>s :update
 
 " Save all buffers
-nnoremap <Leader>S :bufdo update<CR>
+nnoremap <Leader>S :bufdo update
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 cnoremap WW w !sudo tee > /dev/null %
 
 " Rename file
-nnoremap <F2> :call <SID>RenameFile()<CR>
+nnoremap <F2> :call <SID>RenameFile()
 
 " Work on buffer
-nnoremap yab :%y<CR>
-nnoremap Yab :%y +<CR>
-nnoremap dab :%d<CR>
+nnoremap yab :%y
+nnoremap Yab :%y +
+nnoremap dab :%d
 nnoremap vab ggVG
 
 "----------------------------------------------------------------
@@ -791,21 +791,21 @@ nnoremap vab ggVG
 set hidden
 
 " Close the current buffer
-nnoremap <Leader>bd :call <SID>OnlyCloseBuffer()<CR>
+nnoremap <Leader>bd :call <SID>OnlyCloseBuffer()
 
 " Move between buffers
-nnoremap <C-h> :bprev<CR>
-nnoremap <C-l> :bnext<CR>
+nnoremap <C-h> :bprev
+nnoremap <C-l> :bnext
 
 " Edit and explore buffers
-nnoremap <Leader>bb :edit <C-R>=expand("%:p:h")<CR>/
-nnoremap <Leader>bg :buffers<CR>:buffer<Space>
+nnoremap <Leader>bb :edit <C-R>=expand("%:p:h")/
+nnoremap <Leader>bg :buffers:buffer<Space>
 
 " Switch CWD to the directory of the current buffer
-nnoremap <Leader>bw :lcd %:p:h<CR>:pwd<CR>
+nnoremap <Leader>bw :lcd %:p:h:pwd
 
 " Copy the filepath to clipboard
-nnoremap <Leader>by :let @+=expand("%:p")<CR>
+nnoremap <Leader>by :let @+=expand("%:p")
 
 " Ignore case when autocompletes when browsing files
 set fileignorecase
@@ -824,16 +824,16 @@ endtry
 " 8. Tabs management
 "----------------------------------------------------------------
 " Create and close tabs
-nnoremap <Leader>td :tabclose<CR>
-nnoremap <Leader>to :tabonly<CR>
+nnoremap <Leader>td :tabclose
+nnoremap <Leader>to :tabonly
 
 " Open a new tab with the current buffer's path
 " Useful when editing files in the same directory
-nnoremap <Leader>tt :tabedit <C-R>=expand("%:p:h")<CR>/
+nnoremap <Leader>tt :tabedit <C-R>=expand("%:p:h")/
 
 " Move tabs position
-nnoremap <Leader>tr :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
-nnoremap <Leader>ty :execute 'silent! tabmove ' . tabpagenr()<CR>
+nnoremap <Leader>tr :execute 'silent! tabmove ' . (tabpagenr()-2)
+nnoremap <Leader>ty :execute 'silent! tabmove ' . tabpagenr()
 
 "----------------------------------------------------------------
 " 9. Multiple windows
@@ -848,48 +848,48 @@ set splitright
 set fillchars+=stlnc:\/,vert:│,fold:―,diff:―
 
 " Split windows
-map <C-w>- :split<CR>
-map <C-w>. :vsplit<CR>
-map <C-w>j :close<CR>
-map <C-w>x :q!<CR>
+map <C-w>- :split
+map <C-w>. :vsplit
+map <C-w>j :close
+map <C-w>x :q!
 map <C-w>, <C-w>=
 
 " Resize windows
 if bufwinnr(1)
-	map + :resize +1<CR>
-	map - :resize -1<CR>
-	map < :vertical resize +1<CR>
-	map > :vertical resize -1<CR>
+	map + :resize +1
+	map - :resize -1
+	map < :vertical resize +1
+	map > :vertical resize -1
 endif
 
 " Toggle resize window
-nnoremap <silent> <C-f> :call <SID>ToggleResize()<CR>
+nnoremap <silent> <C-f> :call <SID>ToggleResize()
 
 " Last, previous and next window; and only one window
-nnoremap <silent> <C-w>l :wincmd p<CR>:echo "Last window."<CR>
-nnoremap <silent> <C-w>p :wincmd w<CR>:echo "Previous window."<CR>
-nnoremap <silent> <C-w>n :wincmd W<CR>:echo "Next window."<CR>
-nnoremap <silent> <C-w>o :wincmd o<CR>:echo "Only one window."<CR>
+nnoremap <silent> <C-w>l :wincmd p:echo "Last window."
+nnoremap <silent> <C-w>p :wincmd w:echo "Previous window."
+nnoremap <silent> <C-w>n :wincmd W:echo "Next window."
+nnoremap <silent> <C-w>o :wincmd o:echo "Only one window."
 
 " Move between Vim windows and Tmux panes
 " - It requires the corresponding configuration into Tmux.
 " - Check it at my .tmux.conf from my dotfiles repository.
 " - URL: https://github.com/gerardbm/dotfiles/blob/master/tmux/.tmux.conf
 " - Plugin required: https://github.com/christoomey/vim-tmux-navigator
-nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
-nnoremap <silent> <M-j> :TmuxNavigateDown<CR>
-nnoremap <silent> <M-k> :TmuxNavigateUp<CR>
-nnoremap <silent> <M-l> :TmuxNavigateRight<CR>
+nnoremap <silent> <M-h> :TmuxNavigateLeft
+nnoremap <silent> <M-j> :TmuxNavigateDown
+nnoremap <silent> <M-k> :TmuxNavigateUp
+nnoremap <silent> <M-l> :TmuxNavigateRight
 
 " Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader><BS> mmHmt:%s/<C-v><CR>//ge<CR>'tzt`m
+noremap <Leader><BS> mmHmt:%s/<C-v>//ge'tzt`m
 
 " Close the preview window
-nnoremap <silent> <Leader>. :pclose<CR>
+nnoremap <silent> <Leader>. :pclose
 
 " Scroll the preview window
-nnoremap <silent> <M-d> :wincmd P<CR>5<C-e>:wincmd p<CR>
-nnoremap <silent> <M-u> :wincmd P<CR>5<C-y>:wincmd p<CR>
+nnoremap <silent> <M-d> :wincmd P5<C-e>:wincmd p
+nnoremap <silent> <M-u> :wincmd P5<C-y>:wincmd p
 
 "----------------------------------------------------------------
 " 10. Indentation tabs
@@ -923,7 +923,7 @@ inoremap <S-TAB> <C-d>
 set list
 
 let g:f6msg = 'Toggle list.'
-nnoremap <F6> :set list!<CR>:echo g:f6msg<CR>
+nnoremap <F6> :set list!:echo g:f6msg
 
 " Show tabs and end-of-lines
 set listchars=tab:│\ ,trail:¬
@@ -956,20 +956,20 @@ set nomore
 
 " Color column
 let g:f10msg = 'Toggle colorcolumn.'
-nnoremap <silent> <F10> :call <SID>ToggleColorColumn()<CR>:echo g:f10msg<CR>
+nnoremap <silent> <F10> :call <SID>ToggleColorColumn():echo g:f10msg
 
 " Show line numbers
 set number
 set numberwidth=2
 
 let g:f3msg = 'Toggle line numbers.'
-nnoremap <silent> <F3> :set number!<CR>:echo g:f3msg<CR>
+nnoremap <silent> <F3> :set number!:echo g:f3msg
 
 " Set relative line numbers
 set relativenumber
 
 let g:f4msg = 'Toggle relative line numbers.'
-nnoremap <silent> <F4> :set norelativenumber!<CR>:echo g:f4msg<CR>
+nnoremap <silent> <F4> :set norelativenumber!:echo g:f4msg
 
 " Treat long lines as break lines (useful when moving around in them)
 nnoremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
@@ -985,15 +985,15 @@ vnoremap <Home> g^
 vnoremap <End> g$
 
 " Toggle the cursor position start/end of the line
-nnoremap <silent> ñ :call <SID>ToggleCPosition('')<CR>
-vnoremap <silent> ñ <Esc>:call <SID>ToggleCPosition('normal! gv')<CR>
+nnoremap <silent> ñ :call <SID>ToggleCPosition('')
+vnoremap <silent> ñ <Esc>:call <SID>ToggleCPosition('normal! gv')
 
 " Move lines
-nnoremap <C-k> :m .-2<CR>==
-vnoremap <C-k> :m '<-2<CR>gv=gv
+nnoremap <C-k> :m .-2==
+vnoremap <C-k> :m '<-2gv=gv
 
-nnoremap <C-j> :m .+1<CR>==
-vnoremap <C-j> :m '>+1<CR>gv=gv
+nnoremap <C-j> :m .+1==
+vnoremap <C-j> :m '>+1gv=gv
 
 " Duplicate a line
 nnoremap cx yyP
@@ -1079,27 +1079,27 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " nnoremap <Leader><Space> ?
 
 " Highlight the word under the cursor and don't jump to next
-nnoremap <silent> <Leader><CR> :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hlsearch<CR>
+nnoremap <silent> <Leader> :let @/='\<<C-R>=expand("<cword>")\>':set hlsearch
 
 " Highlight the selected text and don't jump to next
-vnoremap <silent> <Leader><CR> :<C-U>call <SID>VSetSearch()<CR>:set hlsearch<CR>
+vnoremap <silent> <Leader> :<C-U>call <SID>VSetSearch():set hlsearch
 
 " Disable highlight
-nnoremap <Leader>m :noh<CR>
+nnoremap <Leader>m :noh
 
 " Search into a Visual selection
-" vnoremap <silent> <Space> :<C-U>call <SID>RangeSearch('/')<CR>
-" vnoremap <silent> / :<C-U>call <SID>RangeSearch('/')<CR>
+" vnoremap <silent> <Space> :<C-U>call <SID>RangeSearch('/')
+" vnoremap <silent> / :<C-U>call <SID>RangeSearch('/')
 " 	\ :if strlen(g:srchstr) > 0
-" 	\ \|exec '/'.g:srchstr\|endif<CR>n
-" vnoremap <silent> ? :<C-U>call <SID>RangeSearch('?')<CR>
+" 	\ \|exec '/'.g:srchstr\|endifn
+" vnoremap <silent> ? :<C-U>call <SID>RangeSearch('?')
 " 	\ :if strlen(g:srchstr) > 0
-" 	\ \|exec '?'.g:srchstr\|endif<CR>N
+" 	\ \|exec '?'.g:srchstr\|endifN
 
 " --- Vimgrep and grep ---
 "----------------------------------------------------------------
 " Vimgrep the highlight in the current file
-nnoremap <Leader>vg :vimgrep /<C-R>//j %<CR>
+nnoremap <Leader>vg :vimgrep /<C-R>//j %
 
 " Vimgrep the highlight in the current directory and subdirectories
 nnoremap <Leader>vf :vimgrep /<C-R>//j **/*.
@@ -1110,24 +1110,24 @@ autocmd QuickfixCmdPre grep,grepadd,vimgrep,vimgrepadd,helpgrep copen
 set grepprg=grep\ -nHi
 
 " Current buffer
-nnoremap <Leader>vv :call <SID>GrepWrapper('grep!', '', '%')<CR>
+nnoremap <Leader>vv :call <SID>GrepWrapper('grep!', '', '%')
 
 " All loaded buffers
 nnoremap <Leader>vb :call setqflist([]) \|
-			\ call <SID>GrepWrapper('bufdo grepadd!', '', '%')<CR>
+			\ call <SID>GrepWrapper('bufdo grepadd!', '', '%')
 
 " Current working directory
-nnoremap <Leader>vn :call <SID>GrepWrapper('grep!', '-R --exclude-dir={.git,.svn} --exclude=LICENSE', '')<CR>
+nnoremap <Leader>vn :call <SID>GrepWrapper('grep!', '-R --exclude-dir={.git,.svn} --exclude=LICENSE', '')
 
 " Current buffer (grepadd)
-nnoremap <Leader>vm :call <SID>GrepWrapper('grepadd!', '', '%')<CR>
+nnoremap <Leader>vm :call <SID>GrepWrapper('grepadd!', '', '%')
 
 " Current arglist
-nnoremap <Leader>va :call <SID>GrepWrapper('grep!', '', '##')<CR>
+nnoremap <Leader>va :call <SID>GrepWrapper('grep!', '', '##')
 
 " Navigate between grep and vimgrep results
-nnoremap <Leader>n :cnext<CR>zz
-nnoremap <Leader>N :cprev<CR>zz
+nnoremap <Leader>n :cnextzz
+nnoremap <Leader>N :cprevzz
 
 " Jump to the results in buffers (first open window), not tabs
 set switchbuf=useopen
@@ -1156,15 +1156,15 @@ nnoremap <Leader>A :args **/*.
 "----------------------------------------------------------------
 " Toggle case
 nnoremap <Leader>z ~
-vnoremap <Leader>z y:call setreg('', ToggleCase(@"), getregtype(''))<CR>gv""Pgv
-vnoremap ~ y:call setreg('', ToggleCase(@"), getregtype(''))<CR>gv""Pgv
+vnoremap <Leader>z y:call setreg('', ToggleCase(@"), getregtype(''))gv""Pgv
+vnoremap ~ y:call setreg('', ToggleCase(@"), getregtype(''))gv""Pgv
 
 " Toggle and untoggle spell checking
 let g:f8msg = 'Toggle spell checking.'
-nnoremap <silent> <F8> :setlocal spell!<CR>:echo g:f8msg<CR>
+nnoremap <silent> <F8> :setlocal spell!:echo g:f8msg
 
 " Toggle spell dictionary
-nnoremap <silent> <F9> :call <SID>ToggleSpelllang()<CR>
+nnoremap <silent> <F9> :call <SID>ToggleSpelllang()
 
 " Move to next misspelled word
 nnoremap ç ]s
@@ -1185,8 +1185,8 @@ nnoremap Y y$
 vnoremap p pgvy
 
 " Retab the selected text
-nnoremap <Leader>tf :retab!<CR>
-vnoremap <Leader>tf :retab!<CR>
+nnoremap <Leader>tf :retab!
+vnoremap <Leader>tf :retab!
 
 " Isolate the current line
 nnoremap <Leader>o m`o<Esc>kO<Esc>``
@@ -1212,24 +1212,24 @@ set errorformat=%m\ in\ %f\ on\ line\ %l
 augroup tmuxy
 autocmd FileType javascript,lua,perl,php,python,ruby,sh
 			\ nnoremap <silent> <buffer> <Leader>ij
-			\ :call <SID>Tmuxy()<CR>
+			\ :call <SID>Tmuxy()
 augroup end
 
 " Run code in the preview window
 augroup scripty
 autocmd FileType javascript,lua,perl,php,python,ruby,sh
 			\ nnoremap <silent> <buffer> <Leader>ii
-			\ :call <SID>Scripty()<CR>
+			\ :call <SID>Scripty()
 augroup end
 
 " Work with sqlite databases
 augroup sqlite
 	autocmd FileType sql nnoremap <silent> <Leader>ia
-				\ :call <SID>SqliteDatabase()<CR>
+				\ :call <SID>SqliteDatabase()
 	autocmd FileType sql nnoremap <silent> <buffer> <Leader>ii
-				\ :call <SID>SQLExec('n')<CR>
+				\ :call <SID>SQLExec('n')
 	autocmd FileType sql vnoremap <silent> <buffer> <Leader>ii
-				\ :<C-U>call <SID>SQLExec('v')<CR>
+				\ :<C-U>call <SID>SQLExec('v')
 augroup end
 
 " Work with maxima (symbolic mathematics)
@@ -1237,41 +1237,41 @@ augroup maxima
 	autocmd!
 	autocmd BufRead,BufNewFile *.max set filetype=maxima
 	autocmd FileType maxima nnoremap <silent> <buffer> <Leader>ii
-				\ :call <SID>MaximaExec('n')<CR>
+				\ :call <SID>MaximaExec('n')
 	autocmd FileType maxima vnoremap <silent> <buffer> <Leader>ii
-				\ :<C-U>call <SID>MaximaExec('v')<CR>
+				\ :<C-U>call <SID>MaximaExec('v')
 augroup end
 
 " Convert LaTeX to PDF
 augroup latex
 	autocmd!
 	autocmd FileType tex nnoremap <silent> <buffer> <Leader>ii
-				\ :call <SID>Generator('.pdf', &ft)<CR>
+				\ :call <SID>Generator('.pdf', &ft)
 augroup end
 
 " Convert markdown to PDF, HTML and EPUB
 augroup markdown
 	autocmd!
 	autocmd FileType markdown nnoremap <silent> <buffer> <Leader>ii
-				\ :call <SID>Generator('.pdf', &ft)<CR>
+				\ :call <SID>Generator('.pdf', &ft)
 	autocmd FileType markdown nnoremap <silent> <buffer> <Leader>ih
-				\ :call <SID>Generator('.html', &ft)<CR>
+				\ :call <SID>Generator('.html', &ft)
 	autocmd FileType markdown nnoremap <silent> <buffer> <Leader>ij
-				\ :call <SID>Generator('.epub', &ft)<CR>
+				\ :call <SID>Generator('.epub', &ft)
 augroup end
 
 " Draw with PlantUML
 augroup uml
 	autocmd!
 	autocmd FileType plantuml nnoremap <silent> <buffer> <Leader>ii
-				\ :call <SID>Generator('.png', &ft)<CR>
+				\ :call <SID>Generator('.png', &ft)
 augroup end
 
 " Draw with Graphviz
 augroup dot
 	autocmd!
 	autocmd FileType dot nnoremap <silent> <buffer> <Leader>ii
-				\ :call <SID>Generator('.png', &ft)<CR>
+				\ :call <SID>Generator('.png', &ft)
 augroup end
 
 " Draw with Eukleides
@@ -1279,7 +1279,7 @@ augroup eukleides
 	autocmd!
 	autocmd BufRead,BufNewFile *.euk set filetype=eukleides
 	autocmd FileType eukleides nnoremap <silent> <buffer> <Leader>ii
-				\ :call <SID>Generator('.png', &ft)<CR>
+				\ :call <SID>Generator('.png', &ft)
 augroup end
 
 " Draw with Asymptote
@@ -1287,7 +1287,7 @@ augroup asymptote
 	autocmd!
 	autocmd BufRead,BufNewFile *.asy set filetype=asy
 	autocmd FileType asy nnoremap <silent> <buffer> <Leader>ii
-				\ :call <SID>Generator('.png', &ft)<CR>
+				\ :call <SID>Generator('.png', &ft)
 augroup end
 
 " Draw with Gnuplot
@@ -1295,14 +1295,14 @@ augroup gnuplot
 	autocmd!
 	autocmd BufRead,BufNewFile *.plt set filetype=gnuplot
 	autocmd FileType gnuplot nnoremap <silent> <buffer> <Leader>ii
-				\ :call <SID>Generator('.png', &ft)<CR>
+				\ :call <SID>Generator('.png', &ft)
 augroup end
 
 " Draw with POV-Ray
 augroup povray
 	autocmd!
 	autocmd FileType pov nnoremap <silent> <buffer> <Leader>ii
-				\ :call <SID>Generator('.png', &ft)<CR>
+				\ :call <SID>Generator('.png', &ft)
 augroup end
 
 "----------------------------------------------------------------
@@ -1317,8 +1317,8 @@ func! s:DeleteTrailing()
 	noh
 endfunc
 
-nnoremap <silent> <Leader>dt :call <SID>DeleteTrailing()<CR>
-"nnoremap <Leader>dt :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+nnoremap <silent> <Leader>dt :call <SID>DeleteTrailing()
+"nnoremap <Leader>dt :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>
 
 " Binary
 augroup binary
@@ -1353,15 +1353,15 @@ augroup end
 augroup sql
 	let g:omni_sql_no_default_maps = 1
 	autocmd FileType sql nnoremap <Leader>bf
-				\ :%!sqlformat --reindent --keywords upper --identifiers upper -<CR>
+				\ :%!sqlformat --reindent --keywords upper --identifiers upper -
 	autocmd FileType sql vnoremap <Leader>bf
-				\ :%!sqlformat --reindent --keywords upper --identifiers upper -<CR>
+				\ :%!sqlformat --reindent --keywords upper --identifiers upper -
 augroup end
 
 " XML (it requires tidy)
 augroup xml
 	autocmd FileType xml nnoremap <Leader>bf
-				\ :%!tidy -q -i -xml --show-errors 0 -wrap 0 --indent-spaces 4<CR>
+				\ :%!tidy -q -i -xml --show-errors 0 -wrap 0 --indent-spaces 4
 augroup end
 
 " MD
@@ -1832,7 +1832,7 @@ function! s:WinPreview() abort
 		setlocal previewwindow
 		setlocal buftype=nowrite bufhidden=wipe
 		setlocal nobuflisted noswapfile nowrap
-		nnoremap <silent> <buffer> q :pclose<CR>
+		nnoremap <silent> <buffer> q :pclose
 	endif
 	exec '%delete'
 endfunction
@@ -1883,5 +1883,5 @@ function! s:KeywordDensity() abort
 
 endfunction
 
-nnoremap <Leader>id :call <SID>KeywordDensity()<CR>
+nnoremap <Leader>id :call <SID>KeywordDensity()
 nnoremap <Leader>ik :!ls -lah \| ssh -p 2222 127.0.0.1<enter>

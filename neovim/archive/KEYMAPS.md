@@ -155,11 +155,11 @@
 - Normal mode
   - `<Space>` searches forward for the pattern.
   - `<Leader><Space>` searches backward for the pattern.
-  - `<Leader><CR>` highlights the word under the cursor.
+  - `<Leader>` highlights the word under the cursor.
   - `<Leader>m` disables highlight.
 
 - Visual mode
-  - `<Leader><CR>` highlights the current selection.
+  - `<Leader>` highlights the current selection.
 
 ### Grep
 - Normal mode

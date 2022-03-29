@@ -17,6 +17,9 @@ scriptencoding utf-8
 "                      configurations for vim script plugin                  "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" ---------------------------------------- IndentLine ----------------------------------------
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
 " TODO: UltiSnips is not used -- come back to check if this is a good plugin
 " """""""""""""""""""""""""UltiSnips settings"""""""""""""""""""
 " " Trigger configuration. Do not use <tab> if you use YouCompleteMe
@@ -88,22 +91,22 @@ scriptencoding utf-8
 " let g:Lf_WorkingDirectoryMode = 'a'
 
 " " Search files in popup window
-" nnoremap <silent> <leader>ff :<C-U>Leaderf file --popup<CR>
+" nnoremap <silent> <leader>ff :<C-U>Leaderf file --popup
 
 " " Grep project files in popup window
-" nnoremap <silent> <leader>fg :<C-U>Leaderf rg --no-messages --popup<CR>
+" nnoremap <silent> <leader>fg :<C-U>Leaderf rg --no-messages --popup
 
 " " Search vim help files
-" nnoremap <silent> <leader>fh :<C-U>Leaderf help --popup<CR>
+" nnoremap <silent> <leader>fh :<C-U>Leaderf help --popup
 
 " " Search tags in current buffer
-" nnoremap <silent> <leader>ft :<C-U>Leaderf bufTag --popup<CR>
+" nnoremap <silent> <leader>ft :<C-U>Leaderf bufTag --popup
 
 " " Switch buffers
-" nnoremap <silent> <leader>fb :<C-U>Leaderf buffer --popup<CR>
+" nnoremap <silent> <leader>fb :<C-U>Leaderf buffer --popup
 
 " " Search recent files
-" nnoremap <silent> <leader>fr :<C-U>Leaderf mru --popup<CR>
+" nnoremap <silent> <leader>fr :<C-U>Leaderf mru --popup
 
 " let g:Lf_PopupColorscheme = 'gruvbox_material'
 
@@ -131,14 +134,14 @@ scriptencoding utf-8
 " " Stay in current window when vista window is opened
 " let g:vista_stay_on_open = 0
 
-" nnoremap <silent> <Space>t :<C-U>Vista!!<CR>
+" nnoremap <silent> <Space>t :<C-U>Vista!!
 
 " " TODO: this seems interesting - show graphically undo history
 " """"""""""""""""""""""""vim-mundo settings"""""""""""""""""""""""
 " let g:mundo_verbose_graph = 0
 " let g:mundo_width = 80
 
-" nnoremap <silent> <Space>u :MundoToggle<CR>
+" nnoremap <silent> <Space>u :MundoToggle
 
 """"""""""""""""""""""""""""vim-yoink settings"""""""""""""""""""""""""
 if g:is_win || g:is_mac
@@ -194,13 +197,13 @@ let g:signify_vcs_list = [ 'git' ]
 let g:signify_sign_change = '~'
 
 " """""""""""""""""""""""""vim-fugitive settings""""""""""""""""""""""""""""""
-" nnoremap <silent> <leader>gs :Git<CR>
-" nnoremap <silent> <leader>gw :Gwrite<CR>
-" nnoremap <silent> <leader>gc :Git commit<CR>
-" nnoremap <silent> <leader>gd :Gdiffsplit<CR>
-" nnoremap <silent> <leader>gpl :Git pull<CR>
+" nnoremap <silent> <leader>gs :Git
+" nnoremap <silent> <leader>gw :Gwrite
+" nnoremap <silent> <leader>gc :Git commit
+" nnoremap <silent> <leader>gd :Gdiffsplit
+" nnoremap <silent> <leader>gpl :Git pull
 " " Note that to use bar literally, we need backslash it, see also `:h :bar`.
-" nnoremap <silent> <leader>gpu :15split \| term git push<CR>
+" nnoremap <silent> <leader>gpu :15split \| term git push
 
 " HACK: Not sure if Markdown is supported in LSP; this plugin does a lot of folding in markdonw.
 " """""""""""""""""""""""""plasticboy/vim-markdown settings"""""""""""""""""""
@@ -229,8 +232,8 @@ let g:signify_sign_change = '~'
 "   let g:mkdp_auto_close = 0
 
 "   " Shortcuts to start and stop markdown previewing
-"   nnoremap <silent> <M-m> :<C-U>MarkdownPreview<CR>
-"   nnoremap <silent> <M-S-m> :<C-U>MarkdownPreviewStop<CR>
+"   nnoremap <silent> <M-m> :<C-U>MarkdownPreview
+"   nnoremap <silent> <M-S-m> :<C-U>MarkdownPreviewStop
 " endif
 
 """"""""""""""""""""""""vim-grammarous settings""""""""""""""""""""""""""""""
@@ -385,7 +388,7 @@ omap s <Nop>
 " endif
 
 " """"""""""""""""""""""""""""""nvim-gdb settings: debug python using pdb""""""""""""""""""""""""""""""
-" nnoremap <leader>dp :<C-U>GdbStartPDB python -m pdb %<CR>
+" nnoremap <leader>dp :<C-U>GdbStartPDB python -m pdb %
 
 """"""""""""""""""""""""""""""wilder.nvim settings""""""""""""""""""""""""""""""
 call timer_start(250, { -> s:wilder_init() })
@@ -513,3 +516,4 @@ call wilder#set_option('renderer', wilder#renderer_mux([
     \ [':', s:popupmenu_renderer],
     \ ['/', s:wildmenu_renderer],
     \]))
+

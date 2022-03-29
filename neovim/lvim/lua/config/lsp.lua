@@ -23,19 +23,19 @@ local custom_attach = function(client, bufnr)
 
   -- Mappings.
   local opts = { noremap = true, silent = true }
-  buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  buf_set_keymap("n", "<C-]>", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  buf_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-  buf_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-  buf_set_keymap("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
-  buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-  buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-  buf_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setqflist({open = true})<CR>", opts)
-  buf_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+  buf_set_keymap("n", "gd", "lua vim.lsp.buf.definition()", opts)
+  buf_set_keymap("n", "<C-]>", "lua vim.lsp.buf.definition()", opts)
+  buf_set_keymap("n", "K", "lua vim.lsp.buf.hover()", opts)
+  buf_set_keymap("n", "<C-k>", "lua vim.lsp.buf.signature_help()", opts)
+  buf_set_keymap("n", "<space>wa", "lua vim.lsp.buf.add_workspace_folder()", opts)
+  buf_set_keymap("n", "<space>wr", "lua vim.lsp.buf.remove_workspace_folder()", opts)
+  buf_set_keymap("n", "<space>wl", "lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))", opts)
+  buf_set_keymap("n", "<space>rn", "lua vim.lsp.buf.rename()", opts)
+  buf_set_keymap("n", "gr", "lua vim.lsp.buf.references()", opts)
+  buf_set_keymap("n", "[d", "lua vim.diagnostic.goto_prev()", opts)
+  buf_set_keymap("n", "]d", "lua vim.diagnostic.goto_next()", opts)
+  buf_set_keymap("n", "<space>q", "lua vim.diagnostic.setqflist({open = true})", opts)
+  buf_set_keymap("n", "<space>ca", "lua vim.lsp.buf.code_action()", opts)
 
   vim.cmd([[
     autocmd CursorHold <buffer> lua require('config.lsp').show_line_diagnostics()
@@ -43,10 +43,10 @@ local custom_attach = function(client, bufnr)
 
   -- Set some key bindings conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", opts)
+    buf_set_keymap("n", "<space>f", "lua vim.lsp.buf.formatting_sync()", opts)
   end
   if client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("x", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR><ESC>", opts)
+    buf_set_keymap("x", "<space>f", "lua vim.lsp.buf.range_formatting()<ESC>", opts)
   end
 
   -- The blow command will highlight the current variable and its usages in the buffer.

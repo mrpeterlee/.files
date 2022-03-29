@@ -14,6 +14,7 @@ lvim.plugins = {
   -- {"folke/tokyonight.nvim"},
   -- {"folke/trouble.nvim", cmd = "TroubleToggle",},
   -- Integrate all issues in the same panel
+
   {
     "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
@@ -34,9 +35,20 @@ lvim.plugins = {
     "phaazon/hop.nvim",
     event = "BufRead",
     config = function()
-      require("hop").setup()
+        -- require("hop").setup()
+        vim.defer_fn(function() require('config.nvim_hop') end, 2000)
     end,
   },
+
+    -- Show match number and index for searching
+    {
+      'kevinhwang91/nvim-hlslens',
+      branch = 'main',
+      keys = {{'n', '*'}, {'n', '#'}, {'n', 'n'}, {'n', 'N'}},
+      config = [[require('config.hlslens')]]
+    },
+
+
 
   -- Grammer Check; TODO: add hotkey to :GrammarousCheck
   {"rhysd/vim-grammarous"},
@@ -44,18 +56,51 @@ lvim.plugins = {
   -- NOTE: Learn to use this plugin -- add to OneNote!
   {"machakann/vim-sandwich"},
 
+    -- NOTE: Learn this - Better git log display
+    { "rbong/vim-flog", requires = "tpope/vim-fugitive", cmd = { "Flog" } },
+
+    -- NOTE: Learn this - git conflict merge
+    { "christoomey/vim-conflicted", requires = "tpope/vim-fugitive", cmd = {"Conflicted"}},
 
   -- Git - Display signs / number on the left bar for any git differences
-  {"mhinz/vim-signify"},
+    {"mhinz/vim-signify", event = 'BufEnter'},
 
   -- use jk to ESC from insert mode faster
-  {"jdhao/better-escape.vim"},
+    { "jdhao/better-escape.vim", event = { "InsertEnter" } },
 
-  -- vim-yoink: keep a history of yanks
-  {"svermeulen/vim-yoink"},
+    -- NOTE: To learn - Add indent object for vim (useful for languages like Python)
+    {"michaeljsmith/vim-indent-object", event = "VimEnter"},
 
-  -- rainbow parenthesis
-  {"p00f/nvim-ts-rainbow"},
+  -- displaying thin vertical lines at each indentation level for code indented with spaces.
+    -- {"Yggdroot/indentLine"},
+    { "lukas-reineke/indent-blankline.nvim",
+    config = function()
+        vim.defer_fn(function()
+            require("indent_blankline").setup({
+              -- U+2502 may also be a good choice, it will be on the middle of cursor.
+              -- U+250A is also a good choice
+              char = "▏",
+              show_end_of_line = false,
+              disable_with_nolist = true,
+              buftype_exclude = { "terminal" },
+              filetype_exclude = { "help", "git", "markdown", "snippets", "text", "gitconfig", "alpha" },
+            })
+
+        end, 2000)
+    end,
+    },
+
+    -- Repeat vim motions
+    {"tpope/vim-repeat", event = "VimEnter"},
+
+    -- Show undo history visually
+    {"simnalamburt/vim-mundo", cmd = {"MundoToggle", "MundoShow"}},
+
+    -- vim-yoink: keep a history of yanks
+    {"svermeulen/vim-yoink", event = "VimEnter"},
+
+  -- Tuse ODO: this need to be configured to work: rainbow parenthesis
+    {"p00f/nvim-ts-rainbow"},
 
   -- [Not Working with NeoVim]-- Ctrol-Space for Project Management
   -- {"vim-ctrlspace/vim-ctrlspace",
@@ -68,6 +113,9 @@ lvim.plugins = {
   --  end
   -- },
 
+    -- Highlight URLs inside vim
+    {"itchyny/vim-highlighturl", event = "VimEnter"},
+
   -- Search & Replace
   {
   "windwp/nvim-spectre",
@@ -77,7 +125,7 @@ lvim.plugins = {
          mapping={
           ['toggle_line'] = {
               map = "dd",
-              cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
+              cmd = "lua require('spectre').toggle_line()",
               desc = "toggle current item"
           },
         },
@@ -85,9 +133,18 @@ lvim.plugins = {
   end,
   },
 
-  -- Tmux integration
-  {"christoomey/vim-tmux-navigator"},
-  {"preservim/vimux"},
+    -- Tmux integration
+    {"christoomey/vim-tmux-navigator"},
+    {"preservim/vimux"},
+    -- syntax highlightnig for tmux file
+    { "tmux-plugins/vim-tmux", ft = { "tmux" } },
+
+    -- Speed up loading NeoVim
+    {'lewis6991/impatient.nvim', config = [[require('impatient')]]},
+
+    -- WARN: Not sure what this is... Omnifunc?
+    { "hrsh7th/cmp-omni", after = "nvim-cmp" },
+
 
   -- to-do integration
   {
@@ -97,6 +154,21 @@ lvim.plugins = {
       require("todo-comments").setup()
     end,
   },
+
+    -- Smoothie scrolling
+    {"karb94/neoscroll.nvim",
+        event = "VimEnter",
+        config = function()
+          vim.defer_fn(function()
+              require("neoscroll").setup({
+                  easing_function = "quadratic",
+              })
+          end, 2000)
+        end
+    },
+
+    -- Copy to system clipboard using ANSI OSC52 sequence - iTerm2/Windoes Terminal/Kitty
+    {"ojroques/vim-oscyank", cmd = {'OSCYank', 'OSCYankReg'}},
 
     -- session management - persistence
     {
@@ -117,8 +189,14 @@ lvim.plugins = {
     -- Python - AutoFlake to remove unused imports
     { "tell-k/vim-autoflake", },
 
-    -- Python - Identation needed when writing code
+    -- Python indent (follows the PEP8 style)
     { "Vimjas/vim-python-pep8-indent" },
+
+    -- NOTE: Learn this plugin -- Python motion control around class / methods
+    { "jeetsukumaran/vim-pythonsense", ft = { "python" } },
+
+    -- NOTE: Learn this plugin -- Swap parameters inside function
+    {"machakann/vim-swap", event = "VimEnter"},
 
     -- Python - Provides code signature when adding a function
     {"ray-x/lsp_signature.nvim",
@@ -156,8 +234,10 @@ lvim.plugins = {
     -- =========== Lua - Debugger ===========
     {"jbyuki/one-small-step-for-vimkind", module = "osv"},
 
+    -- =========== Markdown Table Mode ===========
+    {"dhruvasagar/vim-table-mode",},
+
     -- =========== Wilder - hinting when typing CMD ===========
-    
     {
       "gelguy/wilder.nvim",
       -- event = { "CursorHold", "CmdlineEnter" },
@@ -169,20 +249,31 @@ lvim.plugins = {
       run = ":UpdateRemotePlugins",
     },
 
-
     -- =========== Themes  ===========
-       { 'sainnhe/sonokai'},
-       { 'sainnhe/edge'},
-       { 'rebelot/kanagawa.nvim'},
+    {"lifepillar/vim-gruvbox8"},
+    {"navarasu/onedark.nvim"},
+    {"sainnhe/edge"},
+    {"sainnhe/sonokai"},
+    {"sainnhe/gruvbox-material"},
+    {"shaunsingh/nord.nvim"},
+    {"NTBBloodbath/doom-one.nvim"},
+    {"sainnhe/everforest"},
+    {"EdenEast/nightfox.nvim"},
+    {"rebelot/kanagawa.nvim"},
+
 
 }
 
 ---------------------------------------- LVIM - General Settings ----------------------------------------
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
+
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.colorscheme = "onedarker"
 lvim.transparent_window = true
+
+-- when pressing left/right cursor keys, Vim will move to the previous/next line after reaching first/last character in the line
+lvim.line_wrap_cursor_movement = true
 
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "startify"  -- "dashboard"; "startify"
@@ -196,7 +287,6 @@ lvim.builtin.lualine.active = true
 lvim.builtin.dap.active = true
 
 lvim.builtin.terminal.active = true
-lvim.builtin.bufferline.active = true -- this is actually using romgrk/barbar.nvim
 
 -- Swap `;` with `:`
 vim.api.nvim_set_keymap("n", ";", ":", { noremap = true })
@@ -205,13 +295,13 @@ vim.api.nvim_set_keymap("v", ";", ":", { noremap = true })
 vim.api.nvim_set_keymap("v", ":", ";", { noremap = true })
 
 -- SmartClose
-vim.api.nvim_set_keymap("n", "<F4>", ":SmartClose<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<F4>", ":SmartClose<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<F4>", "<C-[>:SmartClose<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-x>", ":SmartClose<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<S-x>", ":SmartClose<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<F4>", ":SmartClose", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<F4>", ":SmartClose", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "<F4>", "<C-[>:SmartClose", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<S-x>", ":SmartClose", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<S-x>", ":SmartClose", { noremap = true, silent = true })
 
--- lvim.keys.normal_mode["<S-x>"] = ":BufferClose<CR>"
+-- lvim.keys.normal_mode["<S-x>"] = ":BufferClose"
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -232,64 +322,18 @@ lvim.builtin.treesitter.ensure_installed = {
 -- lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
 
----------------------------------------- LVIM - Key Bindings ----------------------------------------
--- keymappings [view all the defaults by pressing <leader>Lk]
-lvim.leader = "space"
--- Move window pane & integrate with Tmux
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
--- The below is not working
--- lvim.keys.normal_mode["<A-h>"] = "<cmd>lua require("tmux").move_left()<cr>"
--- lvim.keys.normal_mode["<A-j>"] = "<cmd>lua require("tmux").move_bottom()<cr>"
--- lvim.keys.normal_mode["<A-k>"] = "<cmd>lua require("tmux").move_top()<cr>"
--- lvim.keys.normal_mode["<A-l>"] = "<cmd>lua require("tmux").move_right()<cr>"
+---------------------------------------- RainbowParens ----------------------------------------
+-- require("nvim-treesitter.configs").setup {
+--   rainbow = {
+--     enable = true,
+--     -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+--     extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+--     max_file_lines = nil, -- Do not enable for files with more than n lines, int
+--     -- colors = {}, -- table of hex strings
+--     -- termcolors = {} -- table of colour name strings
+--   },
+-- }
 
--- unmap a default keymapping
--- lvim.keys.normal_mode["<C-Up>"] = false
--- edit a default keymapping
--- lvim.keys.normal_mode["<C-q>"] = ":q<cr>"
--- when pressing left/right cursor keys, Vim will move to the previous/next line after reaching first/last character in the line
-lvim.line_wrap_cursor_movement = true
-
--- Use which-key to add extra bindings with the leader-key prefix
-lvim.builtin.which_key.mappings["p"] = { "<cmd>Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings["u"] = {
-  name = "Update",
-    c = { "<cmd>PackerCompile<cr>", "Compile" },
-    i = { "<cmd>PackerInstall<cr>", "Install" },
-    r = { "<cmd>lua require('lvim.plugin-loader').recompile()<cr>", "Re-compile" },
-    s = { "<cmd>PackerSync<cr>", "Sync" },
-    l = { "<cmd>PackerStatus<cr>", "List" },
-    u = { "<cmd>PackerUpdate<cr>", "Update" },
-    x = { "<cmd>PackerClean<cr>", "Clean" },
-  }
-lvim.builtin.which_key.mappings["ss"] = { "<cmd>lua require('spectre').open()<CR>", "Search All" }
--- lvim.builtin.which_key.mappings["ss"] = { "<cmd>lua require('spectre').open_file_search()<cr>", "Search" }
--- lvim.builtin.which_key.mappings["sw"] = { "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", "Search Current Word" }
--- lvim.builtin.which_key.mappings["sw"] = { "<cmd>lua require('spectre').open_file_search()<cr>", "Search Current Word" }
-
-lvim.builtin.which_key.mappings["t"] = {
-  name = "+Trouble",
-  r = { "<cmd>Trouble references<cr>", "References" },
-  f = { "<cmd>Trouble definitions<cr>", "Definitions" },
-  d = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnostics" },
-  -- d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
-  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-  w = { "<cmd>TodoQuickFix<cr>", "ToDos" },
-}
-
--- vim.api.nvim_command('quit!')
--- vim.api.nvim_command('close!')
-lvim.builtin.which_key.mappings["q"] = { "<cmd>SmartClose<CR>", "Quit", noremap=true, silent=true }
--- lvim.builtin.which_key.mappings["q"] = { "<cmd>q!<CR>", "Quit" }
-
--- Extra message template for python IDE
-lvim.builtin.which_key.mappings["lb"] = { "<cmd>let blank=''|put=blank|let debug_comment='# ----------  temporary debug code ---------- #'|put=debug_comment|let a='import sys'|put=a|let a='from pprint import pprint'|put=a|let a='print(" .. '"' .. "\\n" .. '"' .. "*2, " .. '"' .. "=" .. '"' .. "*40, " .. '"' .. " temporary debug code " .. '"' .. ", " .. '"' .. "=" .. '"' .. "*40, " .. '"' .. "\\n" .. '"' .. "*2)'|put=a|put=blank|put=a|let a='sys.exit(1)'|put=a|put=debug_comment|put=blank" .. "<CR>", "Debug Snippet" }
-lvim.builtin.which_key.mappings["lm"] = { "<cmd>:0 | let blank=''|let t='\"\"\" {Module Name}'|put=t|put=blank|let t='id:            Peter Lee (peter.lee@finclab.com)'|put=t|let t='last_update:   ' . strftime('%Y-%m-%d %H:%M:%S %Z')|put=t|let t='type:          lib'|put=t|let t='sensitivity:   datalab@finclab.com'|put=t|let t='platform:      any'|put=t|let t='description:   {Description}'|put=t|let t='\"\"\"'|put=t<CR>", "Add Module Header" }
-
-
--- Disable close buffer - reserve this key for something else
-lvim.builtin.which_key.mappings["c"] = { "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", "Comment" }
 
 ---------------------------------------- Search & Replace (nvim-spectre) ----------------------------------------
 -- Add new feature to do search current word in current file
@@ -299,15 +343,15 @@ function OpenFileSearchCurrentWord()
         search_text = vim.fn.expand('<cword>'),
     })
 end
-lvim.builtin.which_key.mappings["sw"] = { "<cmd>lua OpenFileSearchCurrentWord()<CR>", "Search Current Word" }
+lvim.builtin.which_key.mappings["sw"] = { "lua OpenFileSearchCurrentWord()", "Search Current Word" }
 
 
 ---------------------------------------- Session Management - persistence ----------------------------------------
 lvim.builtin.which_key.mappings["m"]= {
   name = "Mgmt Session",
-  c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
-  l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
-  Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
+  c = { "lua require('persistence').load()", "Restore last session for current dir" },
+  l = { "lua require('persistence').load({ last = true })", "Restore last session" },
+  Q = { "lua require('persistence').stop()", "Quit without saving session" },
 }
 
 ---------------------------------------- StatusLine (LuaLine) Settings ----------------------------------------
@@ -317,8 +361,8 @@ lvim.builtin.lualine.sections.lualine_c = { "diff", }
 local components = require("lvim.core.lualine.components")
 lvim.builtin.lualine.sections.lualine_a = { "mode", }
 lvim.builtin.lualine.sections.lualine_y = {
-  components.spaces,
-  components.location,
+    components.spaces,
+    components.location,
 }
 -- lvim.builtin.lualine.options.theme = "gruvbox"
 lvim.builtin.lualine.options.theme = "edge"
@@ -327,6 +371,8 @@ lvim.builtin.lualine.options.theme = "edge"
 lvim.builtin.cmp.completion.keyword_length = 2
 
 
+---------------------------------------- Tmux Navigation ----------------------------------------
+vim.g.tmux_navigator_no_mappings = 1
 
 ---------------------------------------- Fuzzy Search - TeleScope ----------------------------------------
 lvim.builtin.telescope.defaults.layout_config.width = 0.95
@@ -426,7 +472,7 @@ require('lsp_signature').on_attach()
 vim.g.autoflake_remove_all_unused_imports = 1
 vim.g.autoflake_remove_all_unused_variables = 0
 vim.g.autoflake_disable_show_diff = 1
-lvim.builtin.which_key.mappings["lu"] = { "<cmd>call Autoflake()<CR><CR>", "Cleanse Imports" }
+lvim.builtin.which_key.mappings["lu"] = { "call Autoflake()", "Cleanse Imports" }
 
 
 -- =========== Debugger - DAP ===========
@@ -488,12 +534,12 @@ dap.adapters.nlua = function(callback, config)
   callback { type = "server", host = config.host, port = config.port }
 end
 
--- vim.api.nvim_set_keymap("v", "<S-t>", "<ESC>:lua require('dap-python').debug_selection()<CR>", { noremap = true })
-lvim.builtin.which_key.mappings["dm"] = { "<cmd>lua require('dap-python').test_method()<CR>", "Test Current Method" }
-lvim.builtin.which_key.mappings["dn"] = { "<cmd>lua require('dap-python').test_class()<CR>", "Test Current Class" }
-lvim.builtin.which_key.mappings["dv"] = { "<ESC>:lua require('dap-python').debug_selection()<CR>", "Debug Selection" }
-vim.api.nvim_set_keymap("v", "<M-e>", "<ESC>:lua require('dap-python').eval()<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<M-e>", "<cmd>lua require('dap-python').eval()<CR>", { noremap = true })
+-- vim.api.nvim_set_keymap("v", "<S-t>", "<ESC>:lua require('dap-python').debug_selection()", { noremap = true })
+lvim.builtin.which_key.mappings["dm"] = { "lua require('dap-python').test_method()", "Test Current Method" }
+lvim.builtin.which_key.mappings["dn"] = { "lua require('dap-python').test_class()", "Test Current Class" }
+lvim.builtin.which_key.mappings["dv"] = { "<ESC>:lua require('dap-python').debug_selection()", "Debug Selection" }
+vim.api.nvim_set_keymap("v", "<M-e>", "<ESC>:lua require('dap-python').eval()", { noremap = true })
+vim.api.nvim_set_keymap("n", "<M-e>", "lua require('dap-python').eval()", { noremap = true })
 
 
 -- =========== Debugger - DAP-UI ===========
@@ -509,47 +555,6 @@ end
 dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
-
-lvim.builtin.which_key.mappings["d"] = {
-  name = "Debug",
-  t = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
-  b = { "<cmd>lua require'dap'.step_back()<cr>", "Step Back" },
-  n = { "<cmd>lua require'dap'.continue()<cr>", "Next" },
-  C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "Run To Cursor" },
-  d = { "<cmd>lua require'dap'.disconnect()<cr>", "Disconnect" },
-  g = { "<cmd>lua require'dap'.session()<cr>", "Get Session" },
-  i = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
-  o = { "<cmd>lua require'dap'.step_over()<cr>", "Step Over" },
-  u = { "<cmd>lua require'dap'.step_out()<cr>", "Step Out" },
-  p = { "<cmd>lua require'dap'.pause.toggle()<cr>", "Pause" },
-  r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
-  s = { "<cmd>lua require'dap'.continue()<cr>", "Start" },
-  q = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
-  h = { "<cmd>lua require('dapui').toggle()<CR>", "DAP-UI" },
-  e = { "<cmd>lua require('dapui').eval()<CR>", "Eval Expression" },
-  m = { "<cmd>lua require('dap-python').test_method()<CR>", "Test Current Method" },
-  c = { "<cmd>lua require('dap-python').test_class()<CR>", "Test Current Class" },
-  v = { "<ESC>:lua require('dap-python').debug_selection()<CR>", "Debug Selection" },
-}
-
-vim.api.nvim_set_keymap("n", "tt", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { noremap = true })
-vim.api.nvim_set_keymap("n", "tb", "<cmd>lua require'dap'.step_back()<cr>",{ noremap = true })
-vim.api.nvim_set_keymap("n", "tn", "<cmd>lua require'dap'.continue()<cr>",{ noremap = true })
-vim.api.nvim_set_keymap("n", "tC", "<cmd>lua require'dap'.run_to_cursor()<cr>",{ noremap = true })
-vim.api.nvim_set_keymap("n", "td", "<cmd>lua require'dap'.disconnect()<cr>", { noremap = true })
-vim.api.nvim_set_keymap("n", "tg", "<cmd>lua require'dap'.session()<cr>", { noremap = true })
-vim.api.nvim_set_keymap("n", "ti", "<cmd>lua require'dap'.step_into()<cr>",{ noremap = true })
-vim.api.nvim_set_keymap("n", "to", "<cmd>lua require'dap'.step_over()<cr>",{ noremap = true })
-vim.api.nvim_set_keymap("n", "tu", "<cmd>lua require'dap'.step_out()<cr>",{ noremap = true })
-vim.api.nvim_set_keymap("n", "tp", "<cmd>lua require'dap'.pause.toggle()<cr>", { noremap = true })
-vim.api.nvim_set_keymap("n", "tr", "<cmd>lua require'dap'.repl.toggle()<cr>", { noremap = true })
-vim.api.nvim_set_keymap("n", "ts", "<cmd>lua require'dap'.continue()<cr>", { noremap = true })
-vim.api.nvim_set_keymap("n", "tq", "<cmd>lua require'dap'.close()<cr>", { noremap = true })
-vim.api.nvim_set_keymap("n", "th", "<cmd>lua require('dapui').toggle()<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "te", "<cmd>lua require('dapui').eval()<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "tm", "<cmd>lua require('dap-python').test_method()<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "tc", "<cmd>lua require('dap-python').test_class()<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "tv", "<ESC>:lua require('dap-python').debug_selection()<CR>", { noremap = true })
 
 ---------------------------------------- Other - Misc ----------------------------------------
 
@@ -631,21 +636,27 @@ vim.opt.spelllang = "en"
 vim.opt.scrolloff = 8 -- is one of my fav
 vim.opt.sidescrolloff = 8
 
+--------------------==================== Indent lines ====================--------------------
+
 --------------------==================== NeoVim - VimScripts ====================--------------------
 -- source core vim configs
-vim.cmd('source vimscript/globals.vim')
-vim.cmd('source vimscript/options.vim')
-vim.cmd('source vimscript/autocommands.vim')
-vim.cmd('source vimscript/mappings.vim')
-require('lua-init') -- init before installing vimscript plugin
-vim.cmd('source vimscript/plugins.vim')
+vim.cmd('source ' .. vim.fn.expand("$HOME") .. '/.config/lvim/vimscript/globals.vim')
+vim.cmd('source ' .. vim.fn.expand("$HOME") .. '/.config/lvim/vimscript/options.vim')
+vim.cmd('source ' .. vim.fn.expand("$HOME") .. '/.config/lvim/vimscript/autocommands.vim')
+vim.cmd('source ' .. vim.fn.expand("$HOME") .. '/.config/lvim/vimscript/key-bindings.vim')
+vim.cmd('source ' .. vim.fn.expand("$HOME") .. '/.config/lvim/vimscript/plugins.vim')
 
 -- require("user.neovim").config()
 
 
+--------------------==================== Support for Chinese Typing ====================--------------------
+    -- if vim.g.is_mac then
+    --   use({ "lyokha/vim-xkbswitch", event = { "InsertEnter" } })
+    -- elseif vim.g.is_win then
+    --   use({ "Neur1n/neuims", event = { "InsertEnter" } })
+    -- end
 
-
-
-
-
-
+--------------------==================== Load LUA Modules ====================--------------------
+require('utils')        -- Load LUA Utilities
+require('plugins')      -- Load LUA Plugins
+require('key-bindings') -- Set Key-bindings

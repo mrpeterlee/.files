@@ -1,7 +1,3 @@
-require("neoscroll").setup({
-  easing_function = "quadratic",
-})
-
 local t = {}
 -- Syntax: t[keys] = {function, {function arguments}}
 -- Use the "sine" easing function

@@ -113,11 +113,11 @@ endfunction
 "   autocmd VimEnter,DirChanged * call utils#Inside_git_repo()
 " augroup END
 
-" Auto-generate packer_compiled.lua file
-augroup packer_auto_compile
-  autocmd!
-  autocmd BufWritePost */nvim/lua/plugins.lua source <afile> | PackerCompile
-augroup END
+" " Auto-generate packer_compiled.lua file
+" augroup packer_auto_compile
+"   autocmd!
+"   autocmd BufWritePost */nvim/lua/plugins.lua source <afile> | PackerCompile
+" augroup END
 
 " HACK: Causing error on :wq
 " augroup auto_create_dir

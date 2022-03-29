@@ -60,4 +60,4 @@ nvim_tree.setup({
 	},
 })
 
-vim.api.nvim_set_keymap("n", "<space>s", "<cmd>NvimTreeToggle<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<space>s", "NvimTreeToggle", { noremap = true, silent = true })
