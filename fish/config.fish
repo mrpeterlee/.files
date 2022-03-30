@@ -53,11 +53,15 @@ set -x PATH $PATH /usr/bin
 set -x PATH $PATH /snap/bin
 set -x PATH $PATH /bin
 set -x PATH $PATH /opt/conda/bin
+set -x PATH $PATH $HOME/lab/paper/finclab/sh/bash
+set -x PATH $PATH $HOME/lab/paper/finclab/sh/zsh
+set -x PATH $PATH $HOME/lab/paper/finclab/sh/fish
 set -x PATH $PATH /lab/lib/finclab/sh/bash
 set -x PATH $PATH /lab/lib/finclab/sh/zsh
 set -x PATH $PATH /lab/lib/finclab/sh/fish
 set -x PATH $PATH $HOME/.local/bin
 set -x PATH $PATH $HOME/.files/bin
+set -x PATH $PATH $HOME/.cargo/bin
 
 
 

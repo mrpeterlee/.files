@@ -65,6 +65,7 @@ lvim.builtin.which_key.mappings["f"] = {
     p = { "<cmd>Telescope projects<CR>", "Project" },
     r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
     s = { "<cmd>Telescope live_grep<cr>", "Search String" },
+    o = { "<cmd>NvimTreeToggle<cr>", "File" },
   }
 
 -- SPC u:: UPDATE
@@ -177,6 +178,7 @@ lvim.builtin.which_key.mappings["c"] =  {"<cmd>BufferKill<CR>", "Close Buffer" }
 -- lvim.builtin.which_key.mappings["q"] = { "<cmd>SmartClose<CR>", "Quit", noremap=true, silent=true }
 lvim.builtin.which_key.mappings["q"] = { "<cmd>q!<CR>", "Close Window" }
 lvim.builtin.which_key.mappings["Q"] = { "<cmd>qa!<CR>", "Exit NeoVim" }
+lvim.builtin.which_key.mappings["e"] = nil
 
 
 

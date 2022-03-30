@@ -105,6 +105,7 @@ dirs=( '/opt/conda/bin' \
        '/snap/bin' \
        '$HOME/.local/bin' \
        '$HOME/.files/bin' \
+       '$HOME/.cargo/bin' \
        '/lab/lib/finclab/sh/bin' \
        '/lab/lib/finclab/sh/bash' \
        '/lab/lib/finclab/sh/zsh' \
