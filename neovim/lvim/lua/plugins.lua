@@ -254,7 +254,7 @@ lvim.plugins = {
     { "NTBBloodbath/doom-one.nvim" },
     { "sainnhe/everforest" },
     { "EdenEast/nightfox.nvim" },
-    { "rebelot/kanagawa.nvim" },
+{ "rebelot/kanagawa.nvim" },
 }
 
 -- indent line

@@ -203,3 +203,4 @@ eval "$(register-python-argcomplete quantrocket)"
 # find $HOME/ts/ -type d -exec chmod 700 {} \;
 ## Set files to: -rw-r-----
 # find $HOME/ts/ -type f -exec chmod 600 {} \;
+. "$HOME/.cargo/env"

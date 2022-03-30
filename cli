@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """CLI Tool to Configure / Install Terminal Packages
 
 
@@ -22,25 +21,27 @@ Usage
 """
 
 import os
+import os.path
+import shutil
 import typing
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
+import finclab.cli.build
 import finclab.cli.build.util
 import finclab.config.helper
 import finclab.config.main
+import finclab.io.file
 from finclab.logger import init_logger
 from simple_parsing import ArgumentParser
 
-# Docker Reigistry
-#   Github Packages Registry: # <org_name>/<repo_name>/<image_name>
-
-logger = init_logger(f"Install.Files")
+app_name = "Install.Files"
+logger = init_logger("Install.Files")
 
 DIR_DOTFILES = Path(Path.home(), ".files")
 
-ALL_SERVICES = ['neovim']
+ALL_SERVICE = ['neovim']
 
 
 @dataclass
