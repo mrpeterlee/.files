@@ -190,6 +190,193 @@
                                     }
                                 ],
                                 "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^org\\.vim\\.",
+                                            "^com.googlecode.iterm2",
+                                            "com\\.microsoft\\.rdc\\.macos"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command",
+                                            "left_shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "h",
+                                        "modifiers": [
+                                            "left_option",
+                                            "left_shift"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^org\\.vim\\.",
+                                            "^com.googlecode.iterm2",
+                                            "com\\.microsoft\\.rdc\\.macos"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command",
+                                            "left_shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "j",
+                                        "modifiers": [
+                                            "left_option",
+                                            "left_shift"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^org\\.vim\\.",
+                                            "^com.googlecode.iterm2",
+                                            "com\\.microsoft\\.rdc\\.macos"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "k",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command",
+                                            "left_shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "k",
+                                        "modifiers": [
+                                            "left_option",
+                                            "left_shift"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^org\\.vim\\.",
+                                            "^com.googlecode.iterm2",
+                                            "com\\.microsoft\\.rdc\\.macos"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "l",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command",
+                                            "left_shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "l",
+                                        "modifiers": [
+                                            "left_option",
+                                            "left_shift"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Map CMD-. to Alt-. & CMD- to ALT- in iTerm2",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^org\\.vim\\.",
+                                            "^com.googlecode.iterm2",
+                                            "com\\.microsoft\\.rdc\\.macos"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": ".",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": ".",
+                                        "modifiers": [
+                                            "left_option"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^org\\.vim\\.",
+                                            "^com.googlecode.iterm2",
+                                            "com\\.microsoft\\.rdc\\.macos"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "-",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "-",
+                                        "modifiers": [
+                                            "left_option"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
                             }
                         ]
                     },

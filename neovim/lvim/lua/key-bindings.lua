@@ -438,6 +438,8 @@ lvim.keys.visual_mode = {
     -- Better indenting
     ["<"] = "<gv",
     [">"] = ">gv",
+    -- Spectre search & replace in file
+    ["s"] = "<cmd>lua require('spectre').open_visual()<CR>",
 }
 
 --- Visual block mode

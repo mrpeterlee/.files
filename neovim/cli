@@ -32,22 +32,27 @@ DIR_DOTFILES = Path(Path.home(), ".files")
 # SYMLINKS
 SYMLINKS = {
     # LunarVim user config
-    Path(Path.home(), ".config", "lvim", "config.lua"):
-    Path(DIR_DOTFILES, "neovim", "lvim", "config.lua"),
+    Path(Path.home(), ".config", "lvim", "config.lua"): Path(
+        DIR_DOTFILES, "neovim", "lvim", "config.lua"
+    ),
     # Additional config dir
-    Path(Path.home(), ".config", "lvim", "vimscript"): Path(DIR_DOTFILES, "neovim", "lvim", "vimscript"),
-    Path(Path.home(), ".config", "lvim", "lua"): Path(DIR_DOTFILES, "neovim", "lvim", "lua"),
-    Path(Path.home(), ".config", "lvim", "snippet"):
-    Path(DIR_DOTFILES, "neovim", "lvim", "snippet"),
+    Path(Path.home(), ".config", "lvim", "vimscript"): Path(
+        DIR_DOTFILES, "neovim", "lvim", "vimscript"
+    ),
+    Path(Path.home(), ".config", "lvim", "lua"): Path(
+        DIR_DOTFILES, "neovim", "lvim", "lua"
+    ),
+    Path(Path.home(), ".local", "share", "lunarvim", "lvim", "lua", "config"): Path(
+        DIR_DOTFILES, "neovim", "lvim", "lua", "config"
+    ),
     # SpaceVim user folder
-    Path(Path.home(), ".SpaceVim.d"):
-    Path(DIR_DOTFILES, "neovim", ".SpaceVim.d"),
+    Path(Path.home(), ".SpaceVim.d"): Path(DIR_DOTFILES, "neovim", ".SpaceVim.d"),
     # pylintrc
-    Path(Path.home(), ".pylintrc"):
-    Path(DIR_DOTFILES, "neovim", ".pylintrc"),
+    Path(Path.home(), ".pylintrc"): Path(DIR_DOTFILES, "neovim", ".pylintrc"),
     # pydocstyle
-    Path(Path.home(), ".config", "pycodestyle"):
-    Path(DIR_DOTFILES, "neovim", "pycodestyle"),
+    Path(Path.home(), ".config", "pycodestyle"): Path(
+        DIR_DOTFILES, "neovim", "pycodestyle"
+    ),
 }
 
 
