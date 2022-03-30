@@ -153,23 +153,24 @@ lvim.plugins = {
 
     --------------------==================== Python IDE ====================--------------------
 
-    -- NOTE: To learn - Add indent object for vim (useful for languages like Python)
-    { "michaeljsmith/vim-indent-object", event = "VimEnter" },
+    -- -- NOTE: To learn - Add indent object for vim (useful for languages like Python)
+    -- { "michaeljsmith/vim-indent-object", event = "VimEnter" },
 
-    -- Omni completion - the text before the cursor is inspected to guess what might follow
-    { "hrsh7th/cmp-omni", after = "nvim-cmp" },
+    -- -- Omni completion - the text before the cursor is inspected to guess what might follow
+    -- { "hrsh7th/cmp-omni", after = "nvim-cmp" },
 
     -- Python - AutoFlake to remove unused imports
     { "tell-k/vim-autoflake" },
 
     -- Python indent (follows the PEP8 style)
-    { "Vimjas/vim-python-pep8-indent" },
+    -- { "Vimjas/vim-python-pep8-indent" },
+    { "sheerun/vim-polyglot" },
 
-    -- NOTE: Learn this plugin -- Python motion control around class / methods
-    { "jeetsukumaran/vim-pythonsense", ft = { "python" } },
+    -- -- NOTE: Learn this plugin -- Python motion control around class / methods
+    -- { "jeetsukumaran/vim-pythonsense", ft = { "python" } },
 
-    -- NOTE: Learn this plugin -- Swap parameters inside function
-    { "machakann/vim-swap", event = "VimEnter" },
+    -- -- NOTE: Learn this plugin -- Swap parameters inside function
+    -- { "machakann/vim-swap", event = "VimEnter" },
 
     -- Python - Provides code signature when adding a function
     {
@@ -254,7 +255,7 @@ lvim.plugins = {
     { "NTBBloodbath/doom-one.nvim" },
     { "sainnhe/everforest" },
     { "EdenEast/nightfox.nvim" },
-{ "rebelot/kanagawa.nvim" },
+    { "rebelot/kanagawa.nvim" },
 }
 
 -- indent line

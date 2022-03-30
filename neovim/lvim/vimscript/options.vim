@@ -12,9 +12,9 @@ set splitbelow splitright
 
 " Time in milliseconds to wait for a mapped sequence to complete,
 " see https://unix.stackexchange.com/q/36882/221410 for more info
-set timeoutlen=500
+set timeoutlen=100
 
-set updatetime=500  " For CursorHold events
+set updatetime=300  " For CursorHold events
 
 " Clipboard settings, always use clipboard for all delete, yank, change, put
 " operation, see https://stackoverflow.com/q/30691466/6064933
@@ -37,11 +37,13 @@ set wildignorecase  " ignore file and dir name cases in cmd-completion
 " Set up backup directory
 let g:backupdir=expand(stdpath('data') . '/backup//')
 let &backupdir=g:backupdir
+set nobackup  " No backup
+
+let g:undodir=expand(stdpath('data') . '/undo//')
 
 " Skip backup for patterns in option wildignore
 let &backupskip=&wildignore
-set backup  " create backup for files
-set backupcopy=yes  " copy the original file to backupdir and overwrite it
+set backupcopy=no  " copy the original file to backupdir and overwrite it
 
 " General tab settings
 set tabstop=4       " number of visual spaces per TAB
@@ -70,11 +72,13 @@ set showbreak=↪
 set wildmode=list:longest
 
 " Minimum lines to keep above and below cursor when scrolling
-set scrolloff=3
+set scrolloff=8
+set sidescrolloff=8
 
 " Use mouse to select and resize windows, etc.
-set mouse=nic  " Enable mouse in several mode
-set mousemodel=popup  " Set the behaviour of mouse
+set mouse=a
+" set mouse=nic  " Enable mouse in several mode
+" set mousemodel=popup  " Set the behaviour of mouse
 
 " Disable showing current mode on command line since statusline plugins can show it.
 set noshowmode
@@ -98,10 +102,7 @@ set autowrite
 " http://man7.org/linux/man-pages/man3/strftime.3.html. The function to get
 " lastmod time is drawn from https://stackoverflow.com/q/8426736/6064933
 set title
-set titlestring=
-
-" HACK: Temporary disabled cuz causing trouble
-" set titlestring=%{utils#Get_titlestr()}
+set titlestring= "%<%F%=%l/%L - nvim" " what the title of the window will be set to
 
 " Persistent undo even after you close a file and re-open it
 set undofile
@@ -117,6 +118,7 @@ set shortmess+=S
 " Completion behaviour
 " set completeopt+=noinsert  " Auto select the first completion entry
 set completeopt+=menuone  " Show menu even if there is only one item
+set completeopt+=noselect " Show menu even if there is only one item
 set completeopt-=preview  " Disable the preview window
 
 set pumheight=10  " Maximum number of items to show in popup menu
@@ -127,6 +129,7 @@ set winblend=5  " pseudo transparency for floating window
 " Insert mode key word completion setting
 set complete+=kspell complete-=w complete-=b complete-=u complete-=t
 
+set nospell
 set spelllang=en,cjk  " Spell languages
 set spellsuggest+=9  " show 9 spell suggestions at most
 
@@ -176,3 +179,31 @@ set diffopt+=context:3  " context for diff
 set diffopt+=internal,indent-heuristic,algorithm:histogram
 
 set nowrap  " do no wrap
+
+
+set numberwidth=4 " set number column width to 2 {default 4}
+
+set cmdheight=2 " more space in the neovim command line for displaying messages
+set colorcolumn=99999 " fixes indentline for now
+
+set conceallevel=0 " so that `` is visible in markdown files
+
+set nofoldenable  " disable folding
+set foldmethod=expr " folding set to 'expr' for treesitter based folding
+set foldexpr=nvim_treesitter#foldexpr()
+
+set guifont=firamono:h17 " the font used in graphical neovim applications
+set hidden " required to keep multiple buffers and open multiple buffers
+set hlsearch
+
+set noshowmode " we don't need to see things like -- INSERT -- 
+
+set showtabline=2  " always show tabs
+
+set smartindent " make indenting smarter again
+
+set noswapfile  " No swapfile
+
+" if a file is being edited by another program (or was written to file while editing with another program) it is not allowed to be edited
+set nowritebackup
+set cursorline

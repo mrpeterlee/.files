@@ -2,21 +2,29 @@
 # -*- coding: utf-8 -*-
 """CLI Tool to Configure / Install Terminal Packages
 
+# Feature
 
-Usage
------
+- update:: re-sync the config files (existing config are DELETED)
+- install:: remove package folders and re-init them
+- os_setup:: setup the OS the first time, installing all prequisites
+
+
+# Usage
 ```bash
     # Update a single package
-    >>> ts cli install neovim --force
+    >>> ts cli update neovim
 
     # Reinstall / Install the first time a single package
-    >>> ts cli install neovim --force
+    >>> ts cli install neovim
 
-    # Install all packages
-    >>> ts cli install --all
+    # Update all packages
+    >>> ts cli update --all
 
     # Reinstall all packages
-    >>> ts cli install --all --force
+    >>> ts cli install --all
+
+    # Setup the OS the 1st time
+    >>> ts cli ossetup
 ```
 """
 
@@ -33,6 +41,7 @@ import finclab.cli.build.util
 import finclab.config.helper
 import finclab.config.main
 import finclab.io.file
+import finclab.util.shell
 from finclab.logger import init_logger
 from simple_parsing import ArgumentParser
 
@@ -42,6 +51,9 @@ logger = init_logger("Install.Files")
 DIR_DOTFILES = Path(Path.home(), ".files")
 
 ALL_SERVICE = ['neovim']
+
+
+OS = finclab.util.shell.get_os()
 
 
 @dataclass
@@ -134,10 +146,31 @@ class Update:
 
 
 @dataclass
+class OsSetup:
+    """ Setup the OS the first time.
+
+    Usage
+    -----
+        # Setup the OS the 1st time
+        >>> ts cli ossetup
+    """
+
+    def execute(self):
+        """Install system prerequisite packages"""""
+        print(f"Operating system is detected as: {OS}")
+
+        if OS=='mac':
+            cmd = f"""cd $HOME/.files/install/{OS} && brew bundle"""
+            os.system(cmd)
+
+        raise ValueError(f"Unsupported OS {OS}. Please add more support.")
+
+
+@dataclass
 class MainMenu:
     """DotFiles Install CLI Main Menu"""
 
-    command: typing.Union[Install, Update]
+    command: typing.Union[Install, Update, OsSetup]
 
     def execute(self):
         """Main entry point"""
