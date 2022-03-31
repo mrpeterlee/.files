@@ -1,12 +1,67 @@
-#
-# Defines environment variables.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+
+############################# PATHS #############################
+dirs=( '/opt/conda/bin' \
+       '/snap/bin' \
+       '$HOME/.local/bin' \
+       '$HOME/.files/bin' \
+       '$HOME/.cargo/bin' \
+       '/lab/lib/finclab/sh/bin' \
+       '/lab/lib/finclab/sh/bash' \
+       '/lab/lib/finclab/sh/zsh' \
+       '/lab/lib/finclab/sh/fish' \
+       '$HOME/lab/paper/lib/finclab/sh/bin' \
+       '$HOME/lab/paper/lib/finclab/sh/bash' \
+       '$HOME/lab/paper/lib/finclab/sh/zsh' \
+       '$HOME/lab/paper/lib/finclab/sh/fish' \
+   )
+for folderpath in $dirs; do
+    echo "looking at folder $folderpath"
+    if [ -d "$folderpath" ]; then
+        # echo "folder exists: $folderpath"
+        export PATH="$folderpath:$PATH"
+    fi
+done
+
+
+############################## ENV Variables #############################
+# Grab env variables
+if [ -f "${HOME}/.lab/labenv.yml" ]; then
+    echo "Loading config for package labenv (${HOME}/.lab/labenv.yml)..."
+    . parse_yml "${HOME}/.lab/labenv.yml" >/dev/null
+    for package in ${HOME}/.lab/*.yml ; do
+        test "$package" = "${HOME}/.lab/labenv.yml" && continue
+        filestem=$(basename -s .yml $package)
+        echo "Loading config for package ${filestem} (${package})..."
+        . parse_yml "${package}" "${filestem}_" >/dev/null
+    done
+fi
+
+############################## Python PATHS #############################
+repos=("finclab" "datalab")
+
+unset PYTHONPATH
+export PYTHONPATH="/lab/lib:$HOME/lab/paper/lib:$HOME/lab/prod/lib"
+
+# for repo in $repos; do 
+#     if [ -d ${HOME}/project/${repo} ]; then
+#         export PYTHONPATH="${HOME}/project/${repo}:${PYTHONPATH}"
+#         echo "Added source code ${HOME}/project/${repo} into Python Path..."
+#     else
+#         if [ -d /lab/${repo} ]; then
+#             export PYTHONPATH="/lab/${repo}:${PYTHONPATH}"
+#             echo "Added source code /lab/${repo} into Python Path..."
+#         fi
+#     fi
+# done
+
+
+############################## Other Config #############################
+## Source Cargo
+if [[ ( -f "$HOME/.cargo/env" ) ]]; then
+  . "$HOME/.cargo/env"
+fi
 
 # Ensure that a non-login, non-interactive shell has a defined environment.
 if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
-. "$HOME/.cargo/env"
