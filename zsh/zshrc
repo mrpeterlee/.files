@@ -431,7 +431,4 @@ cow=$(shuf -n 1 -e $(cowsay -l))
 fortune | cowsay -f "$cow" | lolcat --spread 1.0
 
 # Launch fish
-# fish
-
-
-
+fish
