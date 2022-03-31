@@ -163,6 +163,7 @@ class OsSetup:
             cmd = f"""cd $HOME/.files/install/{OS} && brew bundle"""
             os.system(cmd)
 
+
         raise ValueError(f"Unsupported OS {OS}. Please add more support.")
 
 
