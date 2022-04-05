@@ -109,7 +109,6 @@ manp() {
 }
 
 
-<<<<<<< HEAD
 # ------------------================== Paths ==================------------------ #
 # System Paths
 dirs=( '/opt/conda/bin' \
@@ -496,7 +495,6 @@ function cowsayfortune {
     fortune | cowsay -f $THISCOW -W 100
 }
 
-<<<<<<< HEAD
 cowsayfortune | lolcat --spread 1.0
 
 
