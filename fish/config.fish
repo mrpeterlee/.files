@@ -29,14 +29,12 @@ end
 
 # Init Conda
 eval /opt/conda/bin/conda "shell.fish" "hook" $argv | source
+conda activate $labenv
 
 #if [ (hostname) = finclab-us1 ]
 #    conda activate finclab
 #end 
-#
-#if [ (hostname) = TradeStation-Peter ]
-#    conda activate finclab
-#end 
+
 
 # Disable greeting
 set fish_greeting

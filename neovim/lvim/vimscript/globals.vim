@@ -40,7 +40,7 @@ let g:mapleader = ','
 let g:vimsyn_embed = 'l'
 
 " Use English as main language
-language en_US.utf-8
+" language en_US.utf-8
 "}}
 
 "{{ Disable loading certain plugins

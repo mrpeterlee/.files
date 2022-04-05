@@ -4,6 +4,11 @@
 #         without any warranty.
 #         Copyright 2012— Gregory Pakosz (@gpakosz).
 
+# set true color
+set-option -sa terminal-overrides ',screen-256color:RGB'
+# tell Tmux that outside terminal supports true color
+# set -ga terminal-overrides ",xterm-256color*:Tc"
+
 
 # -- navigation ----------------------------------------------------------------
 

@@ -1,88 +1,32 @@
-#setenv is compatible in both Zsh and Fish
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+#! /usr/bin/zsh
 
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-if [ -f "$HOME/.files/bash/function" ]; then
-    source "$HOME/.files/bash/function"
-fi
-
-
-# Customize to your needs...
-# Powerline Theme
-# if [[ -f "/usr/share/powerline/bindings/zsh/powerline.zsh" ]]; then
-#     . /usr/share/powerline/bindings/zsh/powerline.zsh
-# else
-#     prompt powerline
-# fi
-# Starfish theme
-eval "$(starship init zsh)"
-
-## Init conda
-#export python3_path="/usr/bin/python3"
-dirs=( '/opt/conda' \
-   '/opt/anaconda' \
-   '/opt/anaconda3' \
-   '/usr/local/anaconda3' \
-   '/opt/miniconda' \
-   '/opt/miniconda3' \
-   )
-for folderpath in $dirs; do 
-    if [ -d $folderpath ]; then
-## . "$folderpath/etc/profile.d/conda.sh"    # commented out by conda initialize
-#      $folderpath/bin/conda activate base
-#      export python3_path="$folderpath/bin/python3"
-       . "$folderpath/etc/profile.d/conda.sh"
-    fi
-done
+# -------------------========================================------------------- #
+#                                                                                #
+#                                                                                #
+#  ███████╗██╗      █████╗ ██████╗     ███████╗███████╗██╗  ██╗██████╗  ██████╗  #
+#  ██╔════╝██║     ██╔══██╗██╔══██╗    ╚══███╔╝██╔════╝██║  ██║██╔══██╗██╔════╝  #
+#  █████╗  ██║     ███████║██████╔╝      ███╔╝ ███████╗███████║██████╔╝██║       #
+#  ██╔══╝  ██║     ██╔══██║██╔══██╗     ███╔╝  ╚════██║██╔══██║██╔══██╗██║       #
+#  ██║     ███████╗██║  ██║██████╔╝    ███████╗███████║██║  ██║██║  ██║╚██████╗  #
+#  ╚═╝     ╚══════╝╚═╝  ╚═╝╚═════╝     ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  #
+#                                                                                #
+# Author: Peter Lee (peter.lee@finclab.com)                                      #
+# Last Update: 2022-Apr                                                          #
+#                                                                                #
+# -------------------========================================------------------- #
 
 
-# # >>> conda initialize >>>
-# # !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/opt/conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then
-#         . "/opt/conda/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/opt/conda/bin:$PATH"
+# ------------------================== Helper Functions ==================------------------ #
+# setenv is compatible in both Zsh and Fish
+function setenv() { export "$1=$2"; }
+
+# files=( "$HOME/.files/bash/function" )
+# for file in $files; do
+#     if [ -f "$file" ]; then
+#         . "$file"
 #     fi
-# fi
-# unset __conda_setup
-# # <<< conda initialize <<<
-
-#if [ $(hostname) = finclab-us1 ]; then
-#    conda activate finclab
-#fi
- 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-	export EDITOR='vim'
-else
-	export EDITOR='vim'
-fi
-
-# Configure pager 'less'
-export MANPAGER='less -s -M +Gg'
-manp() {
-	LESS_TERMCAP_md=$'\e[00;36m' \
-	LESS_TERMCAP_me=$'\e[0m' \
-	LESS_TERMCAP_se=$'\e[0m' \
-	LESS_TERMCAP_so=$'\e[01;31m' \
-	LESS_TERMCAP_ue=$'\e[0m' \
-	LESS_TERMCAP_us=$'\e[00;33m' \
-	command man "$@"
-}
-alias man=manp
-
+# done
+#     
 
 # check of os type
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -100,20 +44,90 @@ elif [[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]]; then
 fi
 
 
-############################## PATHS #############################
+
+# ------------------================== Python ==================------------------ #
+# Trigger conda environment
+dirs=( '/opt/conda' \
+       '/opt/anaconda' )
+for folderpath in $dirs; do 
+    if [ -d $folderpath ]; then
+       . "$folderpath/etc/profile.d/conda.sh"
+    fi
+done
+
+# Activate corresponding environment
+if [ -f /opt/conda/envs/prod/bin/python ]; then
+    conda activate prod
+elif [ -f /opt/conda/envs/paper/bin/python ]; then
+    conda activate paper
+fi
+
+# Default repos -- integrate the variable of default environment
+unset PYTHONPATH
+export PYTHONPATH="/lab/lib:$HOME/lab/lib"
+
+# repos=("finclab" \
+#        "datalab" \
+#        "datalab_utilities" \
+#        "execengines_aquamesh" \
+#        "ts" \
+#        "winclient")
+
+# for repo in $repos; do 
+#     if [ -d ${HOME}/lab/paper/${repo} ]; then
+#         export PYTHONPATH="${HOME}/lab/paper/${repo}:${PYTHONPATH}"
+#         echo "Python Path - included additional source lib ${HOME}/lab/paper/${repo}"
+#     else
+#         if [ -d /lab/${repo} ]; then
+#             export PYTHONPATH="/lab/${repo}:${PYTHONPATH}"
+#             echo "Python Path - included additional source lib /lab/${repo}"
+#         fi
+#     fi
+# done
+
+
+
+
+# ------------------================== General ==================------------------ #
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+	export EDITOR='lvim'
+else
+	export EDITOR='lvim'
+fi
+
+# Configure pager 'less'
+export MANPAGER='less -s -M +Gg'
+manp() {
+	LESS_TERMCAP_md=$'\e[00;36m' \
+	LESS_TERMCAP_me=$'\e[0m' \
+	LESS_TERMCAP_se=$'\e[0m' \
+	LESS_TERMCAP_so=$'\e[01;31m' \
+	LESS_TERMCAP_ue=$'\e[0m' \
+	LESS_TERMCAP_us=$'\e[00;33m' \
+	command man "$@"
+}
+
+
+# ------------------================== Paths ==================------------------ #
+# System Paths
 dirs=( '/opt/conda/bin' \
        '/snap/bin' \
-       '$HOME/.local/bin' \
-       '$HOME/.files/bin' \
-       '$HOME/.cargo/bin' \
+
+       '/home/peter/.local/bin' \
+       '/home/peter/.local/bin' \
+       '/home/peter/.files/bin' \
+       '/home/peter/.cargo/bin' \
+
+       '/Users/peter/.local/bin' \
+       '/Users/peter/.local/bin' \
+       '/Users/peter/.files/bin' \
+       '/Users/peter/.cargo/bin' \
+
        '/lab/lib/finclab/sh/bin' \
        '/lab/lib/finclab/sh/bash' \
        '/lab/lib/finclab/sh/zsh' \
        '/lab/lib/finclab/sh/fish' \
-       '/Users/peter/lab/lib/finclab/sh/bin' \
-       '/Users/peter/lab/lib/finclab/sh/bash' \
-       '/Users/peter/lab/lib/finclab/sh/zsh' \
-       '/Users/peter/lab/lib/finclab/sh/fish' \
    )
 for folderpath in $dirs; do
     # echo "looking at folder $folderpath"
@@ -123,57 +137,40 @@ for folderpath in $dirs; do
     fi
 done
 
+# Additional cowsay..
+COWPATH="$COWPATH:$HOME/.cowsay/cowfiles"
 
-############################## ENV Variables #############################
+# ------------------================== Env Variables ==================------------------ #
 # Grab env variables
 if [ -f "${HOME}/.lab/labenv.yml" ]; then
-    echo "Loading config for package labenv (${HOME}/.lab/labenv.yml)..."
+    echo "Bash ENV - Extracted config from 'labenv' (${HOME}/.lab/labenv.yml)..."
     . parse_yml "${HOME}/.lab/labenv.yml" >/dev/null
-    for package in ${HOME}/.lab/*.yml ; do
+    # for package in ${HOME}/.lab/*.yml ; do
+    for package in "${HOME}/.lab/finclab.yml" "${HOME}/.lab/datastore.yml" "${HOME}/.lab/tradestation.yml" ; do
         test "$package" = "${HOME}/.lab/labenv.yml" && continue
         filestem=$(basename -s .yml $package)
-        echo "Loading config for package ${filestem} (${package})..."
+        echo "Bash ENV - Extracted config from '${filestem}' (${package})..."
         . parse_yml "${package}" "${filestem}_" >/dev/null
     done
 fi
 
-############################## Python PATHS #############################
-repos=("finclab" "datalab")
-
-unset PYTHONPATH
-export PYTHONPATH="/lab/lib:/Users/peter/lab/lib"
-
-# for repo in $repos; do 
-#     if [ -d ${HOME}/project/${repo} ]; then
-#         export PYTHONPATH="${HOME}/project/${repo}:${PYTHONPATH}"
-#         echo "Added source code ${HOME}/project/${repo} into Python Path..."
-#     else
-#         if [ -d /lab/${repo} ]; then
-#             export PYTHONPATH="/lab/${repo}:${PYTHONPATH}"
-#             echo "Added source code /lab/${repo} into Python Path..."
-#         fi
-#     fi
-# done
-
 ############################## Utilities / Functions #############################
-# setenv is compatible in both Zsh and Fish
-function setenv() { export "$1=$2"; }
+alias man=manp
+# Login to TradeStation (default to paper)
+alias tsprod='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 30000 peter@10.1.1.100'
+alias tspaper='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 50000 peter@10.1.1.100'
 
-############################## ALIAS #############################
-# For a full list of active aliases, run `alias`.
 alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v /home/peter/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker'
 alias fd=fdfind
 alias vpn='sudo /usr/local/Cellar/openvpn/2.4.9/sbin/openvpn --config ~/peter.ovpn'
 alias update_prezto='cd $ZPREZTODIR;git pull;git submodule update --init --recursive'
 
-if ! type "exa" > /dev/null; then
-    alias ls='exa --group-directories-first'
-    alias l='exa -lah --group-directories-first'
-    alias ll='exa -lah --group-directories-first'
-fi
+alias ls='exa --group-directories-first'
+alias l='exa -lah --group-directories-first'
+alias ll='exa -lah --group-directories-first'
 
 if ! type "batcat" > /dev/null; then
-    alias bat='batcat'
+    alias cat='batcat'
 fi
 
 alias lsp='ls -C --color=always | less -R'
@@ -194,6 +191,8 @@ alias disk='df -h .'
 alias xres='xrdb ~/.Xresources'
 
 # Zsh
+alias v='lvim'
+alias vim='lvim'
 alias viz='vim ~/.zshrc'
 alias soz='source ~/.zshrc'
 
@@ -470,9 +469,10 @@ bindkey -a ds delete-surround
 bindkey -a ys add-surround
 bindkey -M visual S add-surround
 
+
 # string=$(conda env list)
-word="finclab"
-test "${string#*$word}" != "$string" && echo "$word found in conda environment" && conda activate finclab
+# word="${labenv}"
+# test "${string#*$word}" != "$string" && echo "$word found in conda environment" && conda activate "$word"
 # test "${string#*$word}" = "$string" && echo "$word NOT found in conda environment" && conda activate base
 
 export HOUSTON_URL=http://10.1.1.100:1969
@@ -481,12 +481,26 @@ if [[ ${os_type} == "mac" ]]; then
     export HOUSTON_URL=http://houston.finclab.com:1969
 fi
 
+## ------------------================== Themes ==================------------------ #
+# Starfish theme
+eval "$(starship init zsh)"
+
 # Cowsay
-cow=$(shuf -n 1 -e $(cowsay -l))
-fortune | cowsay -f "$cow" | lolcat --spread 1.0
+# Cow-spoken fortunes every time you open a terminal
+function cowsayfortune {
+    NUMOFCOWS=`cowsay -l | tail -n +2 | wc -w`
+    WHICHCOW=$((RANDOM%$NUMOFCOWS+1))
+    THISCOW=`cowsay -l | tail -n +2 | sed -e 's/\ /\'$'\n/g' | sed $WHICHCOW'q;d'`
+
+    #echo "Selected cow: ${THISCOW}, from ${WHICHCOW}"
+    fortune | cowsay -f $THISCOW -W 100
+}
+
+cowsayfortune | lolcat --spread 1.0
+
+
+# cow=$(shuf -n 1 -e $(cowsay -l))
+# fortune | cowsay -f "$cow" | lolcat --spread 1.0
 
 # Launch fish
-fish
-
-
-
+# fish

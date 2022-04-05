@@ -144,7 +144,7 @@ set virtualedit=block  " Virtual edit is useful for visual block edit
 set formatoptions+=mM
 
 " Tilde (~) is an operator, thus must be followed by motions like `e` or `w`.
-set tildeop
+" set tildeop
 
 set synmaxcol=200  " Text after this column number is not highlighted
 set nostartofline

@@ -174,8 +174,8 @@ lvim.plugins = {
 	{ "tell-k/vim-autoflake" },
 
 	-- Python indent (follows the PEP8 style)
-	-- { "Vimjas/vim-python-pep8-indent" },
-	{ "sheerun/vim-polyglot" },
+	{ "Vimjas/vim-python-pep8-indent", filetypes = { "python" } },
+	-- { "sheerun/vim-polyglot" },
 
 	-- -- NOTE: Learn this plugin -- Python motion control around class / methods
 	-- { "jeetsukumaran/vim-pythonsense", ft = { "python" } },
@@ -255,6 +255,9 @@ lvim.plugins = {
 	-- =========== Markdown Table Mode ===========
 	-- TODO: Learn!
 	{ "dhruvasagar/vim-table-mode" },
+
+	-- Glow - view markdown in terminal
+	{ "ellisonleao/glow.nvim" },
 
 	-- =========== Themes ===========
 	{ "lifepillar/vim-gruvbox8" },

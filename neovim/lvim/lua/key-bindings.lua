@@ -60,17 +60,17 @@ lvim.builtin.which_key.mappings["p"] = nil
 
 -- SPC f:: FILES
 lvim.builtin.which_key.mappings["f"] = {
-  name = "+File",
+    name = "+File",
     f = { require("lvim.core.telescope.custom-finders").find_project_files, "Find File" },
     p = { "<cmd>Telescope projects<CR>", "Project" },
     r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
     s = { "<cmd>Telescope live_grep<cr>", "Search String" },
     o = { "<cmd>NvimTreeToggle<cr>", "File" },
-  }
+}
 
 -- SPC u:: UPDATE
 lvim.builtin.which_key.mappings["u"] = {
-  name = "+Update",
+    name = "+Update",
     c = { "<cmd>PackerCompile<cr>", "Compile" },
     i = { "<cmd>PackerInstall<cr>", "Install" },
     r = { "<cmd>lua require('lvim.plugin-loader').recompile()<cr>", "Re-compile" },
@@ -78,44 +78,44 @@ lvim.builtin.which_key.mappings["u"] = {
     l = { "<cmd>PackerStatus<cr>", "List Plugins" },
     u = { "<cmd>PackerUpdate<cr>", "Update" },
     x = { "<cmd>PackerClean<cr>", "Delete Unused" },
-  }
+}
 
 -- SPC s:: SEARCH
 -- lvim.builtin.which_key.mappings["ss"] = { "<cmd>lua require('spectre').open_file_search()<cr>", "Search" }
 lvim.builtin.which_key.mappings["s"] = {
     name = "+Search",
-        -- TODO: move to "git" --> b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-        f = { "<cmd>Telescope find_files<cr>", "Find File" },
-        h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-        M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-        R = { "<cmd>Telescope registers<cr>", "Registers" },
-        k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-        C = { "<cmd>Telescope commands<cr>", "Commands" },
-        a = { "<cmd>lua require('spectre').open()<CR>", "Replace in Folder" },
-        s = { "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", "Replace in File" },
-      }
+    -- TODO: move to "git" --> b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
+    f = { "<cmd>Telescope find_files<cr>", "Find File" },
+    h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
+    M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
+    R = { "<cmd>Telescope registers<cr>", "Registers" },
+    k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
+    C = { "<cmd>Telescope commands<cr>", "Commands" },
+    a = { "<cmd>lua require('spectre').open()<CR>", "Replace in Folder" },
+    s = { "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", "Replace in File" },
+}
 
 -- SPC t:: TEST
 lvim.builtin.which_key.mappings["t"] = {
-  name = "+Test",
-  r = { "<cmd>Trouble references<cr>", "References" },
-  f = { "<cmd>Trouble definitions<cr>", "Definitions" },
-  d = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnostics" },
-  -- d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
-  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-  l = { "<cmd>Trouble loclist<cr>", "Location List" },
-  w = { "<cmd>TodoQuickFix<cr>", "ToDos" },
+    name = "+Test",
+    r = { "<cmd>Trouble references<cr>", "References" },
+    f = { "<cmd>Trouble definitions<cr>", "Definitions" },
+    d = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnostics" },
+    -- d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+    q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+    l = { "<cmd>Trouble loclist<cr>", "Location List" },
+    w = { "<cmd>TodoQuickFix<cr>", "ToDos" },
 }
 
 -- SPC b:: Buffer
 lvim.builtin.which_key.mappings["b"] = {
     name = "+Buffer",
     h = { "<cmd>BufferLineCloseLeft<cr>", "Close all to the left" },
-    l = { "<cmd>BufferLineCloseRight<cr>", "Close all to the right", },
-    q = { "<cmd>BufferLinePickClose<cr>", "Pick which buffer to close", },
+    l = { "<cmd>BufferLineCloseRight<cr>", "Close all to the right" },
+    q = { "<cmd>BufferLinePickClose<cr>", "Pick which buffer to close" },
     j = { "<cmd>BufferLinePick<cr>", "Select by letter" },
-    d = { "<cmd>BufferLineSortByDirectory<cr>", "Sort by directory", },
-    e = { "<cmd>BufferLineSortByExtension<cr>", "Sort by extension", },
+    d = { "<cmd>BufferLineSortByDirectory<cr>", "Sort by directory" },
+    e = { "<cmd>BufferLineSortByExtension<cr>", "Sort by extension" },
     [","] = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
     ["."] = { "<cmd>BufferLineCycleNext<cr>", "Next" },
 }
@@ -144,14 +144,14 @@ lvim.builtin.which_key.mappings["d"] = {
 }
 
 vim.api.nvim_set_keymap("n", "tt", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { noremap = true })
-vim.api.nvim_set_keymap("n", "tb", "<cmd>lua require'dap'.step_back()<cr>",{ noremap = true })
-vim.api.nvim_set_keymap("n", "tn", "<cmd>lua require'dap'.continue()<cr>",{ noremap = true })
-vim.api.nvim_set_keymap("n", "tC", "<cmd>lua require'dap'.run_to_cursor()<cr>",{ noremap = true })
+vim.api.nvim_set_keymap("n", "tb", "<cmd>lua require'dap'.step_back()<cr>", { noremap = true })
+vim.api.nvim_set_keymap("n", "tn", "<cmd>lua require'dap'.continue()<cr>", { noremap = true })
+vim.api.nvim_set_keymap("n", "tC", "<cmd>lua require'dap'.run_to_cursor()<cr>", { noremap = true })
 vim.api.nvim_set_keymap("n", "td", "<cmd>lua require'dap'.disconnect()<cr>", { noremap = true })
 vim.api.nvim_set_keymap("n", "tg", "<cmd>lua require'dap'.session()<cr>", { noremap = true })
-vim.api.nvim_set_keymap("n", "ti", "<cmd>lua require'dap'.step_into()<cr>",{ noremap = true })
-vim.api.nvim_set_keymap("n", "to", "<cmd>lua require'dap'.step_over()<cr>",{ noremap = true })
-vim.api.nvim_set_keymap("n", "tu", "<cmd>lua require'dap'.step_out()<cr>",{ noremap = true })
+vim.api.nvim_set_keymap("n", "ti", "<cmd>lua require'dap'.step_into()<cr>", { noremap = true })
+vim.api.nvim_set_keymap("n", "to", "<cmd>lua require'dap'.step_over()<cr>", { noremap = true })
+vim.api.nvim_set_keymap("n", "tu", "<cmd>lua require'dap'.step_out()<cr>", { noremap = true })
 vim.api.nvim_set_keymap("n", "tp", "<cmd>lua require'dap'.pause.toggle()<cr>", { noremap = true })
 vim.api.nvim_set_keymap("n", "tr", "<cmd>lua require'dap'.repl.toggle()<cr>", { noremap = true })
 vim.api.nvim_set_keymap("n", "ts", "<cmd>lua require'dap'.continue()<cr>", { noremap = true })
@@ -162,25 +162,54 @@ vim.api.nvim_set_keymap("n", "tm", "<cmd>lua require('dap-python').test_method()
 vim.api.nvim_set_keymap("n", "tc", "<cmd>lua require('dap-python').test_class()<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "tv", "<ESC>:lua require('dap-python').debug_selection()<CR>", { noremap = true })
 
+-- SPC k:: Keys
+lvim.builtin.which_key.mappings["k"] = {
+    name = "+HotKey",
+    m = { "<cmd> w | Glow<cr>", "Preview Markdown" },
+}
 
 -- SPC L:: LUNAR VIM
 lvim.builtin.which_key.mappings["Lt"] = {
-          "<cmd>lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<cr>",
-          "Colorscheme with Preview",
-        }
-lvim.builtin.which_key.mappings["lb"] = { "<cmd>let blank=''|put=blank|let debug_comment='# ----------  temporary debug code ---------- #'|put=debug_comment|let a='import sys'|put=a|let a='from pprint import pprint'|put=a|let a='print(" .. '"' .. "\\n" .. '"' .. "*2, " .. '"' .. "=" .. '"' .. "*40, " .. '"' .. " temporary debug code " .. '"' .. ", " .. '"' .. "=" .. '"' .. "*40, " .. '"' .. "\\n" .. '"' .. "*2)'|put=a|put=blank|put=a|let a='sys.exit(1)'|put=a|put=debug_comment|put=blank" .. "<CR>", "Debug Snippet" }
-lvim.builtin.which_key.mappings["lm"] = { "<cmd>:0 | let blank=''|let t='\"\"\" {Module Name}'|put=t|put=blank|let t='id:            Peter Lee (peter.lee@finclab.com)'|put=t|let t='last_update:   ' . strftime('%Y-%m-%d %H:%M:%S %Z')|put=t|let t='type:          lib'|put=t|let t='sensitivity:   datalab@finclab.com'|put=t|let t='platform:      any'|put=t|let t='description:   {Description}'|put=t|let t='\"\"\"'|put=t<CR>", "Add Module Header" }
-
+    "<cmd>lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<cr>",
+    "Colorscheme with Preview",
+}
+lvim.builtin.which_key.mappings["lb"] = {
+    "<cmd>let blank=''|put=blank|let debug_comment='# ----------  temporary debug code ---------- #'|put=debug_comment|let a='import sys'|put=a|let a='from pprint import pprint'|put=a|let a='print("
+        .. '"'
+        .. "\\n"
+        .. '"'
+        .. "*2, "
+        .. '"'
+        .. "="
+        .. '"'
+        .. "*40, "
+        .. '"'
+        .. " temporary debug code "
+        .. '"'
+        .. ", "
+        .. '"'
+        .. "="
+        .. '"'
+        .. "*40, "
+        .. '"'
+        .. "\\n"
+        .. '"'
+        .. "*2)'|put=a|put=blank|put=a|let a='sys.exit(1)'|put=a|put=debug_comment|put=blank"
+        .. "<CR>",
+    "Debug Snippet",
+}
+lvim.builtin.which_key.mappings["lm"] = {
+    "<cmd>:0 | let blank=''|let t='\"\"\" {Module Name}'|put=t|put=blank|let t='id:            Peter Lee (peter.lee@finclab.com)'|put=t|let t='last_update:   ' . strftime('%Y-%m-%d %H:%M:%S %Z')|put=t|let t='type:          lib'|put=t|let t='sensitivity:   datalab@finclab.com'|put=t|let t='platform:      any'|put=t|let t='description:   {Description}'|put=t|let t='\"\"\"'|put=t<CR>",
+    "Add Module Header",
+}
 
 lvim.builtin.which_key.mappings[";"] = nil -- no need to access dashboard
 lvim.builtin.which_key.mappings[" "] = { "<cmd>Telescope buffers<cr>", "Switch Buffer" }
-lvim.builtin.which_key.mappings["c"] =  {"<cmd>BufferKill<CR>", "Close Buffer" }
+lvim.builtin.which_key.mappings["c"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
 -- lvim.builtin.which_key.mappings["q"] = { "<cmd>SmartClose<CR>", "Quit", noremap=true, silent=true }
 lvim.builtin.which_key.mappings["q"] = { "<cmd>q!<CR>", "Close Window" }
 lvim.builtin.which_key.mappings["Q"] = { "<cmd>qa!<CR>", "Exit NeoVim" }
 lvim.builtin.which_key.mappings["e"] = nil
-
-
 
 -- " Save key strokes (now we do not need to press shift to enter command mode).
 -- " Vim-sneak has also mapped `;`, so using the below mapping will break the map
@@ -375,8 +404,6 @@ lvim.builtin.which_key.mappings["e"] = nil
 --   silent! delmarks y
 -- endfunction
 
-
-
 --------------------==================== Combined Keys ====================--------------------
 -- NORMAL MODE
 lvim.keys.normal_mode = {
@@ -406,8 +433,7 @@ lvim.keys.normal_mode = {
     ["<C-q>"] = ":call QuickFixToggle()<CR>",
 }
 
-
--- INSERT MODE 
+-- INSERT MODE
 lvim.keys.insert_mode = {
     -- 'jk' for quitting insert mode
     ["jk"] = "<ESC>",
@@ -446,19 +472,19 @@ lvim.keys.visual_mode = {
 
 --- Visual block mode
 lvim.keys.visual_block_mode = {
-  -- Move selected line / block of text in visual mode
-  ["K"] = ":move '<-2<CR>gv-gv",
-  ["J"] = ":move '>+1<CR>gv-gv",
+    -- Move selected line / block of text in visual mode
+    ["K"] = ":move '<-2<CR>gv-gv",
+    ["J"] = ":move '>+1<CR>gv-gv",
 
-  -- Move current line / block with Alt-j/k ala vscode.
-  ["<C-j>"] = ":m '>+1<CR>gv-gv",
-  ["<C-k>"] = ":m '<-2<CR>gv-gv",
+    -- Move current line / block with Alt-j/k ala vscode.
+    ["<C-j>"] = ":m '>+1<CR>gv-gv",
+    ["<C-k>"] = ":m '<-2<CR>gv-gv",
 }
 
- -- Command mode
+-- Command mode
 lvim.keys.command_mode = {
-   -- navigate tab completion with <c-j> and <c-k>
-   -- runs conditionally
-   ["<C-j>"] = { 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } },
-   ["<C-k>"] = { 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } },
- }
+    -- navigate tab completion with <c-j> and <c-k>
+    -- runs conditionally
+    ["<C-j>"] = { 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } },
+    ["<C-k>"] = { 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } },
+}
