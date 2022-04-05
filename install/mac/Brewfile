@@ -119,6 +119,14 @@ tap 'homebrew/services'
 #
 ###########################################################################
 
+yarn
+pnpm
+npm
+
+cowsay
+fortune
+lolcat
+
 ##
 # Browsers
 #

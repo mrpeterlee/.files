@@ -160,6 +160,28 @@ alias man=manp
 # Login to TradeStation (default to paper)
 alias tsprod='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 30000 peter@10.1.1.100'
 alias tspaper='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 50000 peter@10.1.1.100'
+=======
+# check of os type
+if [[ "$(uname)" == "Darwin" ]]; then
+    # Do something under Mac OS X platform
+    export os_type='mac'
+elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
+    # Do something under GNU/Linux platform
+    export os_type='linux'
+elif [[ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]]; then
+    # Do something under 32 bits Windows NT platform
+    export os_type='windows'
+elif [[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]]; then
+    # Do something under 64 bits Windows NT platform
+    export os_type='windows'
+fi
+
+
+############################### Utilities / Functions #############################
+# setenv is compatible in both Zsh and Fish
+function setenv() { export "$1=$2"; }
+>>>>>>> 49c80ecfc14328316888f47329ede60dc2532c9d
+
 alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v /home/peter/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker'
 alias fd=fdfind
 alias vpn='sudo /usr/local/Cellar/openvpn/2.4.9/sbin/openvpn --config ~/peter.ovpn'
@@ -505,3 +527,7 @@ cowsayfortune | lolcat --spread 1.0
 
 # Launch fish
 # fish
+=======
+# Launch fish
+fish
+>>>>>>> 49c80ecfc14328316888f47329ede60dc2532c9d
