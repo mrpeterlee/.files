@@ -1,4 +1,4 @@
-#! /usr/bin/zsh
+#! /usr/bin/env zsh
 
 # -------------------========================================------------------- #
 #                                                                                #
@@ -20,30 +20,15 @@
 # setenv is compatible in both Zsh and Fish
 function setenv() { export "$1=$2"; }
 
-# files=( "$HOME/.files/bash/function" )
-# for file in $files; do
-#     if [ -f "$file" ]; then
-#         . "$file"
-#     fi
-# done
-#     
+# Set zsh function path
+fpath=( /usr/local/bin /lab/lib/finclab/sh/zsh "${fpath[@]}")
+# autoload -Uz parse_yml
 
-# check of os type
-if [[ "$(uname)" == "Darwin" ]]; then
-    # Do something under Mac OS X platform
-    export os_type='mac'
-elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
-    # Do something under GNU/Linux platform
-    export os_type='linux'
-elif [[ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]]; then
-    # Do something under 32 bits Windows NT platform
-    export os_type='windows'
-elif [[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]]; then
-    # Do something under 64 bits Windows NT platform
-    export os_type='windows'
+# ------------------================== Rust ==================------------------ #
+## Source Cargo
+if [[ ( -f "$HOME/.cargo/env" ) ]]; then
+  . "$HOME/.cargo/env"
 fi
-
-
 
 
 # ------------------================== Python ==================------------------ #
@@ -65,7 +50,7 @@ fi
 
 # Default repos -- integrate the variable of default environment
 unset PYTHONPATH
-export PYTHONPATH="/lab/lib:$HOME/lab/lib"
+export PYTHONPATH=/lab/lib:~/lab/lib
 
 # repos=("finclab" \
 #        "datalab" \
@@ -76,7 +61,7 @@ export PYTHONPATH="/lab/lib:$HOME/lab/lib"
 
 # for repo in $repos; do 
 #     if [ -d ${HOME}/lab/paper/${repo} ]; then
-#         export PYTHONPATH="${HOME}/lab/paper/${repo}:${PYTHONPATH}"
+#         export PYTHONPATH=${HOME}/lab/paper/${repo}:${PYTHONPATH}
 #         echo "Python Path - included additional source lib ${HOME}/lab/paper/${repo}"
 #     else
 #         if [ -d /lab/${repo} ]; then
@@ -87,43 +72,15 @@ export PYTHONPATH="/lab/lib:$HOME/lab/lib"
 # done
 
 
-
-
-# ------------------================== General ==================------------------ #
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-	export EDITOR='lvim'
-else
-	export EDITOR='lvim'
-fi
-
-# Configure pager 'less'
-export MANPAGER='less -s -M +Gg'
-manp() {
-	LESS_TERMCAP_md=$'\e[00;36m' \
-	LESS_TERMCAP_me=$'\e[0m' \
-	LESS_TERMCAP_se=$'\e[0m' \
-	LESS_TERMCAP_so=$'\e[01;31m' \
-	LESS_TERMCAP_ue=$'\e[0m' \
-	LESS_TERMCAP_us=$'\e[00;33m' \
-	command man "$@"
-}
-
-
 # ------------------================== Paths ==================------------------ #
 # System Paths
 dirs=( '/opt/conda/bin' \
        '/snap/bin' \
 
-       '/home/peter/.local/bin' \
-       '/home/peter/.local/bin' \
-       '/home/peter/.files/bin' \
-       '/home/peter/.cargo/bin' \
-
-       '/Users/peter/.local/bin' \
-       '/Users/peter/.local/bin' \
-       '/Users/peter/.files/bin' \
-       '/Users/peter/.cargo/bin' \
+       ~/.local/bin \
+       ~/.local/bin \
+       ~/.files/bin \
+       ~/.cargo/bin \
 
        '/lab/lib/finclab/sh/bin' \
        '/lab/lib/finclab/sh/bash' \
@@ -131,15 +88,13 @@ dirs=( '/opt/conda/bin' \
        '/lab/lib/finclab/sh/fish' \
    )
 for folderpath in $dirs; do
-    # echo "looking at folder $folderpath"
     if [ -d "$folderpath" ]; then
-        # echo "folder exists: $folderpath"
         export PATH="$folderpath:$PATH"
     fi
 done
 
 # Additional cowsay..
-COWPATH="$COWPATH:$HOME/.cowsay/cowfiles"
+COWPATH=$COWPATH:~/.cowsay/cowfiles
 
 # ------------------================== Env Variables ==================------------------ #
 # Grab env variables
@@ -155,333 +110,22 @@ if [ -f "${HOME}/.lab/labenv.yml" ]; then
     done
 fi
 
-############################## Utilities / Functions #############################
-alias man=manp
-# Login to TradeStation (default to paper)
-alias tsprod='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 30000 peter@10.1.1.100'
-alias tspaper='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 50000 peter@10.1.1.100'
-alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v /home/peter/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker'
-alias fd=fdfind
-alias vpn='sudo /usr/local/Cellar/openvpn/2.4.9/sbin/openvpn --config ~/peter.ovpn'
-alias update_prezto='cd $ZPREZTODIR;git pull;git submodule update --init --recursive'
-
-alias ls='exa --group-directories-first'
-alias l='exa -lah --group-directories-first'
-alias ll='exa -lah --group-directories-first'
-
-if ! type "batcat" > /dev/null; then
-    alias cat='batcat'
-fi
-
-alias lsp='ls -C --color=always | less -R'
-alias lsd='ls -ld */'
-alias lsf='ls -lhp | grep -v "/"'
-alias unbz='tar -jxvf'
-alias ungz='tar -zxvf'
-alias cmc='./configure && make && sudo checkinstall'
-alias cleanswap='sudo swapoff -a && sudo swapon -a'
-
-# Hardware
-alias ram='free -h'
-alias dush='du -sh'
-alias dushs='du -sh * | sort -r -h'
-alias disk='df -h .'
-
-# X11
-alias xres='xrdb ~/.Xresources'
-
-# Zsh
-alias v='lvim'
-alias vim='lvim'
-alias viz='vim ~/.zshrc'
-alias soz='source ~/.zshrc'
-
-# Vim
-alias vir='vim $HOME/.vimrc'
-alias vimgd='vim `git diff --name-only`'
-alias svim='sudoedit'
-alias vil='vim $HOME/.SpaceVim/autoload/myspacevim.vim'
-alias vis='vim $HOME/.SpaceVim.d/init.toml'
-
-# Vifm
-alias vif='vim ~/.config/vifm/vifmrc'
-
-# Neovim
-if [ -x "$(command -v nvim)"  ]; then
-    alias vim=nvim
-fi
-
-# Docker
-## Show all docker name and port
-alias ddc="docker ps -q | xargs -n 1 docker inspect --format '{{ .Name }} {{range .NetworkSettings.Networks}} {{.IPAddress}}{{end}}' | sed 's#^/##';"
-
-
-# Trash-cli tool
-# sudo apt install trash-cli
-#alias rm='echo "rm is disabled, use tr or trash or /bin/rm instead."'
-alias tr='trash'
-alias trl='trash-list'
-alias tre='trash-empty'
-alias trun='trash `git ls-files . --exclude-standard --others`' # mv git untracked 
-
-# Apt
-alias aptedit='sudo apt edit-sources'
-alias aptdep='apt-cache depends'
-alias aptpol='apt-cache policy'
-alias aptsea='apt-cache search'
-alias aptsho='apt-cache show'
-alias aptver='apt-cache madison'
-alias aptbin='apt-get download'
-alias aptsrc='apt-get source'
-alias aptins='sudo apt-get install'
-alias aptsid='sudo apt-get -t sid install'
-alias aptrem='sudo apt-get remove'
-alias aptaut='sudo apt-get autoremove'
-alias aptupg='sudo apt-get update && sudo apt-get upgrade'
-
-# Surfraw
-alias srd='surfraw duckduckgo'
-alias srg='surfraw github'
-alias srl='surfraw slinuxdoc'
-alias srm='surfraw mdn'
-alias srs='surfraw stack'
-alias srw='surfraw wikipedia'
-alias srwca='surfraw wikipedia -l=CA'
-alias srwes='surfraw wikipedia -l=ES'
-alias sry='surfraw youtube'
-
-# Faster git alias
-alias gg='git status'
-alias gd='git diff'
-alias gds='git diff --staged'
-alias gdn='git diff --name-only'
-alias gc='git commit'
-alias gcm='git commit -m'
-alias gcam='git commit --amend -m'
-alias gl='git log'
-alias gls='git log --stat'
-alias ga='git add'
-alias gk='git checkout'
-alias gb='git branch'
-alias gt='git tag'
-alias gver='git_version'
-alias gm='git merge'
-alias grebm='git rebase master'       # Update a branch with the master
-alias guntr='git rm --cached'         # Untrack file
-alias gunst='git reset HEAD'          # Unstage file
-alias gunco='git reset --soft HEAD~1' # Undo last commit
-alias gpuom='git push origin master'
-alias gpush='git push'
-alias gpull='git pull'
-
-# Dev
-alias cdd='cd $HOME/project/; ls -ld */'
-
-# Translate-shell
-# apt install translate-shell
-alias enes='trans en:es -brief'
-alias esen='trans es:en -brief'
-alias enzh='trans es:zh -brief'
-alias zhen='trans zh:en -brief'
-alias enfr='trans en:fr -brief'
-alias fren='trans fr:en -brief'
-alias enjp='trans en:ja -brief'
-alias jpen='trans ja:en -brief'
-
-# Time
-alias cal1='ncal -M1b'
-alias cal3='ncal -M3b'
-alias caly='ncal -Myb'
-alias diso='date -I | sed "s/-//g"'
-alias dutc='date -u'
-alias dabs='echo "Day: $(date +%j) - Week: $(date +%V)"'
-
-# Network
-alias ipr='ip route'
-alias wanip='curl -s icanhazip.com'
-
-# http://www.zzapper.co.uk/zshtips.html
-alias -g ND='*(/om[1])'     # newest directory
-alias -g NF='*(.om[1])'     # newest file
-alias -g NO='&>|/dev/null'
-alias -g P='2>&1 | $PAGER'
-alias -g VV='| vim -R -'
-alias -g G='| grep'
-alias -g L='| less'
-alias -g M='| most'
-alias -g C='| wc -l'
-alias -g H='| head'
-alias -g T='| tail'
-alias -g H1='| head -n 1'
-alias -g T1='| tail -n 1'
-alias -g LL='2>&1 | less'
-alias -g CA='2>&1 | cat -A'
-alias -g NE='2> /dev/null'
-alias -g NUL='> /dev/null 2>&1'
-alias -g CC='| xsel -b'
-
-# Misc
-alias news='newsbeuter'
-alias www='w3m'
-alias mux='tmuxinator'
-
-
-# ssh copy back to local
-# https://stackoverflow.com/questions/1152362/how-to-send-data-to-local-clipboard-from-a-remote-ssh-session
-alias cb='ssh -p 2222 127.0.0.1 pbcopy'
-alias ww='curl wttr.in'
-
-# Connect to DB services
-alias connect_tickstore='make -C ~/project/tickstore connect'
-alias connect_datastore='make -C ~/project/datastore connect'
-alias connect_docstore='make -C ~/project/docstore connect'
-alias ssh_localhost='ssh-keygen -f "${HOME}/.ssh/known_hosts" -R "[localhost]:8000" && sshpass -p StrongPassword ssh -p 8000 root@localhost'
-alias ssh_localhost='sshpass -p StrongPassword ssh -p 8000 root@localhost'
-alias ssh_workspace='sshpass -p StrongPassword ssh -p 8000 root@vpn.finclab.com'
-alias notebook='jupyter lab --ip="*" --port=50000 --no-browser --NotebookApp.password="${jupyter_password}" --NotebookApp.token="" --NotebookApp.allow_remote_access=True --notebook-dir=$HOME/project'
-
-
-# TradeStation
-export tradestation_lean_path=${HOME}/project/tradestation/lean
-if [[ -d /lab/lean ]]; then
-    export tradestation_lean_path=/lab/lean
-fi
-#alias tscompile='cd $tradestation_lean_path; nuget restore ./QuantConnect.Lean.sln ; msbuild ./QuantConnect.Lean.sln ; cd -; tsrun'
-alias tslc='vim $tradestation_lean_path/Launcher/config.json'
-#tsoverride_mac_python_config() {
-#    if [[ ${os_type} == "mac" ]]; then
-#        if [[ -f "${HOME}/project/tradestation/lean/Launcher/bin/Debug/Python.Runtime.dll.config" ]]; then
-#            export mac_python_config="<?xml version='1.0' encoding='utf-8'?>\n<configuration>\n<dllmap dll='python3.6m' target='/usr/local/anaconda3/lib/libpython3.6m.dylib' os='!windows'/>\n</configuration>"
-#            rm -f /Users/peter/project/tradestation/lean/Launcher/bin/Debug/Python.Runtime.dll.config
-#            echo -e $mac_python_config > /Users/peter/project/tradestation/lean/Launcher/bin/Debug/Python.Runtime.dll.config
-#            #echo "$mac_python_config"
-#        fi
-#    fi
-#}
-
-tscompile() {
-    lean_path=${1:-"${tradestation_lean_path}"}
-    echo "Compiling lean at the target path: ${lean_path}"
-    cd $lean_path
-    nuget restore ./QuantConnect.Lean.sln 
-    msbuild ./QuantConnect.Lean.sln 
-    cd -
-}
-
-# alias tsrun='cd $tradestation_lean_path/Launcher/bin/Debug ; mono ./QuantConnect.Lean.Launcher.exe ; cd -'
-tsrun() {
-    lean_path=${1:-"${tradestation_lean_path}"}
-    tscompile "${lean_path}"
-    echo "Running lean compiled at the target path: ${lean_path}"
-    # tsoverride_mac_python_config
-    cd $lean_path/Launcher/bin/Debug 
-    mono ./QuantConnect.Lean.Launcher.exe 
-    cd -
-}
-
-
-################################### Vi-mode ##################################
-bindkey -v
-export KEYTIMEOUT=20
-
-# Navigate in tab autocomplete menu
-# bindkey -M menuselect 'h' vi-backward-char
-# bindkey -M menuselect 'k' vi-up-line-or-history
-# bindkey -M menuselect 'l' vi-forward-char
-# bindkey -M menuselect 'j' vi-down-line-or-history
-
-# Change cursor shape
-zle-keymap-select () {
-if [ $KEYMAP = vicmd ]; then
-	echo -ne "\e[2 q"
-else
-	echo -ne "\e[6 q"
-fi
-}
-
-zle-line-init() {
-	echo -ne "\e[6 q"
-}
-
-zle-line-finish() {
-	echo -ne "\e[2 q"
-}
-
-zle -N zle-keymap-select
-zle -N zle-line-init
-zle -N zle-line-finish
-
-vifmx() {
-	vifm .
-}
-
-bindkey -s '^o' 'vifmx\n'
-
-# Edit line in vim
-autoload edit-command-line; zle -N edit-command-line
-bindkey '^x' edit-command-line
-
-# Readline commands in vi-mode
-bindkey '^a' beginning-of-line
-bindkey '^e' end-of-line
-bindkey '^b' backward-char
-bindkey '^f' forward-char
-bindkey '^h' backward-delete-char
-bindkey '^d' delete-char
-bindkey '^k' kill-line
-bindkey '^u' kill-whole-line
-bindkey '^w' backward-kill-word
-bindkey '^q' kill-word
-bindkey '^p' up-line-or-beginning-search
-bindkey '^n' down-line-or-beginning-search
-
-# Interrupt key is Ctrl+j
-# - As in tmux to close pane/window: Ctrl+Alt+j
-# - As in i3wm window: Ctrl+$mod+j
-# stty intr ^j
-
-# Escape key is Ctrl+c
-# - As in vim
-bindkey '^c' vi-cmd-mode
-
-# Surround
-autoload -U select-quoted # ci"
-zle -N select-quoted
-for m in visual viopp; do
-	for c in {a,i}{\',\",\`}; do
-		bindkey -M $m $c select-quoted
-	done
+# ------------------================== Functions ==================------------------ #
+files=( ~/.files/zsh/zalias \
+       /lab/lib/finclab/sh/zsh/utils \
+      )
+for file in $files; do 
+    if [ -f $file ]; then
+       source $file
+    fi
 done
 
-autoload -U select-bracketed # ci{, ci(
-zle -N select-bracketed
-for m in visual viopp; do
-	for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
-		bindkey -M $m $c select-bracketed
-	done
-done
-autoload -Uz surround
-zle -N delete-surround surround
-zle -N add-surround surround
-zle -N change-surround surround
-bindkey -a cs change-surround
-bindkey -a ds delete-surround
-bindkey -a ys add-surround
-bindkey -M visual S add-surround
-
-
-# string=$(conda env list)
-# word="${labenv}"
-# test "${string#*$word}" != "$string" && echo "$word found in conda environment" && conda activate "$word"
-# test "${string#*$word}" = "$string" && echo "$word NOT found in conda environment" && conda activate base
-
-export HOUSTON_URL=http://10.1.1.100:1969
-if [[ ${os_type} == "mac" ]]; then
-    # Do something under Mac OS X platform
-    export HOUSTON_URL=http://houston.finclab.com:1969
-fi
 
 ## ------------------================== Themes ==================------------------ #
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
 # Starfish theme
 eval "$(starship init zsh)"
 
@@ -496,13 +140,90 @@ function cowsayfortune {
     fortune | cowsay -f $THISCOW -W 100
 }
 
+# ------------------================== General Settings ==================------------------ #
+export EDITOR='lvim'
+
+# Configure pager 'less'
+export MANPAGER='less -s -M +Gg'
+manp() {
+	LESS_TERMCAP_md=$'\e[00;36m' \
+	LESS_TERMCAP_me=$'\e[0m' \
+	LESS_TERMCAP_se=$'\e[0m' \
+	LESS_TERMCAP_so=$'\e[01;31m' \
+	LESS_TERMCAP_ue=$'\e[0m' \
+	LESS_TERMCAP_us=$'\e[00;33m' \
+	command man "$@"
+}
+
+export HOUSTON_URL=http://10.1.1.100:1969
+
+# why would you type 'cd dir' if you could just type 'dir'?
+setopt AUTO_CD
+# Now we can pipe to multiple outputs!
+setopt MULTIOS
+# This makes cd=pushd; this option you can use something like cd -5 to get back to the 5th directory you've visited.
+setopt AUTO_PUSHD
+# This will use named dirs when possible
+setopt AUTO_NAME_DIRS
+# If we have a glob this will expand it
+setopt GLOB_COMPLETE
+setopt PUSHD_MINUS
+# No more annoying pushd messages...
+# setopt PUSHD_SILENT
+# blank pushd goes to home
+setopt PUSHD_TO_HOME
+# this will ignore multiple directories for the stack.  Useful?  I dunno.
+setopt PUSHD_IGNORE_DUPS
+# 10 second wait if you do something that will delete everything.  I wish I'd had this before...
+setopt RM_STAR_WAIT
+# use magic (this is default, but it can't hurt!)
+setopt ZLE
+setopt NO_HUP
+setopt IGNORE_EOF
+# If I could disable Ctrl-s completely I would!
+setopt NO_FLOW_CONTROL
+# Keep echo "station" > station from clobbering station
+setopt NO_CLOBBER
+# Case insensitive globbing
+setopt NO_CASE_GLOB
+# Be Reasonable!
+setopt NUMERIC_GLOB_SORT
+setopt EXTENDED_GLOB
+# hows about arrays be awesome?  (that is, frew${cool}frew has frew surrounding all the variables, not just first and last
+setopt RC_EXPAND_PARAM
+
+# ------------------================== Bindings ==================------------------ #
+# export KEYTIMEOUT=20
+
+# Make home and end to work
+bindkey '\e[1~' beginning-of-line
+bindkey '\e[4~' end-of-line
+
+# Incremental search is elite!
+bindkey -M vicmd "/" history-incremental-search-backward
+bindkey -M vicmd "?" history-incremental-search-forward
+
+# Search based on what you typed in already
+bindkey -M vicmd "//" history-beginning-search-backward
+bindkey -M vicmd "??" history-beginning-search-forward
+
+bindkey "\eOP" run-help
+
+# oh wow!  This is killer...  try it!
+bindkey -M vicmd "q" push-line
+
+# it's like, space AND completion.  Gnarlbot.
+bindkey -M viins ' ' magic-space
+
+# Navigate in tab autocomplete menu
+# bindkey -M menuselect 'h' vi-backward-char
+# bindkey -M menuselect 'k' vi-up-line-or-history
+# bindkey -M menuselect 'l' vi-forward-char
+# bindkey -M menuselect 'j' vi-down-line-or-history
+
+# Edit line in vim
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^x' edit-command-line
+
+# ------------------================== Login script ==================------------------ #
 cowsayfortune | lolcat --spread 1.0
-
-export LC_CTYPE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-# cow=$(shuf -n 1 -e $(cowsay -l))
-# fortune | cowsay -f "$cow" | lolcat --spread 1.0
-
-# Launch fish
-# fish

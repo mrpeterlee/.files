@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+function_source="/lab/lib/finclab/sh/bash/function"
+if [[ ! -f "$function_source" ]]; then
+    function_source="$HOME/.files/bash/function"
+fi
+source "$function_source"
+
 # If not running interactively, don't do anything
 case $- in
   *i*) ;;
@@ -171,15 +177,6 @@ export SCM_CHECK=true
 
 # Load Bash It
 source "$BASH_IT"/bash_it.sh
-
-# Load helper functions
-if [ -f "/lab/prod/lib/finclab/sh/bash/function" ]; then
-    source "/lab/prod/lib/finclab/sh/bash/function"
-fi
-if [ -f "$HOME/.files/bash/function" ]; then
-    source "$HOME/.files/bash/function"
-fi
-
 
 # Grab env variables
 parse_yaml_env "${HOME}/.lab/labenv.yml"

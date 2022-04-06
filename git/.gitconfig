@@ -52,5 +52,3 @@
 	newHighlight = green bold 22
 [diff-so-fancy]
 	markEmptyLines = false
-[url "git@github.com:"]
-  insteadOf = "https://github.com/"

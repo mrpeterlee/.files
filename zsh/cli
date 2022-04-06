@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-""" CLI Installation for NeoVim
+""" CLI Installation for Zsh
 
 id:            Peter Lee (peter.lee@finclab.com)
 last_update:   2022-03-28 09:31:43 EDT
 type:          lib
 sensitivity:   datalab@finclab.com
 platform:      any
-description:   This module intends for reinstalling NeoVim in terminal environment.
+description:   This module intends for reinstalling Zsh in terminal environment.
 """
 
 import os
@@ -24,41 +24,32 @@ import finclab.io.file
 from finclab.logger import init_logger
 from simple_parsing import ArgumentParser
 
-app_name = "NeoVim"
+app_name = "Zsh"
 logger = init_logger("Install.Files")
 
 DIR_DOTFILES = Path(Path.home(), ".files")
 
 # SYMLINKS
 SYMLINKS = {
-    # LunarVim user config
-    Path(Path.home(), ".config", "lvim", "config.lua"): Path(
-        DIR_DOTFILES, "neovim", "lvim", "config.lua"
-    ),
-    # Additional config dir
-    Path(Path.home(), ".config", "lvim", "vimscript"): Path(
-        DIR_DOTFILES, "neovim", "lvim", "vimscript"
-    ),
-    Path(Path.home(), ".config", "lvim", "lua"): Path(
-        DIR_DOTFILES, "neovim", "lvim", "lua"
-    ),
-    Path(Path.home(), ".local", "share", "lunarvim", "lvim", "lua", "config"): Path(
-        DIR_DOTFILES, "neovim", "lvim", "lua", "config"
-    ),
-    # SpaceVim user folder
-    Path(Path.home(), ".SpaceVim.d"): Path(DIR_DOTFILES, "neovim", ".SpaceVim.d"),
-    # pylintrc
-    Path(Path.home(), ".pylintrc"): Path(DIR_DOTFILES, "neovim", ".pylintrc"),
-    # pydocstyle
-    Path(Path.home(), ".config", "pycodestyle"): Path(
-        DIR_DOTFILES, "neovim", "pycodestyle"
-    ),
+    # zshrc
+    Path(Path.home(), ".zshrc"): Path(DIR_DOTFILES, "zsh", "zshrc"),
+    # zpreztorc
+    Path(Path.home(), ".zpreztorc"): Path(DIR_DOTFILES, "zsh", "zpreztorc"),
+    # starship
+    Path(Path.home(), ".config", "starship.toml"): Path(DIR_DOTFILES, "starship", "starship.toml"),
+
+    # Other zprezto runcoms
+    Path(Path.home(), ".zlogin"): Path(Path.home(), ".zprezto", "runcoms", "zlogin"),
+    Path(Path.home(), ".zlogout"): Path(Path.home(), ".zprezto", "runcoms", "zlogout"),
+    Path(Path.home(), ".zprofile"): Path(Path.home(), ".zprezto", "runcoms", "zprofile"),
+    Path(Path.home(), ".zshenv"): Path(Path.home(), ".zprezto", "runcoms", "zshenv"),
 }
 
 
 def update_symlink():
     """Re-link the config files from dotfiles repo."""
-    # Ensure the data folders exist
+    # Connect to zprezto runcoms
+    # Create symlink to .files folder
     for nonexist, exist in SYMLINKS.items():
         print(f"Creating symlink from {exist} to {nonexist}...")
         finclab.io.file.update_symlink(nonexist, exist)
@@ -79,7 +70,7 @@ def force_install():
 
 @dataclass
 class Install:
-    """CLI Tool to Configure / Install Neovim
+    """CLI Tool to Configure / Install Zsh
 
     Usage
     -----
@@ -98,13 +89,14 @@ class Install:
         """Execute"""
         print(f"Welcome to {app_name} Installation Script...")
         if self.force:
+            raise ValueError("Sorry not done...")
             force_install()
         update_symlink()
 
 
 @dataclass
 class Update:
-    """CLI Tool to Update Neovim to latest
+    """CLI Tool to Update Zsh to latest
 
     Usage
     -----
@@ -121,14 +113,37 @@ class Update:
 
     def execute(self):
         """Execute"""
-        if self.edge:
-            raise ValueError("@todo sorry not-supported yet.")
-        raise ValueError("@todo sorry update is not-supported yet.")
+        print("Updating zprezto")
+        cmd = '''
+            # Update zprezto
+            cd ~/.zprezto
+            git pull
+            git submodule sync --recursive
+            git submodule update --init --recursive
+            '''
+        os.system(cmd)
+
+        print("Updating starship")
+        cmd = '''
+        # This will install/update the latest version
+        cargo install starship
+        '''
+        os.system(cmd)
+
+        print("Update zsh-z - a plugin for zprezto")
+        cmd = '''
+        # Orig install: git clone https://github.com/agkozak/zsh-z.git ~/.zprezto-contrib/zsh-z
+        cd ~/.zprezto-contrib/zsh-z
+        git pull
+        git submodule sync --recursive
+        git submodule update --init --recursive
+        '''
+        os.system(cmd)
 
 
 @dataclass
 class MainMenu:
-    """NeoVim Installation CLI Main Menu"""
+    """Zsh Installation CLI Main Menu"""
 
     command: typing.Union[Install, Update]
 

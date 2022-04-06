@@ -56,13 +56,13 @@ ssh_only = false
 # suffix = ">"
 # trim_at = "-"
 style = "dimmed white"
-format =  "on [$hostname](bold red) "
+format = "on [$hostname](bold red) "
 disabled = false
 
 [julia]
 symbol = "ஃ "
 style = "bold green"
-disabled = false 
+disabled = false
 
 [memory_usage]
 threshold = 50
@@ -74,9 +74,11 @@ disabled = false
 disabled = true
 
 [python]
-symbol = " py "
+symbol = "👾 "
+# symbol = " py "
+python_binary = 'python3'
 pyenv_version_name = true
-pyenv_prefix = "foo "
+pyenv_prefix = "pyenv "
 
 [dotnet]
 symbol = " .net "
@@ -107,5 +109,3 @@ disabled = true
 [[battery.display]]
 threshold = 30
 style = "bold red"
-
-

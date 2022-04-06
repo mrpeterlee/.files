@@ -9,6 +9,11 @@ set-option -sa terminal-overrides ',screen-256color:RGB'
 # tell Tmux that outside terminal supports true color
 # set -ga terminal-overrides ",xterm-256color*:Tc"
 
+# Something suggested to avoid flickering in zsh
+set-window-option -g window-style 'bg=#181818'
+set-window-option -g window-active-style 'bg=black'
+set-window-option -g pane-active-border-style ''
+
 
 # -- navigation ----------------------------------------------------------------
 

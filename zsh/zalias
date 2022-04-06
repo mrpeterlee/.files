@@ -1,0 +1,184 @@
+#! /usr/bin/env zsh
+
+alias man=manp
+# Login to TradeStation (default to paper)
+alias tsprod='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 30000 peter@10.1.1.100'
+alias tspaper='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 50000 peter@10.1.1.100'
+alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v /home/peter/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker'
+alias fd=fdfind
+alias vpn='sudo /usr/local/Cellar/openvpn/2.4.9/sbin/openvpn --config ~/peter.ovpn'
+
+alias ls='exa --group-directories-first'
+alias l='exa -lah --group-directories-first'
+alias ll='exa -lah --group-directories-first'
+
+if ! type "batcat" > /dev/null; then
+    alias cat='batcat'
+fi
+
+alias unbz='tar -jxvf'
+alias ungz='tar -zxvf'
+alias cmc='./configure && make && sudo checkinstall'
+alias cleanswap='sudo swapoff -a && sudo swapon -a'
+
+# Hardware
+alias ram='free -h'
+alias dush='du -sh'
+alias dushs='du -sh * | sort -r -h'
+alias disk='df -h .'
+
+# X11
+alias xres='xrdb ~/.Xresources'
+
+# Zsh
+alias v='lvim'
+alias vim='lvim'
+alias viz='vim ~/.zshrc'
+alias soz='source ~/.zshrc'
+
+# Vim
+alias vir='vim $HOME/.vimrc'
+alias vimgd='vim `git diff --name-only`'
+alias svim='sudoedit'
+alias vil='vim $HOME/.SpaceVim/autoload/myspacevim.vim'
+alias vis='vim $HOME/.SpaceVim.d/init.toml'
+
+# Vifm
+alias vif='vim ~/.config/vifm/vifmrc'
+
+# Neovim
+if [ -x "$(command -v nvim)"  ]; then
+    alias vim=nvim
+fi
+
+# Docker
+## Show all docker name and port
+alias ddc="docker ps -q | xargs -n 1 docker inspect --format '{{ .Name }} {{range .NetworkSettings.Networks}} {{.IPAddress}}{{end}}' | sed 's#^/##';"
+
+
+# Trash-cli tool
+# sudo apt install trash-cli
+#alias rm='echo "rm is disabled, use tr or trash or /bin/rm instead."'
+alias tr='trash'
+alias trl='trash-list'
+alias tre='trash-empty'
+alias trun='trash `git ls-files . --exclude-standard --others`' # mv git untracked 
+
+# Apt
+alias aptedit='sudo apt edit-sources'
+alias aptdep='apt-cache depends'
+alias aptpol='apt-cache policy'
+alias aptsea='apt-cache search'
+alias aptsho='apt-cache show'
+alias aptver='apt-cache madison'
+alias aptbin='apt-get download'
+alias aptsrc='apt-get source'
+alias aptins='sudo apt-get install'
+alias aptsid='sudo apt-get -t sid install'
+alias aptrem='sudo apt-get remove'
+alias aptaut='sudo apt-get autoremove'
+alias aptupg='sudo apt-get update && sudo apt-get upgrade'
+
+# Surfraw
+alias srd='surfraw duckduckgo'
+alias srg='surfraw github'
+alias srl='surfraw slinuxdoc'
+alias srm='surfraw mdn'
+alias srs='surfraw stack'
+alias srw='surfraw wikipedia'
+alias srwca='surfraw wikipedia -l=CA'
+alias srwes='surfraw wikipedia -l=ES'
+alias sry='surfraw youtube'
+
+# Faster git alias
+alias gg='git status'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gdn='git diff --name-only'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gcam='git commit --amend -m'
+alias gl='git log'
+alias gls='git log --stat'
+alias ga='git add'
+alias gk='git checkout'
+alias gb='git branch'
+alias gt='git tag'
+alias gver='git_version'
+alias gm='git merge'
+alias grebm='git rebase master'       # Update a branch with the master
+alias guntr='git rm --cached'         # Untrack file
+alias gunst='git reset HEAD'          # Unstage file
+alias gunco='git reset --soft HEAD~1' # Undo last commit
+alias gpuom='git push origin master'
+alias gpush='git push'
+alias gpull='git pull'
+
+# Dev
+alias cdd='cd $HOME/project/; ls -ld */'
+
+# Translate-shell
+# apt install translate-shell
+alias enes='trans en:es -brief'
+alias esen='trans es:en -brief'
+alias enzh='trans es:zh -brief'
+alias zhen='trans zh:en -brief'
+alias enfr='trans en:fr -brief'
+alias fren='trans fr:en -brief'
+alias enjp='trans en:ja -brief'
+alias jpen='trans ja:en -brief'
+
+# Time
+alias cal1='ncal -M1b'
+alias cal3='ncal -M3b'
+alias caly='ncal -Myb'
+alias diso='date -I | sed "s/-//g"'
+alias dutc='date -u'
+alias dabs='echo "Day: $(date +%j) - Week: $(date +%V)"'
+
+# Network
+alias ipr='ip route'
+alias wanip='curl -s icanhazip.com'
+
+# http://www.zzapper.co.uk/zshtips.html
+alias -g ND='*(/om[1])'     # newest directory
+alias -g NF='*(.om[1])'     # newest file
+alias -g NO='&>|/dev/null'
+alias -g P='2>&1 | $PAGER'
+alias -g VV='| vim -R -'
+alias -g G='| grep'
+alias -g L='| less'
+alias -g M='| most'
+alias -g C='| wc -l'
+alias -g H='| head'
+alias -g T='| tail'
+alias -g H1='| head -n 1'
+alias -g T1='| tail -n 1'
+alias -g LL='2>&1 | less'
+alias -g CA='2>&1 | cat -A'
+alias -g NE='2> /dev/null'
+alias -g NUL='> /dev/null 2>&1'
+alias -g CC='| xsel -b'
+
+# Misc
+alias news='newsbeuter'
+alias www='w3m'
+alias mux='tmuxinator'
+
+
+# ssh copy back to local
+# https://stackoverflow.com/questions/1152362/how-to-send-data-to-local-clipboard-from-a-remote-ssh-session
+alias cb='ssh -p 2222 127.0.0.1 pbcopy'
+alias ww='curl wttr.in'
+
+# Connect to DB services
+alias connect_tickstore='make -C ~/project/tickstore connect'
+alias connect_datastore='make -C ~/project/datastore connect'
+alias connect_docstore='make -C ~/project/docstore connect'
+alias ssh_localhost='ssh-keygen -f "${HOME}/.ssh/known_hosts" -R "[localhost]:8000" && sshpass -p StrongPassword ssh -p 8000 root@localhost'
+alias ssh_localhost='sshpass -p StrongPassword ssh -p 8000 root@localhost'
+alias ssh_workspace='sshpass -p StrongPassword ssh -p 8000 root@vpn.finclab.com'
+alias notebook='jupyter lab --ip="*" --port=50000 --no-browser --NotebookApp.password="${jupyter_password}" --NotebookApp.token="" --NotebookApp.allow_remote_access=True --notebook-dir=$HOME/project'
+
+
+

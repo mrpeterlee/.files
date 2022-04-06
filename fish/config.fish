@@ -39,6 +39,7 @@ conda activate $labenv
 # Disable greeting
 set fish_greeting
 
+
 ############################## My Settings #############################
 fish_vi_key_bindings  # vi-mode
 # Init Starship
@@ -74,6 +75,7 @@ abbr -a prod 'set -lx _current_folder (pwd) && set _current_folder (string repla
 abbr -a ssh_ts 'ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 50000 peter@10.1.1.100'
 abbr -a pjo pj open
 abbr -a tm 'tmate -k $finclab_tmate_api_key -n finclab-peter'
+
 
 ############################## ALIAS #############################
 alias g=git
