@@ -37,24 +37,12 @@ alias viz='vim ~/.zshrc'
 alias soz='source ~/.zshrc'
 
 # Vim
-alias vir='vim $HOME/.vimrc'
 alias vimgd='vim `git diff --name-only`'
 alias svim='sudoedit'
-alias vil='vim $HOME/.SpaceVim/autoload/myspacevim.vim'
-alias vis='vim $HOME/.SpaceVim.d/init.toml'
-
-# Vifm
-alias vif='vim ~/.config/vifm/vifmrc'
-
-# Neovim
-if [ -x "$(command -v nvim)"  ]; then
-    alias vim=nvim
-fi
 
 # Docker
 ## Show all docker name and port
 alias ddc="docker ps -q | xargs -n 1 docker inspect --format '{{ .Name }} {{range .NetworkSettings.Networks}} {{.IPAddress}}{{end}}' | sed 's#^/##';"
-
 
 # Trash-cli tool
 # sudo apt install trash-cli

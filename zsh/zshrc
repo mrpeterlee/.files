@@ -141,7 +141,7 @@ function cowsayfortune {
 }
 
 # ------------------================== General Settings ==================------------------ #
-export EDITOR='lvim'
+export EDITOR='vim'
 
 # Configure pager 'less'
 export MANPAGER='less -s -M +Gg'
@@ -194,6 +194,12 @@ setopt RC_EXPAND_PARAM
 
 # ------------------================== Bindings ==================------------------ #
 # export KEYTIMEOUT=20
+bindkey -s '^o' 'vim $(fzf)^M'
+
+# autocomplete CTRL-; to move to the end of auto-suggestions
+bindkey '^f' end-of-line
+bindkey '^l' forward-word
+bindkey '^h' backward-word
 
 # Make home and end to work
 bindkey '\e[1~' beginning-of-line
