@@ -409,23 +409,25 @@ bind-key -n M-- split-window -v
 bind-key -n M-e list-panes
 bind-key -n M-t clock-mode
 
-# Panes navigation (Vim-like)
-# bind-key -n M-h select-pane -L
-# bind-key -n M-l select-pane -R
-# bind-key -n M-k select-pane -U
-# bind-key -n M-j select-pane -D
-
 # Move between Tmux panes and Vim windows
 # - It requires the corresponding configuration into Vim.
 # - Check it at my .vimrc, section 9 («Multiple windows»).
 # - URL: https://github.com/gerardbm/vimrc/blob/master/vimrc
 # - Plugin required: https://github.com/christoomey/vim-tmux-navigator
-is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
-    | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-bind-key -n M-h if-shell "$is_vim" "send-keys M-h"  "select-pane -L"
-bind-key -n M-j if-shell "$is_vim" "send-keys M-j"  "select-pane -D"
-bind-key -n M-k if-shell "$is_vim" "send-keys M-k"  "select-pane -U"
-bind-key -n M-l if-shell "$is_vim" "send-keys M-l"  "select-pane -R"
+# is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+#     | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+# bind-key -n M-h if-shell "$is_vim" "send-keys M-h"  "select-pane -L"
+# bind-key -n M-j if-shell "$is_vim" "send-keys M-j"  "select-pane -D"
+# bind-key -n M-k if-shell "$is_vim" "send-keys M-k"  "select-pane -U"
+# bind-key -n M-l if-shell "$is_vim" "send-keys M-l"  "select-pane -R"
+
+# Panes navigation (Vim-like)
+bind-key -n M-h select-pane -L
+bind-key -n M-l select-pane -R
+bind-key -n M-k select-pane -U
+bind-key -n M-j select-pane -D
+
+
 # bind-key -n M-\ if-shell "$is_vim" "send-keys M-\\" "select-pane -l"
 # bind-key -n C-h if-shell "$is_vim" "send-keys C-h" "select-pane -L"
 # bind-key -n C-j if-shell "$is_vim" "send-keys C-j" "select-pane -D"

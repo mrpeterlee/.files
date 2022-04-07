@@ -122,12 +122,15 @@ done
 
 
 ## ------------------================== Themes ==================------------------ #
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
+
 # Starfish theme
 eval "$(starship init zsh)"
+
 
 # Cowsay
 # Cow-spoken fortunes every time you open a terminal
@@ -142,6 +145,7 @@ function cowsayfortune {
 
 # ------------------================== General Settings ==================------------------ #
 export EDITOR='vim'
+export LANG='C'  # Prevent Perl from issuing some language warning
 
 # Configure pager 'less'
 export MANPAGER='less -s -M +Gg'
@@ -191,6 +195,8 @@ setopt NUMERIC_GLOB_SORT
 setopt EXTENDED_GLOB
 # hows about arrays be awesome?  (that is, frew${cool}frew has frew surrounding all the variables, not just first and last
 setopt RC_EXPAND_PARAM
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+
 
 # ------------------================== Bindings ==================------------------ #
 # export KEYTIMEOUT=20
@@ -219,7 +225,7 @@ bindkey "\eOP" run-help
 bindkey -M vicmd "q" push-line
 
 # it's like, space AND completion.  Gnarlbot.
-bindkey -M viins ' ' magic-space
+# bindkey -M viins ' ' magic-space
 
 # Navigate in tab autocomplete menu
 # bindkey -M menuselect 'h' vi-backward-char
