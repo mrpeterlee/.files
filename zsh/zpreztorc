@@ -39,6 +39,7 @@ zstyle ':prezto:load' pmodule \
   'history-substring-search' \
   'tmux' \
   'autosuggestions' \
+  'zsh-abbr' \
   'zsh-z'
 
 #

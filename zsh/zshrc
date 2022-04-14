@@ -24,6 +24,12 @@ function setenv() { export "$1=$2"; }
 fpath=( /usr/local/bin /lab/lib/finclab/sh/zsh "${fpath[@]}")
 # autoload -Uz parse_yml
 
+# Ensure zsh tab-complete prompts works correctly
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+# export LANG='C'  # Prevent Perl from issuing some language warning
+
+
 # ------------------================== Rust ==================------------------ #
 ## Source Cargo
 if [[ ( -f "$HOME/.cargo/env" ) ]]; then
@@ -110,16 +116,6 @@ if [ -f "${HOME}/.lab/labenv.yml" ]; then
     done
 fi
 
-# ------------------================== Functions ==================------------------ #
-files=( ~/.files/zsh/zalias \
-       /lab/lib/finclab/sh/zsh/utils \
-      )
-for file in $files; do 
-    if [ -f $file ]; then
-       source $file
-    fi
-done
-
 
 ## ------------------================== Themes ==================------------------ #
 
@@ -130,6 +126,16 @@ fi
 
 # Starfish theme
 eval "$(starship init zsh)"
+
+# ------------------================== Functions ==================------------------ #
+files=( ~/.files/zsh/zalias \
+       /lab/lib/finclab/sh/zsh/utils \
+      )
+for file in $files; do 
+    if [ -f $file ]; then
+       source $file
+    fi
+done
 
 
 # Cowsay
@@ -144,8 +150,8 @@ function cowsayfortune {
 }
 
 # ------------------================== General Settings ==================------------------ #
-export EDITOR='vim'
-export LANG='C'  # Prevent Perl from issuing some language warning
+export EDITOR='lvim'
+export VISUAL='lvim'
 
 # Configure pager 'less'
 export MANPAGER='less -s -M +Gg'
