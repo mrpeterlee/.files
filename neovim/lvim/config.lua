@@ -323,6 +323,10 @@ linters.setup {
     },
 }
 
+-- Filter unwanted PYRIGHT warnings
+
+require "config.lsp_filters"
+
 --------------------==================== NeoVim - VimScripts ====================--------------------
 -- source core vim configs
 vim.cmd("source " .. vim.fn.expand "$HOME" .. "/.config/lvim/vimscript/globals.vim")
@@ -511,9 +515,9 @@ require("nvim-tree").setup {
 }
 
 -- =========== LSP-Signature ===========
-vim.defer_fn(function()
-    require("lsp_signature").on_attach()
-end, 2000)
+-- vim.defer_fn(function()
+--     require("lsp_signature").on_attach()
+-- end, 2000)
 
 -- =========== AutoFlake Settings ===========
 -- " See https://github.com/tell-k/vim-autoflake

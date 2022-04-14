@@ -47,16 +47,6 @@ for folderpath in $dirs; do
     fi
 done
 
-# Activate corresponding environment
-if [ -f /opt/conda/envs/prod/bin/python ]; then
-    conda activate prod
-elif [ -f /opt/conda/envs/paper/bin/python ]; then
-    conda activate paper
-fi
-
-# Default repos -- integrate the variable of default environment
-unset PYTHONPATH
-export PYTHONPATH=/lab/lib:~/lab/lib
 
 # repos=("finclab" \
 #        "datalab" \
@@ -148,6 +138,8 @@ function cowsayfortune {
     #echo "Selected cow: ${THISCOW}, from ${WHICHCOW}"
     fortune | cowsay -f $THISCOW -W 100
 }
+
+
 
 # ------------------================== General Settings ==================------------------ #
 export EDITOR='lvim'
@@ -242,6 +234,23 @@ bindkey -M vicmd "q" push-line
 # Edit line in vim
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^x' edit-command-line
+
+
+# ------------------================== Conda Activation ==================------------------ #
+
+# Default repos -- integrate the variable of default environment
+unset PYTHONPATH
+export PYTHONPATH=/lab/lib:~/lab/lib
+
+# Activate corresponding environment
+conda activate base
+if [ -f /opt/conda/envs/prod/bin/python ]; then
+    conda activate prod
+    echo "Activated env PROD: $(python --version) @ $(which python)" | lolcat
+elif [ -f /opt/conda/envs/paper/bin/python ]; then
+    conda activate paper
+    echo "Activated env PAPER: $(python --version) @ $(which python)" | lolcat
+fi
 
 # ------------------================== Login script ==================------------------ #
 cowsayfortune | lolcat --spread 1.0
