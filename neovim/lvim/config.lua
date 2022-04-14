@@ -183,14 +183,14 @@ lvim.plugins = {
     -- -- NOTE: Learn this plugin -- Swap parameters inside function
     -- { "machakann/vim-swap", event = "VimEnter" },
 
-    -- Python - Provides code signature when adding a function
-    {
-        "ray-x/lsp_signature.nvim",
-        config = function()
-            require("config/lsp_signature").config()
-        end,
-        event = { "BufRead", "BufNew" },
-    },
+    -- -- Python - Provides code signature when adding a function
+    -- {
+    --     "ray-x/lsp_signature.nvim",
+    --     config = function()
+    --         require("config/lsp_signature").config()
+    --     end,
+    --     event = { "BufRead", "BufNew" },
+    -- },
 
     --------------------==================== Tmux ====================--------------------
     -- Tmux integration
