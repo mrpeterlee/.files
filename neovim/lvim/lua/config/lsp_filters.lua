@@ -39,6 +39,17 @@ function filter_diagnostics(diagnostic)
         return false
     end
 
+    -- Deal with pandas msgs...
+    if string.match(diagnostic.message, 'in function "__setitem__"') then
+        return false
+    end
+    if string.match(diagnostic.message, 'in function "__getitem__"') then
+        return false
+    end
+    if string.match(diagnostic.message, "list[Unknown]") then
+        return false
+    end
+
     return true
 end
 

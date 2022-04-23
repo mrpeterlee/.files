@@ -2,12 +2,14 @@
 
 name: work
 root: ~/
+startup_pane: 1
 
 windows:
   - general:
       layout: even-horizontal
       panes:
         - workspace1:
+          - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi; 
           - cd $HOME/lab/paper/finclab && git pull
           - cd $HOME/lab/paper/datalab && git pull
           - cd $HOME/lab/paper/ts && git pull
@@ -17,28 +19,34 @@ windows:
           - cd $HOME/lab/paper
           - /usr/bin/screenfetch
           - /usr/bin/inxi
+          - nvim  --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
           - curl "wttr.in/newyork?m&lang=zh-cn"
   - finclab:
       layout: even-horizontal
       panes:
         - workspace1:
+          - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi; 
           - cd $HOME/lab/paper/finclab
           - vim README.md
         - workspace2:
+          - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi; 
           - cd $HOME/lab/paper/finclab
   - datalab:
       layout: even-horizontal
       panes:
         - workspace1:
+          - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi; 
           - cd $HOME/lab/paper/datalab
           - vim README.md
         - workspace2:
+          - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi; 
           - cd $HOME/lab/paper/datalab
 
   - tradestation:
       layout: even-horizontal
       panes:
         - workspace1:
+          - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi; 
           - cd $HOME/lab/paper/tradestation
           - vim README.md
           # - ssh_ts
@@ -46,6 +54,7 @@ windows:
           # - conda deactivate && conda activate finclab
           # - cd $HOME/ts
         - workspace2:
+          - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi; 
           - cd $HOME/lab/paper/tradestation
           # - ssh_ts
           # - conda activate base
@@ -55,8 +64,10 @@ windows:
       layout: even-horizontal
       panes:
         - pane1:
+          - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi; 
           - cd $HOME/lab/paper
         - pane2:
+          - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi; 
           - cd $HOME/lab/paper
           - ts flightlog stream -d
 
@@ -64,6 +75,7 @@ windows:
       layout: tiled
       panes:
         - glances:
+          - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi; 
           - cd
           #- glances
 
@@ -79,11 +91,13 @@ windows:
       layout: tiled
       panes:
         - jupyter_notebook:
+          - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi; 
           #- conda deactivate && conda activate finclab
           - jupyter lab --ip="10.1.1.100" --port=55000 --no-browser --NotebookApp.password=$jupyter_password --NotebookApp.token="" --NotebookApp.allow_remote_access=True --notebook-dir=$HOME
         - start_swarm:
+          - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi; 
           - sleep 2
-          - make -C /lab/prod/labenv start
+        #- make -C /lab/prod/labenv start
 
 
 # Optional tmux socket

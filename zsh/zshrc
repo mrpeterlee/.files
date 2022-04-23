@@ -74,7 +74,6 @@ dirs=( '/opt/conda/bin' \
        '/snap/bin' \
 
        ~/.local/bin \
-       ~/.local/bin \
        ~/.files/bin \
        ~/.cargo/bin \
 
@@ -98,7 +97,7 @@ if [ -f "${HOME}/.lab/labenv.yml" ]; then
     echo "Bash ENV - Extracted config from 'labenv' (${HOME}/.lab/labenv.yml)..."
     . parse_yml "${HOME}/.lab/labenv.yml" >/dev/null
     # for package in ${HOME}/.lab/*.yml ; do
-    for package in "${HOME}/.lab/finclab.yml" "${HOME}/.lab/datastore.yml" "${HOME}/.lab/tradestation.yml" ; do
+    for package in "${HOME}/.lab/finclab.yml" "${HOME}/.lab/datastore.yml" "${HOME}/.lab/tradestation.yml" "${HOME}/.lab/github.yml" ; do
         test "$package" = "${HOME}/.lab/labenv.yml" && continue
         filestem=$(basename -s .yml $package)
         echo "Bash ENV - Extracted config from '${filestem}' (${package})..."

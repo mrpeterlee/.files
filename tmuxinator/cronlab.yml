@@ -1,5 +1,6 @@
 name: cronlab
 root: ~/
+startup_pane: 1
 
 windows:
   - Exec-Engine:

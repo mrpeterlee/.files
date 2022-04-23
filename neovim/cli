@@ -31,22 +31,16 @@ DIR_DOTFILES = Path(Path.home(), ".files")
 
 # SYMLINKS
 SYMLINKS = {
+    # AstroNvim
+    Path(Path.home(), ".config", "nvim", "lua", "user"): Path("/lab/paper/astronvim"),
     # LunarVim user config
-    Path(Path.home(), ".config", "lvim", "config.lua"): Path(
-        DIR_DOTFILES, "neovim", "lvim", "config.lua"
-    ),
+    # Path(Path.home(), ".config", "lvim", "config.lua"): Path( DIR_DOTFILES, "neovim", "lvim", "config.lua"),
     # Additional config dir
-    Path(Path.home(), ".config", "lvim", "vimscript"): Path(
-        DIR_DOTFILES, "neovim", "lvim", "vimscript"
-    ),
-    Path(Path.home(), ".config", "lvim", "lua"): Path(
-        DIR_DOTFILES, "neovim", "lvim", "lua"
-    ),
-    Path(Path.home(), ".local", "share", "lunarvim", "lvim", "lua", "config"): Path(
-        DIR_DOTFILES, "neovim", "lvim", "lua", "config"
-    ),
+    # Path(Path.home(), ".config", "lvim", "vimscript"): Path( DIR_DOTFILES, "neovim", "lvim", "vimscript"),
+    # Path(Path.home(), ".config", "lvim", "lua"): Path( DIR_DOTFILES, "neovim", "lvim", "lua"),
+    # Path(Path.home(), ".local", "share", "lunarvim", "lvim", "lua", "config"): Path( DIR_DOTFILES, "neovim", "lvim", "lua", "config"),
     # SpaceVim user folder
-    Path(Path.home(), ".SpaceVim.d"): Path(DIR_DOTFILES, "neovim", ".SpaceVim.d"),
+    # Path(Path.home(), ".SpaceVim.d"): Path(DIR_DOTFILES, "neovim", ".SpaceVim.d"),
     # pylintrc
     Path(Path.home(), ".pylintrc"): Path(DIR_DOTFILES, "neovim", ".pylintrc"),
     # pydocstyle
@@ -66,15 +60,27 @@ def update_symlink():
 
 def force_install():
     """For fresh installation (the 1st time)."""
-    # Remove the current config
-    if Path(Path.home(), ".config/lvim").is_dir():
-        shutil.rmtree(Path(Path.home(), ".config/lvim"))
-    if not Path(Path.home(), ".config", "lvim").exists():
-        Path(Path.home(), ".config", "lvim").mkdir(parents=True)
+    # AstroNvim
+    # Clean up existing cache
+    folders = ["~/.config/nvim", "~/.config/nvim/lua/user", "~/.local/share/nvim/site"]
+    for folder in folders:
+        if Path(folder).is_dir():
+            # Remove this folder
+            shutil.rmtree(Path(folder))
+    cmd = "git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim"
+    os.system(cmd)
+    cmd = "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
+    os.system(cmd)
 
-    # Install LunarVim - Rolling Branch
-    cmd = "LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) -y"
-    os.system(f'/bin/bash -c "{cmd}"')
+    # Remove the current config
+    # if Path(Path.home(), ".config/lvim").is_dir():
+    #     shutil.rmtree(Path(Path.home(), ".config/lvim"))
+    # if not Path(Path.home(), ".config", "lvim").exists():
+    #     Path(Path.home(), ".config", "lvim").mkdir(parents=True)
+
+    # # Install LunarVim - Rolling Branch
+    # cmd = "LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) -y"
+    # os.system(f'/bin/bash -c "{cmd}"')
 
 
 @dataclass
