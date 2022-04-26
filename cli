@@ -6,7 +6,7 @@
 
 - update:: re-sync the config files (existing config are DELETED)
 - install:: remove package folders and re-init them
-- os_setup:: setup the OS the first time, installing all prequisites
+- os_setup:: setup the OS the first time, installing all prerequisites
 
 
 # Usage
@@ -50,7 +50,7 @@ logger = init_logger("Install.Files")
 
 DIR_DOTFILES = Path(Path.home(), ".files")
 
-ALL_SERVICE = ['neovim']
+ALL_SERVICE = ["neovim"]
 
 
 OS = finclab.util.shell.get_os()
@@ -63,13 +63,13 @@ class Install:
     -----
         # Update a single package
         >>> ts cli install neovim --force
-    
+
         # Reinstall / Install the first time a single package
         >>> ts cli install neovim --force
-    
+
         # Install all packages
         >>> ts cli install --all
-    
+
         # Reinstall all packages
         >>> ts cli install --all --force
     """
@@ -90,14 +90,17 @@ class Install:
         elif self.service is not None:
             services = self.service.split(self.delimiter)
         else:
-            raise ValueError("You must provide at least one service name or set `all` parameter to True")
+            raise ValueError(
+                "You must provide at least one service name or set `all` parameter to True"
+            )
 
         # Iterate through services
         for service in services:
             cmd = """
             cd {_path} && ts cli install
-            """.format(_path = Path(DIR_DOTFILES , service).absolute(),
-                       _service=service)
+            """.format(
+                _path=Path(DIR_DOTFILES, service).absolute(), _service=service
+            )
             if self.force:
                 cmd += " --force"
             print(cmd)
@@ -111,10 +114,10 @@ class Update:
     -----
         # Update a single package
         >>> ts cli update neovim
-    
+
         # Update all packages
         >>> ts cli update --all
-    
+
         # Update all packages to latest edge (non-stable)
         >>> ts cli update --all --edge
     """
@@ -132,14 +135,17 @@ class Update:
         elif self.service is not None:
             services = self.service.split(self.delimiter)
         else:
-            raise ValueError("You must provide at least one service name or set `all` parameter to True")
+            raise ValueError(
+                "You must provide at least one service name or set `all` parameter to True"
+            )
 
         # Iterate through services
         for service in services:
             cmd = """
             cd {_path} & ts cli update
-            """.format(_path = Path(DIR_DOTFILES , service).absolute(),
-                       _service=service)
+            """.format(
+                _path=Path(DIR_DOTFILES, service).absolute(), _service=service
+            )
             if self.edge:
                 cmd += " --edge"
             os.system(cmd)
@@ -147,7 +153,7 @@ class Update:
 
 @dataclass
 class OsSetup:
-    """ Setup the OS the first time.
+    """Setup the OS the first time.
 
     Usage
     -----
@@ -156,13 +162,12 @@ class OsSetup:
     """
 
     def execute(self):
-        """Install system prerequisite packages"""""
+        """Install system prerequisite packages""" ""
         print(f"Operating system is detected as: {OS}")
 
-        if OS=='mac':
+        if OS == "mac":
             cmd = f"""cd $HOME/.files/install/{OS} && brew bundle"""
             os.system(cmd)
-
 
         raise ValueError(f"Unsupported OS {OS}. Please add more support.")
 
