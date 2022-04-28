@@ -34,7 +34,13 @@ SYMLINKS = {
     # AstroNvim
     Path(Path.home(), ".config", "nvim", "lua", "user"): Path("/lab/paper/astronvim"),
     # Spell dicts
-    Path(Path.home(), ".config", "nvim", "spell"): Path(DIR_DOTFILES, "spell"),
+    Path(Path.home(), ".config", "nvim", "spell"): Path(
+        DIR_DOTFILES, "neovim", "spell"
+    ),
+    # Code skeleton
+    Path(Path.home(), ".config", "nvim", "skeleton"): Path(
+        DIR_DOTFILES, "neovim", "skeleton"
+    ),
     # LunarVim user config
     # Path(Path.home(), ".config", "lvim", "config.lua"): Path( DIR_DOTFILES, "neovim", "lvim", "config.lua"),
     # Additional config dir
