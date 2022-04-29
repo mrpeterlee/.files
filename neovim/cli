@@ -41,6 +41,10 @@ SYMLINKS = {
     Path(Path.home(), ".config", "nvim", "skeleton"): Path(
         DIR_DOTFILES, "neovim", "skeleton"
     ),
+    # GUi Config - ginit.vim
+    Path(Path.home(), ".config", "nvim", "ginit.vim"): Path(
+        DIR_DOTFILES, "neovim", "ginit.vim"
+    ),
     # LunarVim user config
     # Path(Path.home(), ".config", "lvim", "config.lua"): Path( DIR_DOTFILES, "neovim", "lvim", "config.lua"),
     # Additional config dir
