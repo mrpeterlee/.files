@@ -29,7 +29,6 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 # export LANG='C'  # Prevent Perl from issuing some language warning
 
-
 # ------------------================== Rust ==================------------------ #
 ## Source Cargo
 if [[ ( -f "$HOME/.cargo/env" ) ]]; then
