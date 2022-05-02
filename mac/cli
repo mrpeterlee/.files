@@ -1,0 +1,122 @@
+#!/usr/bin/env python
+""" Install for Mac os
+
+id:            Peter Lee (peter.lee@finclab.com)
+last_update:   2022-03-28 09:31:43 EDT
+type:          lib
+sensitivity:   datalab@finclab.com
+platform:      any
+description:   This module provides installation script for the mac os
+"""
+
+import os
+import os.path
+import shutil
+import typing
+from dataclasses import dataclass
+from pathlib import Path
+
+import finclab.cli.build
+import finclab.cli.build.util
+import finclab.config.helper
+import finclab.config.main
+import finclab.io.file
+from finclab.logger import init_logger
+from simple_parsing import ArgumentParser
+
+app_name = "mac"
+logger = init_logger("Install.Files")
+
+DIR_DOTFILES = Path(Path.home(), ".files")
+
+# SYMLINKS
+SYMLINKS = {
+    # karabiner
+    Path(Path.home(), ".config", "karabiner", ""): Path(
+        DIR_DOTFILES, "mac", "karabiner"
+    ),
+}
+
+
+def update_symlink():
+    """Re-link the config files from dotfiles repo."""
+    # Ensure the data folders exist
+    for nonexist, exist in SYMLINKS.items():
+        print(f"Creating symlink from {exist} to {nonexist}...")
+        finclab.io.file.update_symlink(nonexist, exist)
+
+
+def force_install():
+    """For fresh installation (the 1st time)."""
+    cmd = "cd $HOME/.files/mac/brew && brew bundle"
+    os.system(f'/bin/bash -c "{cmd}"')
+
+
+@dataclass
+class Install:
+    """CLI Tool to Configure / Install Neovim
+
+    Usage
+    -----
+    ```bash
+        # Install
+        >>> ts cli install
+
+        # Reinstall
+        >>> ts cli install --force
+    ```
+    """
+
+    force: bool = False  # True force reinstall the NeoVim
+
+    def execute(self):
+        """Execute"""
+        print(f"Welcome to {app_name} Installation Script...")
+        if self.force:
+            force_install()
+        update_symlink()
+
+
+@dataclass
+class Update:
+    """CLI Tool to Update Neovim to latest
+
+    Usage
+    -----
+    ```bash
+        # Update to latest stable
+        >>> ts cli update
+
+        # Update to latest edge
+        >>> ts cli update --edge
+    ```
+    """
+
+    edge: bool = False  # True Update to the latest edge release (nonstable)
+
+    def execute(self):
+        """Execute"""
+        if self.edge:
+            raise ValueError("@todo sorry not-supported yet.")
+        raise ValueError("@todo sorry update is not-supported yet.")
+
+
+@dataclass
+class MainMenu:
+    """NeoVim Installation CLI Main Menu"""
+
+    command: typing.Union[Install, Update]
+
+    def execute(self):
+        """Main entry point"""
+        return self.command.execute()
+
+
+parser = ArgumentParser()
+parser.add_arguments(MainMenu, dest="PodBuilderCLI")
+
+if __name__ == "__main__":
+    args = parser.parse_args()
+    PodBuilderCLI: MainMenu = args.PodBuilderCLI
+
+    PodBuilderCLI.execute()
