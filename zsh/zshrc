@@ -11,8 +11,8 @@
 #  ╚═╝     ╚══════╝╚═╝  ╚═╝╚═════╝     ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  #
 #                                                                                #
 # Author: Peter Lee (peter.lee@finclab.com)                                      #
-# Last Update: 2022-Apr                                                          #
-#                                                                                #
+# Last Update: 2022-May                                                          #
+
 # -------------------========================================------------------- #
 
 
@@ -28,6 +28,23 @@ fpath=( /usr/local/bin /lab/lib/finclab/sh/zsh "${fpath[@]}")
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 # export LANG='C'  # Prevent Perl from issuing some language warning
+
+
+# check of os type
+if [[ "$(uname)" == "Darwin" ]]; then
+    # Do something under Mac OS X platform
+    export os_type='mac'
+elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
+    # Do something under GNU/Linux platform
+    export os_type='linux'
+elif [[ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]]; then
+    # Do something under 32 bits Windows NT platform
+    export os_type='windows'
+elif [[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]]; then
+    # Do something under 64 bits Windows NT platform
+    export os_type='windows'
+fi
+
 
 # ------------------================== Rust ==================------------------ #
 ## Source Cargo
@@ -45,7 +62,6 @@ for folderpath in $dirs; do
        . "$folderpath/etc/profile.d/conda.sh"
     fi
 done
-
 
 # repos=("finclab" \
 #        "datalab" \
@@ -90,6 +106,7 @@ done
 # Additional cowsay..
 COWPATH=$COWPATH:~/.cowsay/cowfiles
 
+
 # ------------------================== Env Variables ==================------------------ #
 # Grab env variables
 if [ -f "${HOME}/.lab/labenv.yml" ]; then
@@ -115,6 +132,7 @@ fi
 # Starfish theme
 eval "$(starship init zsh)"
 
+
 # ------------------================== Functions ==================------------------ #
 files=( ~/.files/zsh/zalias \
        /lab/lib/finclab/sh/zsh/utils \
@@ -126,22 +144,9 @@ for file in $files; do
 done
 
 
-# Cowsay
-# Cow-spoken fortunes every time you open a terminal
-function cowsayfortune {
-    NUMOFCOWS=`cowsay -l | tail -n +2 | wc -w`
-    WHICHCOW=$((RANDOM%$NUMOFCOWS+1))
-    THISCOW=`cowsay -l | tail -n +2 | sed -e 's/\ /\'$'\n/g' | sed $WHICHCOW'q;d'`
-
-    #echo "Selected cow: ${THISCOW}, from ${WHICHCOW}"
-    fortune | cowsay -f $THISCOW -W 100
-}
-
-
-
 # ------------------================== General Settings ==================------------------ #
-export EDITOR='lvim'
-export VISUAL='lvim'
+export EDITOR='nvim'
+export VISUAL='nvim'
 
 # Configure pager 'less'
 export MANPAGER='less -s -M +Gg'
@@ -250,5 +255,24 @@ elif [ -f /opt/conda/envs/paper/bin/python ]; then
     echo "Activated env PAPER: $(python --version) @ $(which python)" | lolcat
 fi
 
+
+# ------------------================== Mac Only ==================------------------ #
+if [[ "$(os_type)" == "mac" ]]; then
+    # Ensure more number of files to be opened
+    ulimit -S -n 200048
+fi
+
+
+
 # ------------------================== Login script ==================------------------ #
+# Cow-spoken fortunes every time you open a terminal
+function cowsayfortune {
+    NUMOFCOWS=`cowsay -l | tail -n +2 | wc -w`
+    WHICHCOW=$((RANDOM%$NUMOFCOWS+1))
+    THISCOW=`cowsay -l | tail -n +2 | sed -e 's/\ /\'$'\n/g' | sed $WHICHCOW'q;d'`
+
+    #echo "Selected cow: ${THISCOW}, from ${WHICHCOW}"
+    fortune | cowsay -f $THISCOW -W 100
+}
 cowsayfortune | lolcat --spread 1.0
+
