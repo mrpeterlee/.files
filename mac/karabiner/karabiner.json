@@ -251,59 +251,6 @@
             ]
           },
           {
-            "description": "Map Ctrl-j to Right Arrow in iTerm2",
-            "manipulators": [
-              {
-                "conditions": [
-                  {
-                    "bundle_identifiers": [
-                      "^org\\.vim\\.",
-                      "^com.googlecode.iterm2",
-                      "com\\.microsoft\\.rdc\\.macos"
-                    ],
-                    "type": "frontmost_application_if"
-                  }
-                ],
-                "from": {
-                  "key_code": "j",
-                  "modifiers": {
-                    "mandatory": ["control"]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "right_arrow"
-                  }
-                ],
-                "type": "basic"
-              },
-              {
-                "conditions": [
-                  {
-                    "bundle_identifiers": [
-                      "^org\\.vim\\.",
-                      "^com.googlecode.iterm2",
-                      "com\\.microsoft\\.rdc\\.macos"
-                    ],
-                    "type": "frontmost_application_if"
-                  }
-                ],
-                "from": {
-                  "key_code": "f",
-                  "modifiers": {
-                    "mandatory": ["control"]
-                  }
-                },
-                "to": [
-                  {
-                    "key_code": "right_arrow"
-                  }
-                ],
-                "type": "basic"
-              }
-            ]
-          },
-          {
             "description": "Map CMD-hjlt to Alt-hjkl in iTerm2",
             "manipulators": [
               {
