@@ -115,8 +115,11 @@ windows:
   - background-apps:
       layout: tiled
       panes:
+        - glances:
+            - glances -w -t 5
         - jupyter-notebook:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
+            # glances running in background
             #- conda deactivate && conda activate finclab
             # - export JUPYTER_ASCENDING_EXECUTE_HOST=10.1.1.100
             - export JUPYTER_ASCENDING_EXECUTE_PORT=55000

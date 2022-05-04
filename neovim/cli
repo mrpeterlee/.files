@@ -38,9 +38,9 @@ SYMLINKS = {
         DIR_DOTFILES, "neovim", "spell"
     ),
     # Code skeleton
-    Path(Path.home(), ".config", "nvim", "skeleton"): Path(
-        DIR_DOTFILES, "neovim", "skeleton"
-    ),
+    Path(Path.home(), ".config", "nvim", "skeleton"): Path( DIR_DOTFILES, "neovim", "skeleton"),
+    # Syntax 
+    Path(Path.home(), ".config", "nvim", "after"): Path( DIR_DOTFILES, "neovim", "after"),
     # GUi Config - ginit.vim
     Path(Path.home(), ".config", "nvim", "ginit.vim"): Path(
         DIR_DOTFILES, "neovim", "ginit.vim"

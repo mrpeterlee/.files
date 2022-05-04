@@ -3,9 +3,10 @@ inoremap <silent> <S-Insert>  <C-R>+
 cnoremap <S-Insert> <C-R>+
 nnoremap <silent> <C-6> <C-^>
 
-set guifont=FiraCode\ NF\ Retina:h15
+set guifont=FiraMono\ Nerd\ Font:h16
 
 if exists('g:fvim_loaded')
+
   set termguicolors
   " colorscheme gruvbox8_hard
 
@@ -16,7 +17,7 @@ if exists('g:fvim_loaded')
 
   " good old 'set guifont' compatibility with HiDPI hints...
   if g:fvim_os == 'windows' || g:fvim_render_scale > 1.0
-    set guifont=FiraCode\ NF\ Retina:h15
+    set guifont=FiraCode\ NF\ Retina:h13
   else
     set guifont=FiraCode\ NF\ Retina:h30
   endif
@@ -31,7 +32,7 @@ if exists('g:fvim_loaded')
   FVimBackgroundAltOpacity 0.95
 
   " Title bar tweaks (themed with colorscheme)
-  FVimCustomTitleBar v:true
+  FVimCustomTitleBar v:false
 
   " Debug UI overlay
   FVimDrawFPS v:false
