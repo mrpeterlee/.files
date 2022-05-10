@@ -17,9 +17,9 @@ if exists('g:fvim_loaded')
 
   " good old 'set guifont' compatibility with HiDPI hints...
   if g:fvim_os == 'windows' || g:fvim_render_scale > 1.0
-    set guifont=FiraCode\ NF\ Retina:h13
+    set guifont=FiraCode\ NF\ Retina:h16
   else
-    set guifont=FiraCode\ NF\ Retina:h30
+    set guifont=FiraCode\ NF\ Retina:h12
   endif
  
   " Cursor tweaks
