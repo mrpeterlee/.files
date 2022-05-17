@@ -106,6 +106,7 @@ fi
 ## Anaconda
 export PATH=$PATH:/usr/bin:/usr/sbin:/opt/conda/bin:$HOME/.local/bin:$HOME/.files/bin:/lab/lib/finclab/sh/bin:/lab/lib/finclab/sh/bash:/lab/lib/finclab/sh/zsh:/lab/lib/finclab/sh/fish
 
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/opt/conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -120,6 +121,11 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+# Default repos -- integrate the variable of default environment
+unset PYTHONPATH
+export PYTHONPATH=/lab/lib:~/lab/lib
+
 
 
 # # >>> bash-it initialize >>>
