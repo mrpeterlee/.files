@@ -116,17 +116,18 @@ windows:
       layout: tiled
       panes:
         - glances:
+            # glances running in background
             - glances -w -t 5
         - jupyter-notebook:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            # glances running in background
-            #- conda deactivate && conda activate finclab
-            # - export JUPYTER_ASCENDING_EXECUTE_HOST=10.1.1.100
+            - conda deactivate && conda activate paper
+            - export JUPYTER_ASCENDING_EXECUTE_HOST=10.1.1.100
             - export JUPYTER_ASCENDING_EXECUTE_PORT=55000
-            - jupyter notebook --ip="*" --port=55000 --no-browser --NotebookApp.password=$jupyter_password --NotebookApp.token="" --NotebookApp.allow_remote_access=True --notebook-dir=$HOME
+            - export JUPYTER_PORT=55000
+            - export JUPYTER_PORT_RETRIES=0
+            - jupyter notebook --ip="10.1.1.100" --port=$JUPYTER_PORT --no-browser --NotebookApp.password=$jupyter_password --NotebookApp.token="" --NotebookApp.allow_remote_access=True --notebook-dir=$HOME
         - neovim-headless:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            - export JUPYTER_ASCENDING_EXECUTE_PORT=55000
             - nvim /lab/paper/astronvim/polish.lua --headless --listen 10.1.1.100:7128
         #- make -C /lab/prod/labenv start
 # Optional tmux socket
