@@ -121,14 +121,13 @@ windows:
         - jupyter-notebook:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
             - conda deactivate && conda activate paper
-            - export JUPYTER_ASCENDING_EXECUTE_HOST=10.1.1.100
-            - export JUPYTER_ASCENDING_EXECUTE_PORT=55000
-            - export JUPYTER_PORT=55000
+            - export JUPYTER_ASCENDING_EXECUTE_PORT=60000
+            - export JUPYTER_PORT=60000
             - export JUPYTER_PORT_RETRIES=0
-            - jupyter notebook --ip="10.1.1.100" --port=$JUPYTER_PORT --no-browser --NotebookApp.password=$jupyter_password --NotebookApp.token="" --NotebookApp.allow_remote_access=True --notebook-dir=$HOME
+            - jupyter notebook --port=$JUPYTER_PORT --no-browser --NotebookApp.token="" --notebook-dir=$HOME
         - neovim-headless:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            - nvim /lab/paper/astronvim/polish.lua --headless --listen 10.1.1.100:7128
+            - nvim /lab/paper/astronvim/polish.lua --headless --listen 10.1.1.100:60001
         #- make -C /lab/prod/labenv start
 # Optional tmux socket
 # socket_name: foo
