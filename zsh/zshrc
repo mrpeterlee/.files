@@ -259,6 +259,8 @@ elif [ -f /opt/conda/envs/paper/bin/python ]; then
     echo "Activated env PAPER: $(python --version) @ $(which python)" | lolcat
 fi
 
+# Config for jupyter_ascending
+export JUPYTER_ASCENDING_EXECUTE_PORT=60000
 
 # ------------------================== Login script ==================------------------ #
 # Cow-spoken fortunes every time you open a terminal
