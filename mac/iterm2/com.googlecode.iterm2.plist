@@ -1080,6 +1080,28 @@
 			</array>
 			<key>Keyboard Map</key>
 			<dict>
+				<key>0x20-0x20000-0x31</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>O2S</string>
+					<key>Version</key>
+					<integer>1</integer>
+				</dict>
+				<key>0x20-0x40000-0x31</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>O2R</string>
+					<key>Version</key>
+					<integer>1</integer>
+				</dict>
 				<key>0x2d-0x40000</key>
 				<dict>
 					<key>Action</key>
@@ -1135,6 +1157,28 @@
 					<integer>11</integer>
 					<key>Text</key>
 					<string>0x7f</string>
+				</dict>
+				<key>0xd-0x20000-0x24</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>O2Q</string>
+					<key>Version</key>
+					<integer>1</integer>
+				</dict>
+				<key>0xd-0x40000-0x24</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>O2P</string>
+					<key>Version</key>
+					<integer>1</integer>
 				</dict>
 				<key>0xf700-0x220000</key>
 				<dict>
