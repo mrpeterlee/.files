@@ -1,35 +1,52 @@
 # ~/.config/starship.toml
 
 # Prompt
-# Use custom format
+# Disabled prompt (too slow): $git_status
+
 format = """
-[┌───────────────────>](bold green)
-[│](bold green)$directory (bold white)$username (bold red)$hostname $package $git_branch $git_status $git_commit
-[└─>](bold green) """
+[┌────ﱤ ](dimmed blue)$directory\
+$conda$python$container$git_branch$git_commit$dotnet \
+$fill $username$hostname[ﱤ────┐ ](dimmed blue)
+[╘═ﱣ](dimmed blue) $character
+"""
+right_format = """
+$shell[ﱣ═╛](dimmed blue)
+"""
+# symbol = " "
+
 # Wait 10 milliseconds for starship to check files under the current directory.
 scan_timeout = 10
 # Disable the blank line at the start of the prompt
-add_newline = false
+add_newline = true
+command_timeout = 2500
+continuation_prompt = "▶▶"
+
+[fill]
+symbol = " "
 
 [conda]
-format = "[$symbol$environment](bold blue) "
+symbol = " "
+format = " [$symbol$environment](bold cyan) "
 disabled = false
 
 [character]
-success_symbol = "[](bold green) "
-error_symbol = "[](bold red) "
+success_symbol = "[](bold green)"
+error_symbol = "[](bold red)"
+# success_symbol = "[➜](bold green) "
+# error_symbol = "[✗](bold red) "
+
 
 [directory]
 truncation_length = 5
 truncate_to_repo = false
+truncation_symbol = ".../"
+style = "bold green"
 #prefix = "in "
-style = "bold cyan"
-disabled = false
 
 [git_branch]
-symbol = "🍣 "
-style = "bold yellow"
-format = "git [$symbol$branch]($style) "
+symbol = " "
+style = "bold red"
+format = " [$symbol$branch]($style) "
 
 [git_state]
 format = '[\($state( $progress_current of $progress_total)\)]($style) '
@@ -52,11 +69,9 @@ style = "bright-white"
 
 [hostname]
 ssh_only = false
-# prefix = "<"
-# suffix = ">"
-# trim_at = "-"
 style = "dimmed white"
-format = "on [$hostname](bold red) "
+format = "[$ssh_symbol](bold blue)[ 淚](bold cyan)[$hostname](bold white) "
+trim_at = ".finclab.com"
 disabled = false
 
 [julia]
@@ -74,16 +89,11 @@ disabled = false
 disabled = true
 
 [python]
-symbol = "👾 "
-# symbol = " py "
-python_binary = 'python3'
-pyenv_version_name = true
-pyenv_prefix = "pyenv "
+symbol = ""
+python_binary = ["python", "./venv/bin/python", "python3", "python2"]
+style = "blue"
+format = '[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style) '
 
-[dotnet]
-symbol = " .net "
-style = "green"
-heuristic = false
 
 [time]
 format = '🕙[\[ $time \]]($style) '
@@ -95,17 +105,34 @@ disabled = false
 
 [username]
 style_root = "black bold"
-style_user = "dimmed white"
-format = "user [$user]($style) "
+style_user = "bold white"
+format = "[$user]($style)"
 disabled = false
 show_always = true
 
-[battery]
-full_symbol = "🔋"
-charging_symbol = "🔌"
-discharging_symbol = "⚡"
-disabled = true
+[dotnet]
+symbol = "🥅 "
+style = "green"
+heuristic = false
 
-[[battery.display]]
-threshold = 30
-style = "bold red"
+[shell]
+fish_indicator = ""
+zsh_indicator = ""
+bash_indicator = ""
+powershell_indicator = ""
+unknown_indicator = "mystery shell"
+style = "dimmed white"
+disabled = false
+
+[status]
+style = "bg:blue"
+symbol = "🔴 "
+success_symbol = "🟢 "
+format = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false
+
+
+[container]
+format = "[$container](bold blue) "
+
