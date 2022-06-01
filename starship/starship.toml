@@ -91,7 +91,7 @@ disabled = true
 [python]
 symbol = ""
 python_binary = ["python", "./venv/bin/python", "python3", "python2"]
-style = "blue"
+style = "cyan"
 format = '[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style) '
 
 
