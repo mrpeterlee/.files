@@ -11,16 +11,36 @@ let g:mkdp_auto_start = 1
 " from markdown buffer to another buffer
 let g:mkdp_auto_close = 1
 
-" Better window navigation
-nmap <C-h> :lua require('smart-splits').move_cursor_left()<CR>
-nmap <C-j> :lua require('smart-splits').move_cursor_down()<CR>
-nmap <C-k> :lua require('smart-splits').move_cursor_up()<CR>
-nmap <C-l> :lua require('smart-splits').move_cursor_right()<CR>
+" " Better window navigation
+imap <C-h> <Esc>:lua require('smart-splits').move_cursor_left()<CR>
+imap <C-j> <Esc>:lua require('smart-splits').move_cursor_down()<CR>
+imap <C-k> <Esc>:lua require('smart-splits').move_cursor_up()<CR>
+imap <C-l> <Esc>:lua require('smart-splits').move_cursor_right()<CR>
+
 " resizing splits
-nmap <C-Left> :lua require('smart-splits').resize_left()<CR>
-nmap <C-Down> :lua require('smart-splits').resize_down()<CR>
-nmap <C-Up> :lua require('smart-splits').resize_up()<CR>
-nmap <C-Right> :lua require('smart-splits').resize_right()<CR>
+" nmap <C-Left> :lua require('smart-splits').resize_left()<CR>
+" nmap <C-Down> :lua require('smart-splits').resize_down()<CR>
+" nmap <C-Up> :lua require('smart-splits').resize_up()<CR>
+" nmap <C-Right> :lua require('smart-splits').resize_right()<CR>
+
+set termguicolors
+let g:terminal_color0 = "#3b4252"
+let g:terminal_color1 = "#BF616A "
+let g:terminal_color2 = "#A3B38C"
+let g:terminal_color3 = "#D08770"
+let g:terminal_color4 = "#5E81AC"
+let g:terminal_color5 = "#B48EAD"
+let g:terminal_color6 = "#88C0D0"
+let g:terminal_color7 = "#81A1C1"
+" bright
+let g:terminal_color8 = "#4C566A"
+let g:terminal_color9 = "#BF616A"
+let g:terminal_color10 = "#A3B38C"
+let g:terminal_color11 = "#D08770"
+let g:terminal_color12 = "#5E81AC"
+let g:terminal_color13 = "#B48EAD"
+let g:terminal_color14 = "#88C0D0"
+let g:terminal_color15 = "#E5E9F0"
 
 if exists('g:fvim_loaded')
 

@@ -32,9 +32,6 @@ disabled = false
 [character]
 success_symbol = "[](bold green)"
 error_symbol = "[](bold red)"
-# success_symbol = "[➜](bold green) "
-# error_symbol = "[✗](bold red) "
-
 
 [directory]
 truncation_length = 5
@@ -70,7 +67,7 @@ style = "bright-white"
 [hostname]
 ssh_only = false
 style = "dimmed white"
-format = "[$ssh_symbol](bold blue)[ 淚](bold cyan)[$hostname](bold white) "
+format = "[$ssh_symbol](bold blue)[ 淚](bold yellow)[$hostname](bold white) "
 trim_at = ".finclab.com"
 disabled = false
 
