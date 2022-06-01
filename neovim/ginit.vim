@@ -11,6 +11,17 @@ let g:mkdp_auto_start = 1
 " from markdown buffer to another buffer
 let g:mkdp_auto_close = 1
 
+" Better window navigation
+nmap <C-h> :lua require('smart-splits').move_cursor_left()<CR>
+nmap <C-j> :lua require('smart-splits').move_cursor_down()<CR>
+nmap <C-k> :lua require('smart-splits').move_cursor_up()<CR>
+nmap <C-l> :lua require('smart-splits').move_cursor_right()<CR>
+" resizing splits
+nmap <C-Left> :lua require('smart-splits').resize_left()<CR>
+nmap <C-Down> :lua require('smart-splits').resize_down()<CR>
+nmap <C-Up> :lua require('smart-splits').resize_up()<CR>
+nmap <C-Right> :lua require('smart-splits').resize_right()<CR>
+
 if exists('g:fvim_loaded')
 
   set termguicolors

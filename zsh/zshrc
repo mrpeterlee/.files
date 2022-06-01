@@ -20,14 +20,12 @@
 # setenv is compatible in both Zsh and Fish
 function setenv() { export "$1=$2"; }
 
+export TZ=America/New_York
+
 # Set zsh function path
 fpath=( /usr/local/bin /lab/lib/finclab/sh/zsh "${fpath[@]}")
 # autoload -Uz parse_yml
 
-# Ensure zsh tab-complete prompts works correctly
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-# export LANG='C'  # Prevent Perl from issuing some language warning
 
 
 # check of os type
@@ -133,6 +131,9 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Starfish theme
+# Ensure zsh tab-complete prompts works correctly
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 eval "$(starship init zsh)"
 
 
@@ -259,6 +260,8 @@ elif [ -f /opt/conda/envs/paper/bin/python ]; then
     echo "Activated env PAPER: $(python --version) @ $(which python)" | lolcat
 fi
 
+# Config for jupyter_ascending
+export JUPYTER_ASCENDING_EXECUTE_PORT=60000
 
 # ------------------================== Login script ==================------------------ #
 # Cow-spoken fortunes every time you open a terminal
