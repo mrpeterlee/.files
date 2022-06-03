@@ -128,7 +128,7 @@ windows:
             - jupyter notebook --port=$JUPYTER_PORT --no-browser --NotebookApp.token="" --notebook-dir=$HOME
         - neovim-headless:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            - nvim /lab/paper/astronvim/polish.lua --headless --listen 10.1.1.100:60001
+            - nvim --headless --listen 10.1.1.100:60001
         #- make -C /lab/prod/labenv start
 # Optional tmux socket
 # socket_name: foo

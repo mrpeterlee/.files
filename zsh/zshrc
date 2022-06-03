@@ -152,6 +152,17 @@ done
 export EDITOR='nvim'
 export VISUAL='nvim'
 
+# Ensure correct alias of vim to `nvim` or `nvr` (if running inside nvim)
+if [[ ${#${NVIM_LISTEN_ADDRESS}} -eq 0 ]]; then
+    # echo "Running in SHELL: ${#${NVIM_LISTEN_ADDRESS}} - $NVIM_LISTEN_ADDRESS"
+    alias v='nvim'
+    alias vim='nvim'
+else
+    # echo "Running inside NVIM: ${#${NVIM_LISTEN_ADDRESS}} - $NVIM_LISTEN_ADDRESS"
+    alias v='nvr -cc "ToggleTerm || vsplit" -c "ToggleTerm" --remote-silent'
+    alias vim='nvr -cc "ToggleTerm || vsplit" -c "ToggleTerm" --remote-silent'
+fi
+
 # Configure pager 'less'
 export MANPAGER='less -s -M +Gg'
 manp() {
