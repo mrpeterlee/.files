@@ -24,27 +24,28 @@ imap <C-l> <Esc>:lua require('smart-splits').move_cursor_right()<CR>
 " nmap <C-Right> :lua require('smart-splits').resize_right()<CR>
 
 set termguicolors
-let g:terminal_color0 = "#3b4252"
-let g:terminal_color1 = "#BF616A "
-let g:terminal_color2 = "#A3B38C"
-let g:terminal_color3 = "#D08770"
-let g:terminal_color4 = "#5E81AC"
-let g:terminal_color5 = "#B48EAD"
-let g:terminal_color6 = "#88C0D0"
-let g:terminal_color7 = "#81A1C1"
-" bright
-let g:terminal_color8 = "#4C566A"
-let g:terminal_color9 = "#BF616A"
-let g:terminal_color10 = "#A3B38C"
-let g:terminal_color11 = "#D08770"
-let g:terminal_color12 = "#5E81AC"
-let g:terminal_color13 = "#B48EAD"
-let g:terminal_color14 = "#88C0D0"
-let g:terminal_color15 = "#E5E9F0"
+let g:terminal_color_0 = '#7f7f8c'
+let g:terminal_color_1 = '#cd5c5c'
+let g:terminal_color_2 = '#9acd32'
+let g:terminal_color_3 = '#bdb76b'
+let g:terminal_color_4 = '#75a0ff'
+let g:terminal_color_5 = '#eeee00'
+let g:terminal_color_6 = '#cd853f'
+let g:terminal_color_7 = '#666666'
+let g:terminal_color_8 = '#8a7f7f'
+let g:terminal_color_9 = '#ff0000'
+let g:terminal_color_10 = '#89fb98'
+let g:terminal_color_11 = '#f0e68c'
+let g:terminal_color_12 = '#6dceeb'
+let g:terminal_color_13 = '#ffde9b'
+let g:terminal_color_14 = '#ffa0a0'
+let g:terminal_color_15 = '#c2bfa5'
+
+
+
 
 if exists('g:fvim_loaded')
 
-  set termguicolors
   " colorscheme gruvbox8_hard
 
   " CTRL-Scroll Wheel for zooming in/out
@@ -96,3 +97,7 @@ if exists('g:fvim_loaded')
   FVimUIPopupMenu v:false
 endif
 
+" Load last session
+SessionManager! load_current_dir_session
+
+autocmd VimLeave * SessionManager! save_current_session

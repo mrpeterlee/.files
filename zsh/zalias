@@ -38,8 +38,6 @@ alias disk='df -h .'
 alias xres='xrdb ~/.Xresources'
 
 # Zsh
-alias v='nvim'
-alias vim='nvim'
 alias viz='nvim ~/.zshrc'
 alias soz='source ~/.zshrc'
 
