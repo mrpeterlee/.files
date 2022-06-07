@@ -29,7 +29,6 @@ zstyle ':prezto:load' pmodule-dirs $HOME/.zprezto-contrib
 zstyle ':prezto:load' pmodule \
   'environment' \
   'terminal' \
-  'editor' \
   'history' \
   'directory' \
   'spectrum' \
@@ -39,9 +38,11 @@ zstyle ':prezto:load' pmodule \
   'history-substring-search' \
   'autosuggestions' \
   'zsh-abbr' \
+  'zsh-vi-mode' \
   'zsh-z'
 
   # 'tmux' \
+  # 'editor' \
 #
 # Autosuggestions
 #
@@ -58,11 +59,11 @@ zstyle ':prezto:module:autosuggestions:color' found ''
 #   '0.0.0.0' '127.0.0.1'
 
 #
-# Editor
+# Editor:: Disabled in favour of the custom plugin - https://github.com/jeffreytse/zsh-vi-mode
 #
 
 # Set the key mapping style to 'emacs' or 'vi'.
-zstyle ':prezto:module:editor' key-bindings 'vi'
+# zstyle ':prezto:module:editor' key-bindings 'vi'
 
 # Auto convert .... to ../..
 zstyle ':prezto:module:editor' dot-expansion 'yes'
