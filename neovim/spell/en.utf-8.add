@@ -119,3 +119,5 @@ linter
 NeoVim
 detach
 ipynb
+backtester
+VSCode

@@ -1,7 +1,12 @@
 #! /usr/bin/env zsh
 
+# Make projects shorter
+alias p='pj'
+alias po='pjo'
+
 # sudo while preserving current environment
 # abbr sud="sudo -E -s"
+alias d='dirs -v | head -10'
 
 alias paper='cd ${$(pwd):gs/\/lab\/prod/\/lab\/paper}'
 alias prod='cd ${$(pwd):gs/\/lab\/paper/\/lab\/prod}'

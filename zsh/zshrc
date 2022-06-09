@@ -276,7 +276,13 @@ elif [ -f /opt/conda/envs/paper/bin/python ]; then
 fi
 
 # Config for jupyter_ascending
-export JUPYTER_ASCENDING_EXECUTE_PORT=60000
+export JUPYTER_ASCENDING_EXECUTE_PORT=8888
+
+# ------------------================== Custom Modules ==================------------------ #
+PROJECT_PATHS=( /lab/paper ~ ~/lean )
+if [ -f ~/.files/zsh/modules/project_jump.zsh ]; then
+    source ~/.files/zsh/modules/project_jump.zsh
+fi
 
 # ------------------================== Login script ==================------------------ #
 # Cow-spoken fortunes every time you open a terminal
