@@ -40,6 +40,32 @@
             ]
           },
           {
+            "description": "Map <ESC> to kj iTerm2",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "escape"
+                },
+                "to": [
+                  {
+                    "key_code": "kj"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
             "description": "Map CMD-. to Alt-. & CMD- to ALT- in iTerm2",
             "manipulators": [
               {
