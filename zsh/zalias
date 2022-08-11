@@ -23,6 +23,7 @@ alias ls='exa --group-directories-first -l -g --icons --classify --grid'
 alias l='exa -lah --group-directories-first -l -g --icons --classify --grid'
 alias ll='exa -lah --group-directories-first -l -g --icons --classify --grid'
 alias lt='exa -lah --group-directories-first -l -g --icons --classify --tree --level=2'
+alias tree='tree --gitignore -I __pycache__ --dirsfirst'
 
 if type -f "bat" > /dev/null; then
     alias cat='bat'

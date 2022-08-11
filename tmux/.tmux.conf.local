@@ -394,7 +394,6 @@ bind-key -n M-6 select-window -t 6
 bind-key -n M-7 select-window -t 7
 bind-key -n M-8 select-window -t 8
 bind-key -n M-9 select-window -t 9
-bind-key -n M-0 select-window -t 10
 
 # Split window into panes
 unbind-key '"'
@@ -404,6 +403,7 @@ unbind-key %
 bind-key -n M-. split-window -h
 bind-key -n M-- split-window -v
 bind-key -n M-/ next-layout
+bind-key -n C-M-/ next-layout
 
 # Panes
 bind-key -n M-e list-panes
