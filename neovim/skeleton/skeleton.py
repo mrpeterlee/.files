@@ -1,12 +1,13 @@
-""" [TODO:ModuleName]
-id:            Peter Lee (peter.lee@finclab.com)
-last_update:   [TODO:LastUpdate]
+"""
+id:            Peter Lee (peter.lee@astrocapital.net)
+last_update:   2022-Aug-08 17:03:09
 type:          lib
-sensitivity:   datalab@finclab.com
+sensitivity:   global_equities@astrocapital.net
 platform:      any
 description:   [TODO:Description]
 """
 
+from pathlib import Path
 from pprint import pprint
 from typing import Dict, List, Optional, Union
 
@@ -15,7 +16,8 @@ import pandas as pd
 from finclab.logger import init_logger
 from munch import Munch
 
-logger = init_logger()
+APP_NAME = "APPNAME"
+logger = init_logger(APP_NAME)
 
 
 def main() -> None:
@@ -25,4 +27,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    logger.info("[TODO:ModuleName] is finished.")
+    logger.info(f"\n\n{APP_NAME} completes successfully...")

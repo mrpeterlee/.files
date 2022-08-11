@@ -150,10 +150,12 @@ done
 
 # ------------------================== General Settings ==================------------------ #
 # Zsh-VI-Mode changing the escape key to `kj`
-ZVM_VI_ESCAPE_BINDKEY=kj
-ZVM_VI_INSERT_ESCAPE_BINDKEY=kj
-ZVM_VI_VISUAL_ESCAPE_BINDKEY=kj
-ZVM_VI_OPPEND_ESCAPE_BINDKEY=kj
+# ZVM_VI_ESCAPE_BINDKEY=kj
+# ZVM_VI_INSERT_ESCAPE_BINDKEY=kj
+# ZVM_VI_VISUAL_ESCAPE_BINDKEY=kj
+# ZVM_VI_OPPEND_ESCAPE_BINDKEY=kj
+# Change to Zsh's default readkey engine
+ZVM_READKEY_ENGINE=$ZVM_READKEY_ENGINE_ZLE
 
 export EDITOR='nvim'
 export VISUAL='nvim'

@@ -119,13 +119,13 @@ windows:
         - glances:
             # glances running in background
             - glances -w -t 5
-        # - jupyter-notebook:
-        #     - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-        #     - conda deactivate && conda activate paper
-        #     - export JUPYTER_ASCENDING_EXECUTE_PORT=60000
-        #     - export JUPYTER_PORT=60000
-        #     - export JUPYTER_PORT_RETRIES=0
-        #     - jupyter notebook --port=$JUPYTER_PORT --no-browser --NotebookApp.token="" --notebook-dir=$HOME
+              #- jupyter-notebook:
+              #    - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
+              #    - conda deactivate && conda activate paper
+              #    - export JUPYTER_ASCENDING_EXECUTE_PORT=8888
+              #    - export JUPYTER_PORT=8888
+              #    - export JUPYTER_PORT_RETRIES=0
+              #    - jupyter notebook --port=$JUPYTER_PORT --no-browser --NotebookApp.token="" --notebook-dir=$HOME
         - neovim-headless:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
             - nvim --headless --listen 10.1.1.100:60001
