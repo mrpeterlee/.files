@@ -156,6 +156,8 @@ done
 # ZVM_VI_OPPEND_ESCAPE_BINDKEY=kj
 # Change to Zsh's default readkey engine
 ZVM_READKEY_ENGINE=$ZVM_READKEY_ENGINE_ZLE
+zvm_bindkey viins '^H' up-line-or-history
+zvm_bindkey viins '^L' down-line-or-history
 
 export EDITOR='nvim'
 export VISUAL='nvim'
