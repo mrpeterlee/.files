@@ -7,57 +7,55 @@ windows:
       layout: even-vertical
       panes:
         - workspace1:
-          - cd /lab/lib/finclab/sh/bin
-          - exec_engine
+            - cd /lab/lib/aquamesh/bin
+            - python run.py
   - Cron-US:
       layout: even-vertical
       panes:
         - workspace1:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_us_est.py
+            - cd /lab/lib/ts/cronlab
+            - ipython
+            - run cron_us_est.py
   - Cron-CN:
       layout: even-vertical
       panes:
         - workspace1:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_cn.py
+            - cd /lab/lib/ts/cronlab
+            - ipython
+            - run cron_cn.py
   - Cron-GB:
       layout: even-vertical
       panes:
         - workspace1:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_gb.py
+            - cd /lab/lib/ts/cronlab
+            - ipython
+            - run cron_gb.py
   - Cron-FR:
       layout: even-vertical
       panes:
         - workspace1:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_fr.py
+            - cd /lab/lib/ts/cronlab
+            - ipython
+            - run cron_fr.py
   - Cron-DE:
       layout: even-vertical
       panes:
         - workspace1:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_de.py
+            - cd /lab/lib/ts/cronlab
+            - ipython
+            - run cron_de.py
   - Cron-Misc:
       layout: even-vertical
       panes:
         - AU:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_au.py
+            - cd /lab/lib/ts/cronlab
+            - ipython
+            - run cron_au.py
         - JP:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_jp.py
+            - cd /lab/lib/ts/cronlab
+            - ipython
+            - run cron_jp.py
         - HK:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_hk.py
-
-
+            - cd /lab/lib/ts/cronlab
+            - ipython
+            - run cron_hk.py
