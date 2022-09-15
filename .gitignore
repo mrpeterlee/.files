@@ -5,9 +5,9 @@ __pycache__/
 *$py.class
 
 # vscode temp files
-vscode/User/workspaceStorage
-vscode/User/globalStorage
-vscode/User/History
+vscode/User/workspaceStorage/
+vscode/User/globalStorage/
+vscode/User/History/
 
 # C extensions
 *.so
