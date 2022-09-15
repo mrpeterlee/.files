@@ -1,0 +1,84 @@
+# selenium
+
+#################### Unsorted ####################
+joblib
+tabulate
+boto3
+psutil
+zipp
+papermill
+go-ghq
+
+#################### System Prerequisites ####################
+wheel
+more-itertools
+munch
+filelock
+deprecated
+typing_extensions
+ipython
+lazygit
+
+#################### Data Science ####################
+matplotlib
+numpy
+plotly
+xlrd
+statsmodels
+seaborn
+scipy
+pyyaml
+jupyter
+jupyterlab
+jupyter_contrib_nbextensions
+openpyxl
+nbconvert
+pandas
+pandas-stubs
+
+#################### Web Access ####################
+retrying
+requests
+requests-file
+beautifulsoup4
+pandas-datareader
+
+#################### Trading ####################
+# HACK: Temp disabled - see if any building error
+# trading-calendars
+pydantic
+pylint
+fastapi
+uvicorn
+
+#################### Python Linting ####################
+yapf
+coverage
+autoflake
+autopep8
+isort
+
+#################### Python Debug ####################
+rich
+mock
+pytest
+pytest-cov
+pytest-mock
+faker
+
+#################### Terminal CLI ####################
+fire
+simple-parsing
+watchdog
+fzf
+pynvim
+visidata
+
+#################### Jupyter Notebbok ####################
+jupyterthemes
+
+#################### NeoVim Plugins ####################
+jupytext
+
+#################### Database ####################
+SQLAlchemy

@@ -1,0 +1,34 @@
+Renamed main folder
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch is up to date with 'origin/main'.
+#
+# Changes to be committed:
+#	new file:   lean/digital_assets/csharp_project/.vscode/launch.json
+#	new file:   lean/digital_assets/csharp_project/Main.cs
+#	new file:   lean/digital_assets/csharp_project/config.json
+#	new file:   lean/digital_assets/csharp_project/csharp_project.csproj
+#	new file:   lean/digital_assets/csharp_project/research.ipynb
+#	deleted:    lean/digital_assets/master-seafood/.vscode/launch.json
+#	renamed:    lean/digital_assets/master-seafood/.idea/misc.xml -> lean/digital_assets/master_seafood/.idea/misc.xml
+#	renamed:    lean/digital_assets/master-seafood/.idea/modules.xml -> lean/digital_assets/master_seafood/.idea/modules.xml
+#	renamed:    lean/digital_assets/master-seafood/.idea/simple_buy_the_dip.iml -> lean/digital_assets/master_seafood/.idea/simple_buy_the_dip.iml
+#	renamed:    lean/digital_assets/master-seafood/.idea/workspace.xml -> lean/digital_assets/master_seafood/.idea/workspace.xml
+#	renamed:    lean/digital_assets/master-seafood/.vscode.bak/launch.json -> lean/digital_assets/master_seafood/.vscode.bak/launch.json
+#	renamed:    lean/digital_assets/master-seafood/.vscode.bak/settings.json -> lean/digital_assets/master_seafood/.vscode.bak/settings.json
+#	new file:   lean/digital_assets/master_seafood/.vscode/launch.json
+#	renamed:    lean/digital_assets/master-seafood/.vscode/launch.json.lock -> lean/digital_assets/master_seafood/.vscode/launch.json.lock
+#	renamed:    lean/digital_assets/master-seafood/.vscode/settings.json -> lean/digital_assets/master_seafood/.vscode/settings.json
+#	renamed:    lean/digital_assets/master-seafood/config.json -> lean/digital_assets/master_seafood/config.json
+#	renamed:    lean/digital_assets/master-seafood/config.py -> lean/digital_assets/master_seafood/config.py
+#	renamed:    lean/digital_assets/master-seafood/lab_config.yml -> lean/digital_assets/master_seafood/lab_config.yml
+#	renamed:    lean/digital_assets/master-seafood/main.py -> lean/digital_assets/master_seafood/main.py
+#	renamed:    lean/digital_assets/master-seafood/requirements.txt -> lean/digital_assets/master_seafood/requirements.txt
+#	renamed:    lean/digital_assets/master-seafood/research.ipynb -> lean/digital_assets/master_seafood/research.ipynb
+#	renamed:    lean/digital_assets/master-seafood/research.sync.ipynb -> lean/digital_assets/master_seafood/research.sync.ipynb
+#	renamed:    lean/digital_assets/master-seafood/research.sync.py -> lean/digital_assets/master_seafood/research.sync.py
+#	renamed:    lean/digital_assets/master-seafood/temp-binance.py -> lean/digital_assets/master_seafood/temp-binance.py
+#	modified:   lean/lean.json
+#

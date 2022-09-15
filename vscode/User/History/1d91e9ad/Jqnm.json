@@ -1,0 +1,30 @@
+{
+    "files.autoSave": "afterDelay",
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "security.workspace.trust.untrustedFiles": "open",
+    "autoit.aiPath": "D:\\tool\\AutoIt\\AutoIt3.exe",
+    "autoit.checkPath": "D:\\tool\\AutoIt\\AU3Check.exe",
+    "autoit.helpPath": "D:\\tool\\AutoIt\\AutoIt3Help.exe",
+    "autoit.infoPath": "D:\\tool\\AutoIt\\Au3Info.exe",
+    "autoit.kodaPath": "D:\\tool\\AutoIt\\SciTE\\Koda\\FD.exe",
+    "autoit.tidyPath": "D:\\tool\\AutoIt\\SciTE\\Tidy\\Tidy.exe",
+    "autoit.wrapperPath": "D:\\tool\\AutoIt\\SciTE\\AutoIt3Wrapper\\AutoIt3Wrapper.au3",
+
+    "remote.SSH.localServerDownload": true,
+    "remote.SSH.showLoginTerminal": true,
+    "remote.SSH.loglevel": 1,
+    "remote.SSH.remotePlatform": {
+        "[nabil]ts-paper": "linux",
+        "[peter]ts-paper": "linux"
+    },
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+
+    "vim.enableNeovim": true,
+    "vim.neovimUseConfigFile": false,
+}

@@ -1,0 +1,5 @@
+{
+    /* --------------------    VscodeVim    -------------------- */
+    "vim.enableNeovim": true,
+    "vim.neovimUseConfigFile": true,
+}

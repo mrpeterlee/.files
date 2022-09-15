@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "/opt/conda/envs/paper/bin/python3.9",
+    "python.defaultInterpreterPath": "D:/tool/conda/envs/paper/python.exe",
+    "python.languageServer": "Pylance"
+}

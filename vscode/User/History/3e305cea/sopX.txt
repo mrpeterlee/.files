@@ -1,0 +1,16 @@
+qquantrocket-client
+quantrocket-moonshot
+quantrocket-trading-calendars
+uantrocket-moonchart
+tushare
+doq
+numpy_ext
+alpha-vantage
+ib_insync
+trendln
+o365
+bta-lib
+iexfinance
+kaleido
+country-converter
+ta

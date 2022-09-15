@@ -1,0 +1,12 @@
+test commit
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch is up to date with 'origin/main'.
+#
+# Changes to be committed:
+#	modified:   lean/digital_assets/master-seafood/.vscode/settings.json
+#	modified:   lean/digital_assets/master-seafood/main.py
+#
