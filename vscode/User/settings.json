@@ -1,0 +1,6 @@
+{
+    /* --------------------    VscodeVim    -------------------- */
+    "vim.enableNeovim": true,
+    "vim.neovimUseConfigFile": true,
+    "git.enableSmartCommit": true,
+}

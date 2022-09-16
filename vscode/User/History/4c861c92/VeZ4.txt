@@ -1,0 +1,67 @@
+# nbconvert==5.6.0
+pandas
+# pandas==1.2.5
+
+#################### FincLab Pre-requisites ####################
+faker
+filelock
+fire
+ipython
+isort
+mock
+more-itertools
+munch
+# alpaca-trade-api
+# perspective-python
+# great_expectations
+python-binance
+black
+simple-parsing
+rich
+deprecated
+
+trading-calendars
+typing_extensions
+watchdog
+wheel
+xlrd
+zipp
+
+openpyxl
+pandas
+pandas-datareader
+plotly
+psutil
+pydantic
+pylint
+pytest
+pytest-cov
+pytest-mock
+pyyaml
+requests
+requests-file
+retrying
+rich
+scipy
+seaborn
+statsmodels
+
+matplotlib
+numpy
+commentjson
+pandarallel
+pandas-market-calendars
+psycopg2-binary
+
+
+# #################### NeoVim Plugins ####################
+# pylint
+# yapf
+# autofake
+# isort
+# coverage
+# debugpy
+
+# #################### Jupyter Notebbok ####################
+# # For git-diff jupyter notebooks
+# nbdime
