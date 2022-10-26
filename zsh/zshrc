@@ -186,6 +186,7 @@ manp() {
 }
 
 export HOUSTON_URL=http://10.1.1.100:1969
+export BBG_ROOT=/lab/data/samba/tradestation/data/interim/xbbg
 
 # why would you type 'cd dir' if you could just type 'dir'?
 setopt AUTO_CD
