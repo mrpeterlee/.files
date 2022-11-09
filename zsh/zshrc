@@ -17,6 +17,9 @@
 
 
 # ------------------================== Helper Functions ==================------------------ #
+# ------------------================== zoxide:: replacement of `cd`  ==================------------------ #
+eval "$(zoxide init zsh)"
+
 # setenv is compatible in both Zsh and Fish
 function setenv() { export "$1=$2"; }
 
@@ -135,7 +138,6 @@ fi
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 eval "$(starship init zsh)"
-
 
 # ------------------================== Functions ==================------------------ #
 files=( ~/.files/zsh/zalias \
