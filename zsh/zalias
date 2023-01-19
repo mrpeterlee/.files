@@ -44,16 +44,11 @@ if type -f "dust" > /dev/null; then
     alias du='dust'
 fi
 
-# Replacement for rm:: temporary save to /tmp/graveyard and allow for undelete using rip -u 
-if type -f "rip" > /dev/null; then
-    # cargo install rm-improved
-    alias rm='rip'
-fi
 # Replacement for cd:: remember the last locations
-if type -f "z" > /dev/null; then
-    # cargo install rm-improved
-    alias cd='z'
-fi
+# if type -f "z" > /dev/null; then
+#     # cargo install rm-improved
+#     alias cd='z'
+# fi
 
 
 if type -f "bat" > /dev/null; then
