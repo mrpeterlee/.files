@@ -8,6 +8,9 @@ __pycache__/
 vscode/User/workspaceStorage/
 vscode/User/globalStorage/
 vscode/User/History/
+vscode/User/globalStorage/*
+vscode/User/workspaceStorage/*
+
 
 # C extensions
 *.so

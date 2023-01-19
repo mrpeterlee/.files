@@ -1,1 +1,1 @@
-{"version":"1.0","registers":[["%",[{"text":"polish.lua","registerMode":0}]],["#",[{"text":"settings.json","registerMode":0}]]]}
+{"version":"1.0","registers":[["%",[{"text":"settings.json","registerMode":0}]],["#",[{"text":"tasks","registerMode":0}]],["/",[{"text":"exa","registerMode":0}]],["*",[{"registerMode":0,"text":" exa"}]],["\"",[{"registerMode":0,"text":" exa"}]],["-",[{"text":"Notebooks ","registerMode":0}]],["1",[{"text":"\t// ","registerMode":1}]]]}

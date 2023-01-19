@@ -33,7 +33,7 @@ if [ -f "$basedir/remote-containers-path" ]; then
 fi
 
 if [ -z "$REMOTE_CONTAINERS_PATH" ]; then
-        echo "Failed to determine Remote-Containers path"
+        echo "Failed to determine Dev Containers path"
         exit 1
 fi
 
