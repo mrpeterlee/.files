@@ -19,13 +19,45 @@ alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v /
 alias fd=fdfind
 alias vpn='sudo /usr/local/Cellar/openvpn/2.4.9/sbin/openvpn --config ~/peter.ovpn'
 
-alias ls='exa --group-directories-first -l -g --icons --classify --grid'
+# alias ls='exa --group-directories-first -l -g --icons --classify --grid'
+alias ls='exa -l --classify --git --icons --color=always --group-directories-first'
 alias l='exa -lah --group-directories-first -l -g --icons --classify --grid'
 alias ll='exa -lah --group-directories-first -l -g --icons --classify --grid'
 alias lt='exa -lah --group-directories-first -l -g --icons --classify --tree --level=2'
 alias tree='tree --gitignore -I __pycache__ --dirsfirst'
 
+# Replacement for ps:: human friendly show processes
+if type -f "procs" > /dev/null; then
+    # cargo install procs
+    alias ps='procs'
+fi
+
+# Replacement for top:: colorful and human friendly
+if type -f "btm" > /dev/null; then
+    # cargo install bottom --locked
+    alias top='btm'
+fi
+
+# Replacement for du:: human friendly show disk usage
+if type -f "dust" > /dev/null; then
+    # cargo install du-dust
+    alias du='dust'
+fi
+
+# Replacement for rm:: temporary save to /tmp/graveyard and allow for undelete using rip -u 
+if type -f "rip" > /dev/null; then
+    # cargo install rm-improved
+    alias rm='rip'
+fi
+# Replacement for cd:: remember the last locations
+if type -f "z" > /dev/null; then
+    # cargo install rm-improved
+    alias cd='z'
+fi
+
+
 if type -f "bat" > /dev/null; then
+    # apt install -y exa
     alias cat='bat'
 fi
 if type -f "batcat" > /dev/null; then

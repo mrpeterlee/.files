@@ -17,6 +17,9 @@
 
 
 # ------------------================== Helper Functions ==================------------------ #
+# ------------------================== zoxide:: replacement of `cd`  ==================------------------ #
+eval "$(zoxide init zsh)"
+
 # setenv is compatible in both Zsh and Fish
 function setenv() { export "$1=$2"; }
 
@@ -136,7 +139,6 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 eval "$(starship init zsh)"
 
-
 # ------------------================== Functions ==================------------------ #
 files=( ~/.files/zsh/zalias \
        /lab/lib/finclab/sh/zsh/utils \
@@ -186,6 +188,7 @@ manp() {
 }
 
 export HOUSTON_URL=http://10.1.1.100:1969
+export BBG_ROOT=/lab/data/samba/tradestation/data/interim/xbbg
 
 # why would you type 'cd dir' if you could just type 'dir'?
 setopt AUTO_CD
