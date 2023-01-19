@@ -1,6 +1,240 @@
 {
-    /* --------------------    VscodeVim    -------------------- */
+    /* ==================== General ==================== */
+    "git.enableSmartCommit": true,
+    "window.zoomLevel": 0,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    // "saveAndRunExt": {
+    //     "commands": [
+    //         {
+    //             // Remove unused imports for Python files
+    //             "match": ".*\\.py",
+    //             "isShellCommand": false,
+    //             "cmd": "autoflake.removeUnused"
+    //         },
+    //     ]
+    // },
+    "editor.inlineSuggest.enabled": true,
+    "workbench.colorTheme": "Cobalt Next Dark",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.external.windowsExec": "C:\\Users\\Peter\\AppData\\Local\\Microsoft\\WindowsApps\\wt.exe",
+    /* ==================== Python ==================== */
+    // "python.envFile": "${userHome}/.lab/prod.env",
+    "python.envFile": "d:/home/peter/prod.env",
+    "python.analysis.typeCheckingMode": "off",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "black",
+    "python.defaultInterpreterPath": "D:/tool/conda/envs/paper/python.exe",
+    "cSpell.diagnosticLevel": "Hint",
+    // "python.formatting.blackArgs": ["--line-length", "100"],
+    "python.linting.pylintArgs": [
+        "--disable=I0011",
+    ],
+    // "python.defaultInterpreterPath": "${env:PYTHON_INSTALL_LOC}",
+    // "python.terminal.activateEnvironment": false,
+    // docstring
+    "autoDocstring.docstringFormat": "numpy",
+    "autoDocstring.generateDocstringOnEnter": true,
+    /* -------------------- VscodeVim -------------------- */
+    "vim.smartRelativeLine": true,
     "vim.enableNeovim": true,
     "vim.neovimUseConfigFile": true,
-    "git.enableSmartCommit": true,
+    "vim.useSystemClipboard": true,
+    "vim.debug.silent": false,
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.overrideCopy": true,
+    // In visual mode, start a search with * or # using the current selection
+    "vim.visualstar": true,
+    "vim.highlightedyank.enable": true,
+    // General Settings
+    "vim.leader": "<space>",
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-f>": false
+    },
+    // KEY BINDINGS: "vim.visualModeKeyBindings"/"vim.operatorPendingModeKeyBindings"
+    // Insert mode
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "j",
+                "j"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        }
+    ],
+    // -------------------- Normal mode --------------------  //
+    // Normal Mode
+    "vim.normalModeKeyBindings": [
+        // Open file explorer
+        {
+            "before": [
+                "<leader>",
+                "e"
+            ],
+            "commands": [
+                "workbench.action.quickOpenNavigatePreviousInFilePicker"
+            ],
+        },
+        // Run Python file in terminal
+        {
+            "before": [
+                "<leader>",
+                "k",
+                "f"
+            ],
+            "commands": [
+                "autoflake.removeUnused"
+            ],
+        },
+        // Turn off search highlighting
+        {
+            "before": [
+                "<leader>",
+                "h"
+            ],
+            "commands": [
+                ":nohl"
+            ],
+        },
+        // Doc string
+        {
+            "before": [
+                "<leader>",
+                "k",
+                "d"
+            ],
+            "commands": [
+                "autoDocstring.generateDocstring"
+            ],
+        },
+        // Refactor - Rename
+        {
+            "before": [
+                "<leader>",
+                "k",
+                "r"
+            ],
+            "commands": [
+                "editor.action.rename"
+            ],
+        },
+        // Close buffer - active editor
+        {
+            "before": [
+                "<leader>",
+                "c"
+            ],
+            "commands": [
+                "workbench.action.closeActiveEditor"
+            ]
+        },
+        // Toggle Ctrl-P
+        {
+            "before": [
+                "<leader>",
+                "f",
+                "f"
+            ],
+            "commands": [
+                "workbench.action.quickOpen"
+            ],
+        },
+        // Toggle fuzzy file search
+        {
+            "before": [
+                "<leader>",
+                "f",
+                "w"
+            ],
+            "commands": [
+                "workbench.action.findInFiles"
+            ]
+        },
+        // Comment line
+        {
+            "before": [
+                "<leader>",
+                "/"
+            ],
+            "commands": [
+                "editor.action.commentLine"
+            ],
+        },
+        // Save file
+        {
+            "before": [
+                "<leader>",
+                "w"
+            ],
+            "commands": [
+                "workbench.action.files.save"
+            ],
+        },
+        {
+            "before": [
+                "H"
+            ],
+            "after": [
+                "<c-PageUp>"
+            ]
+        },
+        {
+            "before": [
+                "L"
+            ],
+            "after": [
+                "<c-PageDown>"
+            ]
+        }
+    ],
+    // Visual Mode
+    // Indent lines
+    "vim.visualModeKeyBindings": [
+        {
+            "before": [
+                ">"
+            ],
+            "commands": [
+                "editor.action.indentLines"
+            ]
+        },
+        {
+            "before": [
+                "<"
+            ],
+            "commands": [
+                "editor.action.outdentLines"
+            ]
+        },
+    ],
+    "terminal.integrated.copyOnSelection": true,
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "%PYTHONPATH%;D:/lab/lib",
+        "PATH": "%PATH%;D:/tool/conda/Scripts",
+    },
+    "editor.fontFamily": "'Fira Code', monospace",
+    "editor.codeLensFontFamily": "\"Fira Code\"",
+    "cSpell.userWords": [
+        "backtest",
+        "finclab",
+        "strat",
+        "tradestation"
+    ],
+    "notebook.output.textLineLimit": 100,
+    "jupyter.askForKernelRestart": false,
+    "aws.telemetry": false,
+    "explorer.confirmDragAndDrop": false,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "git.confirmSync": false,
 }
