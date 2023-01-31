@@ -1,9 +1,9 @@
 name: cronlab
 root: /lab/lib/aquamesh
 # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
-startup_window: Engine
+startup_window: "1"
 # Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
-startup_pane: 1
+startup_pane: "1"
 
 windows:
   - Engine:
@@ -44,3 +44,6 @@ windows:
             - cd /lab/lib/ts/cronlab
             - ipython
             - run cron_hk.py
+  - NB-Svr:
+      - cd /lab/paper/ts/lean/equity/watchdog
+      - jupyter notebook --ip="*" --port=51001 --no-browser --NotebookApp.password=$jupyter_password --NotebookApp.token="" --NotebookApp.allow_remote_access=True --notebook-dir=.

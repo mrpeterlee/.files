@@ -51,7 +51,7 @@ set -gx PROJECT_PATHS ~/lab/paper ~/project
 set -x PATH $PATH /usr/bin
 set -x PATH $PATH /snap/bin
 set -x PATH $PATH /bin
-set -x PATH $PATH /opt/conda/bin
+# set -x PATH $PATH /opt/conda/bin
 set -x PATH $PATH $HOME/lab/paper/finclab/sh/bash
 set -x PATH $PATH $HOME/lab/paper/finclab/sh/zsh
 set -x PATH $PATH $HOME/lab/paper/finclab/sh/fish
