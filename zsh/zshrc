@@ -17,6 +17,9 @@
 
 
 # ------------------================== Helper Functions ==================------------------ #
+# ------------------================== zoxide:: replacement of `cd`  ==================------------------ #
+eval "$(zoxide init zsh)"
+
 # setenv is compatible in both Zsh and Fish
 function setenv() { export "$1=$2"; }
 
@@ -86,8 +89,10 @@ done
 
 # ------------------================== Paths ==================------------------ #
 # System Paths
-dirs=( '/opt/conda/bin' \
-       '/snap/bin' \
+export PATH="/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+
+# '/opt/conda/bin' \
+dirs=( '/snap/bin' \
 
        ~/.local/bin \
        ~/.files/bin \
@@ -135,7 +140,6 @@ fi
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 eval "$(starship init zsh)"
-
 
 # ------------------================== Functions ==================------------------ #
 files=( ~/.files/zsh/zalias \
@@ -186,6 +190,7 @@ manp() {
 }
 
 export HOUSTON_URL=http://10.1.1.100:1969
+export BBG_ROOT=/lab/data/samba/tradestation/data/interim/xbbg
 
 # why would you type 'cd dir' if you could just type 'dir'?
 setopt AUTO_CD
@@ -301,4 +306,5 @@ function cowsayfortune {
     fortune | cowsay -f $THISCOW -W 100
 }
 cowsayfortune | lolcat --spread 1.0
+
 

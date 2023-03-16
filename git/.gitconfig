@@ -7,6 +7,7 @@
 [core]
 	editor    = nvim
 	pager = diff-so-fancy | less --tabs=4 -RFX
+	autocrlf = true
 ; }}}
 ; alias {{{
 [alias]
@@ -54,3 +55,12 @@
 	markEmptyLines = false
 [pull]
 	rebase = false
+# define command which will be used when "nvim" is set as a merge tool
+[mergetool "nvim"]
+  cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
+# set "nvim" as tool for merging
+[merge]
+  tool = nvim
+# automatically launch merge tool without displaying a prompt
+[mergetool]
+  prompt = false

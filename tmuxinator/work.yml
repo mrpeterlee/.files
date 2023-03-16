@@ -2,7 +2,7 @@
 
 name: work
 root: ~/
-startup_pane: 1
+startup_pane: "1"
 
 windows:
   - general:

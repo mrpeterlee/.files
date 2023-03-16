@@ -21,13 +21,13 @@ exit 1
 SET REMOTE_CONTAINERS_PATH=
 
 @REM Check the remote-containers-path file 
-@REM This is a cache (and enables Remote-Containers development)
+@REM This is a cache (and enables Dev Containers development)
 IF NOT exist "%~dp0remote-containers-path%" goto fail_remote_container_path
 set /p REMOTE_CONTAINERS_PATH=<"%~dp0remote-containers-path%"
 IF exist "%REMOTE_CONTAINERS_PATH%\dev-containers-user-cli\cli.js" goto forwardcall
 
 :fail_remote_container_path
-echo Failed to determine Remote-Containers path
+echo Failed to determine Dev Containers path
 exit 1
 
 :forwardcall

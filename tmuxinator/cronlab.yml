@@ -1,63 +1,49 @@
 name: cronlab
-root: ~/
-startup_pane: 1
+root: /lab/lib/aquamesh
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+startup_window: "1"
+# Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
+startup_pane: "1"
 
 windows:
-  - Exec-Engine:
-      layout: even-vertical
-      panes:
-        - workspace1:
-          - cd /lab/lib/finclab/sh/bin
-          - exec_engine
+  - Engine:
+      - cd /lab/lib/aquamesh/bin
+      - python run.py
   - Cron-US:
-      layout: even-vertical
-      panes:
-        - workspace1:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_us_est.py
+      - cd /lab/lib/ts/cronlab
+      - ipython
+      - run cron_us_est.py
   - Cron-CN:
-      layout: even-vertical
-      panes:
-        - workspace1:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_cn.py
+      - cd /lab/lib/ts/cronlab
+      - ipython
+      - run cron_cn.py
   - Cron-GB:
-      layout: even-vertical
-      panes:
-        - workspace1:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_gb.py
+      - cd /lab/lib/ts/cronlab
+      - ipython
+      - run cron_gb.py
   - Cron-FR:
-      layout: even-vertical
-      panes:
-        - workspace1:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_fr.py
+      - cd /lab/lib/ts/cronlab
+      - ipython
+      - run cron_fr.py
   - Cron-DE:
-      layout: even-vertical
-      panes:
-        - workspace1:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_de.py
+      - cd /lab/lib/ts/cronlab
+      - ipython
+      - run cron_de.py
   - Cron-Misc:
       layout: even-vertical
       panes:
         - AU:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_au.py
+            - cd /lab/lib/ts/cronlab
+            - ipython
+            - run cron_au.py
         - JP:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_jp.py
+            - cd /lab/lib/ts/cronlab
+            - ipython
+            - run cron_jp.py
         - HK:
-          - cd /lab/lib/ts/cronlab
-          - ipython
-          - run cron_hk.py
-
-
+            - cd /lab/lib/ts/cronlab
+            - ipython
+            - run cron_hk.py
+  - NB-Svr:
+      - cd /lab/paper/ts/lean/equity/watchdog
+      - jupyter notebook --ip="*" --port=51001 --no-browser --NotebookApp.password=$jupyter_password --NotebookApp.token="" --NotebookApp.allow_remote_access=True --notebook-dir=.
