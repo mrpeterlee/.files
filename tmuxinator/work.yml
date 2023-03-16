@@ -46,23 +46,23 @@ windows:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
             - cd $HOME/lab/paper/finclab
 
-  - datalab:
+  - winclient:
       layout: even-horizontal
       panes:
         - workspace1:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            - cd $HOME/lab/paper/datalab
+            - cd $HOME/lab/paper/winclient/
             - vim README.md
         - workspace2:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            - cd $HOME/lab/paper/datalab
+            - cd $HOME/lab/paper/winclient/winclient
 
-  - tradestation:
+  - aquamesh:
       layout: even-horizontal
       panes:
         - workspace1:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            - cd $HOME/lab/paper/tradestation
+            - cd $HOME/lab/paper/aquamesh
             - vim README.md
           # - ssh_ts
           # - conda activate base
@@ -70,7 +70,7 @@ windows:
           # - cd $HOME/ts
         - workspace2:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            - cd $HOME/lab/paper/tradestation
+            - cd $HOME/lab/paper/aquamesh/aquamesh
           # - ssh_ts
           # - conda activate base
           # - cd $HOME/ts
