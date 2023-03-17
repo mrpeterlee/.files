@@ -78,49 +78,28 @@ brew install dos2unix
 
 ```bash
 brew install zsh
-ln -s ~/.files/unix/.zshenv ~/.zshenv
+# Install zprezo
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+# Install starship
+brew install starship
+
+# Set up symlinks
+ln -sf ~/.files/zsh/zshrc ~/.zshrc
+ln -sf ~/.files/zsh/zpreztorc ~/.zpreztorc
+ln -sf ~/.files/starship/starship.toml ~/.config/starship.toml
+
 chsh -s /bin/zsh
 ```
 
-Relaunch iTerm and see if zsh has loaded successfully.
+# Iterm
 
-```
-echo $SHELL
-echo $ZSH_VERSION
-```
+ln -sf ~/.files/iterm/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 
-Note that you could follow _~/.zshenv_ to see what files has been sournced in the zprezto start-up process.
-
-The below script is used to setup this Git Repo the **1st** time. Please discard it.
-
-```bash
-cat <<EOT > ~/.files/unix/.zshenv
-#!/bin/zsh
-export ZDOTDIR=~/.files/unix
-source "\${ZDOTDIR}/.zprofile"
-EOT
-touch ~/.files/unix/.zshrc # will put my fav aliases and functions here
-ln -s ~/.files/unix/.zshenv ~/.zshenv
-export ZDOTDIR=~/.files/unix
-cat <<EOT >> ~/.files/unix/.zshrc
-source "\${ZDOTDIR:-\$HOME}/.zprezto/init.zsh"
-EOT
-git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-setopt EXTENDED_GLOB
-for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-done
-```
-
-### Git & SSH
-
-Then we can't live without git...
+### Git
 
 ```
 brew install git
-git config --global user.name "Peter Lee""
-git config --global user.email "mr.peter.lee@hotmail.com""
-ssh-keygen -t rsa -b 4096 -C "mr.peter.lee@hotmail.com"
+ln -sf ~/.files/git/.gitconfig ~/.gitconfig
 ```
 
 ### Anaconda
