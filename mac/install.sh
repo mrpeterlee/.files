@@ -18,6 +18,7 @@ brew install zoxide
 brew install --cask julia
 brew install golang
 brew install ripgrep git make shellcheck codespell cowsay fortune lolcat tmux tmuxinator tree-sitter openvpn
+brew install --cask docker
 
 # Docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg &&
@@ -65,11 +66,10 @@ conda activate paper
 /opt/conda/envs/paper/bin/python -m pip install trendln
 /opt/conda/envs/paper/bin/python -m pip install pandas_ta
 /opt/conda/envs/paper/bin/python -m pip install numpy_ext
-
 # RUN /opt/conda/envs/paper/bin/python -m pip install quantrocket-moonchart
 
 ## 3 - Install Jupyter Lab Extensions
-# RUN /opt/conda/bin/conda install -c conda-forge/label/cf202003 -y nodejs && \
+conda install -y -c anaconda notebook
 /opt/conda/envs/paper/bin/jupyter labextension install jupyterlab-plotly &&
 	/opt/conda/envs/paper/bin/jupyter labextension install @jupyter-widgets/jupyterlab-manager plotlywidget &&
 	/opt/conda/envs/paper/bin/jupyter labextension install @axlair/jupyterlab_vim &&
@@ -84,92 +84,11 @@ ln -sf $HOME/.tmux/.tmux.conf $HOME/.tmux.conf
 ln -sf $HOME/.files/tmux/.tmux.conf.local $HOME/.tmux.conf.local
 ln -sf $HOME/.files/tmuxinator $HOME/.tmuxinator
 
-exit
-
 # -------------------- QuantConnect / Lean CLI -------------------- #
-brew install mono
+brew install mono nuget
 
 # Restore dependency for QuantConnect/Lean
-# RUN nuget restore /lab/lean/QuantConnect.Lean.sln
-
-# Deploy latest lean
-# COPY ./docker/lean /lab/lean
+nuget restore /lab/paper/lean/QuantConnect.Lean.sln
 
 ## Install Python libraries
-RUN /opt/conda/envs/paper/bin/python -m pip install --upgrade lean &&
-	/opt/conda/envs/paper/bin/python -m pip install --upgrade quantconnect-stubs
-
-# -------------------- System Settings -------------------- #
-# Set the locale
-RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen &&
-	locale-gen
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
-
-# -------------------- Create User Account -------------------- #
-# Change ROOT password
-RUN echo "root:${ts_password}" | chpasswd
-
-COPY docker/sudoers /etc/sudoers
-RUN groupadd -r -g 10000 tradestation &&
-	useradd -U -u ${ts_uid} -G tradestation -G sudo -s ${ts_shell} ${ts_user} -p "$(openssl passwd -1 ${ts_password})" &&
-	echo "${ts_user} ALL=NOPASSWD:/bin/mkdir" >>/etc/sudoers &&
-	echo "${ts_user} ALL=NOPASSWD:/bin/chown" >>/etc/sudoers &&
-	echo "${ts_user} ALL=NOPASSWD:/usr/bin/apt" >>/etc/sudoers &&
-	echo "${ts_user} ALL=NOPASSWD:/usr/sbin/useradd" >>/etc/sudoers &&
-	echo "${ts_user} ALL=NOPASSWD:/usr/sbin/deluser" >>/etc/sudoers &&
-	echo "${ts_user} ALL=NOPASSWD:/usr/sbin/chpasswd" >>/etc/sudoers &&
-	echo "${ts_user} ALL=NOPASSWD:/usr/sbin/service" >>/etc/sudoers &&
-	echo "${ts_user} ALL=NOPASSWD:/usr/bin/docker" >>/etc/sudoers
-
-# -------------------- Configure Docker -------------------- #
-# Add user to docker group
-RUN usermod -a -G docker ${ts_user}
-
-# Start Docker
-# Trust the internal corp docker registry
-COPY docker/docker_config/daemon.json /etc/docker/daemon.json
-COPY docker/docker_config/docker-pull.sh /usr/bin
-RUN chmod +x /usr/bin/docker-pull.sh && docker-pull.sh && rm /usr/bin/docker-pull.sh
-
-# -------------------- Configure Docker -------------------- #
-# Update hostname
-RUN echo "[${ts_user}]ts-paper" >/etc/hostname
-
-# Set labenv to paper
-COPY docker/labenv/labenv_paper.yml /lab/labenv.yml
-
-# Set File Permissions (after the `user` account has been created)
-RUN chmod -R 770 /lab &&
-	chown -R ${ts_user}:tradestation /lab &&
-	chown -R ${ts_user}:tradestation /var/log &&
-	chmod -R 770 /opt/conda &&
-	chown -R ${ts_user}:tradestation /opt/conda
-
-# -------------------- Clean Up -------------------- #
-RUN apt-get install -y cifs-utils rsync &&
-	apt-get autoremove -y
-RUN echo $(date) >/lab/tradestation_last_built
-
-# -------------------- In-house Packages -------------------- #
-# Pyfolio
-COPY ./docker/pyfolio/pyfolio /lab/lib/pyfolio
-COPY ./docker/finclab/finclab /lab/lib/finclab
-
-# Configure Bash / Zsh environment
-COPY ./docker/sh/bash/bashrc /root/.bashrc
-COPY ./docker/sh/bash/bash_alias /root/.bash_alias
-COPY ./docker/sh/zsh/zshrc /root/.zshrc
-
-# Copy over the GE config file
-COPY ./docker/finclab_great_expectations_config.yml /lab/lib/finclab/data/great_expectations/uncommitted/config_variables.yml
-
-# -------------------- Switch User -> Kick off ths system -------------------- #
-# Switch user
-USER ${ts_user}
-WORKDIR /lab
-
-# -------------------- Entry Point -------------------- #
-COPY ./docker/entrypoint.sh /tmp/entrypoint.sh
-CMD ["/bin/bash", "/tmp/entrypoint.sh"]
+/opt/conda/envs/paper/bin/python -m pip install --upgrade lean quantconnect-stubs
