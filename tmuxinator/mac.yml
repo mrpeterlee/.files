@@ -8,45 +8,47 @@ windows:
       layout: even-vertical
       panes:
         - workspace1:
-          - cd $HOME/lab/paper
+            - cd $HOME/lab/paper
           # - conda deactivate && conda activate finclab
         - workspace2:
-          - cd $HOME/lab/paper
+            - cd $HOME/lab/paper
           # - conda deactivate && conda activate finclab
-            #- fswatch:
-            #  - cd $HOME/project
-            #  - conda deactivate && conda activate finclab
-            #  - fswatch $HOME/lab/paper true
+          #- fswatch:
+          #  - cd $HOME/project
+          #  - conda deactivate && conda activate finclab
+          #  - fswatch $HOME/lab/paper true
 
   - finclab:
       layout: even-horizontal
       panes:
         - workspace1:
-          - cd $HOME/lab/paper/finclab
+            - cd $HOME/lab/paper/finclab
 
   - flightlog:
       layout: even-vertical
       panes:
         - pane2:
-          - cd $HOME/lab/paper
-          - ts flightlog stream -d
+            - cd $HOME/lab/paper
+            - ts flightlog stream -d
 
   - server-monitor:
       layout: tiled
       panes:
         - glances:
-          - sleep 5
-          - glances
+            - sleep 5
+            - glances
 
   - background-apps:
       layout: tiled
       panes:
-        - jupyter_notebook:
-          #- conda deactivate && conda activate finclab
-          - jupyter lab --ip="127.0.0.1" --port=55001 --no-browser --NotebookApp.password="" --NotebookApp.token="" --NotebookApp.allow_remote_access=False --notebook-dir=$HOME
-        - ssh_port_forward:
-          - ssha
-
+        # - jupyter_notebook:
+        #- conda deactivate && conda activate finclab
+        # - jupyter lab --ip="127.0.0.1" --port=55001 --no-browser --NotebookApp.password="" --NotebookApp.token="" --NotebookApp.allow_remote_access=False --notebook-dir=$HOME
+        # - ssh_port_forward:
+        # - ssha
+        - NB-Svr:
+            - cd /lab/paper/ts/lean/equity/watchdog
+            - jupyter notebook --ip="*" --port=51002 --no-browser --NotebookApp.password="$jupyter_password" --NotebookApp.token="" --NotebookApp.allow_remote_access=True --notebook-dir=.
 # Optional tmux socket
 # socket_name: foo
 
@@ -82,4 +84,3 @@ windows:
 
 # Controls whether the tmux session should be attached to automatically. Defaults to true.
 # attach: false
-

@@ -1,4 +1,4 @@
-# Build TradeStation Image
+# Install all dependencies from scratch
 #
 # id:            Peter Lee (peter.lee@finclab.com)
 # last_update:   2022-04-02 03:37:11 UTC
@@ -7,29 +7,50 @@
 # platform:      any
 # description:   DockerFile to build the TradeStation Image.
 
+# -------------------- System Packages -------------------- #
+# System packages are installed using brew
+brew install neovim
+brew install starship
+brew install exa
+brew install prettier
+brew install bat
+brew install zoxide
+brew install --cask julia
+brew install golang
+brew install ripgrep git make shellcheck codespell cowsay fortune lolcat tmux tmuxinator tree-sitter openvpn
 
-## 2 - Create the environment
-exit
+# Docker
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg &&
+	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list >/dev/null &&
+	apt-get update &&
+	apt-get install -y docker-ce docker-ce-cli containerd.io
 
+# -------------------- Rust -------------------- #
+brew install rustup
+rustup-init
+
+# -------------------- Zsh -------------------- #
+# zsh configs
+mkdir -p "$HOME/.zprezto-contrib"
+git clone --recursive https://github.com/agkozak/zsh-z.git $HOME/.zprezto-contrib/zsh-z
+git clone --recursive https://github.com/olets/zsh-abbr.git $HOME/.zprezto-contrib/zsh-abbr
 
 # -------------------- Python (Conda) -------------------- #
-
 ## 1 - Download MiniConda installer
-mkdir -p /opt && \
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
-bash /tmp/miniconda.sh -b -u -p /opt/conda && \
-rm -rf /tmp/miniconda.sh
+mkdir -p /opt &&
+	wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh &&
+	bash /tmp/miniconda.sh -b -u -p /opt/conda &&
+	rm -rf /tmp/miniconda.sh
 
 ## 2 - Create the environment
-opt/conda/bin/conda config --add channels conda-forge && \
-/opt/conda/bin/conda config --set channel_priority strict && \
-/opt/conda/bin/conda create -y -c conda-forge --name paper python=3.9 pip --file /lab/paper/tradestation/docker/conda/requirements-conda-install.txt
+opt/conda/bin/conda config --add channels conda-forge &&
+	/opt/conda/bin/conda config --set channel_priority strict &&
+	/opt/conda/bin/conda create -y -c conda-forge --name paper python=3.9 pip --file /lab/paper/tradestation/docker/conda/requirements-conda-install.txt
 
 conda activate paper
 
 ## Install Python libraries
 /opt/conda/envs/paper/bin/python -m pip install -r /lab/paper/tradestation/docker/conda/conda/requirements.txt
-
 /opt/conda/envs/paper/bin/python -m pip install exchange-calendars
 /opt/conda/envs/paper/bin/python -m pip install pandas-market-calendars
 /opt/conda/envs/paper/bin/python -m pip install country-converter
@@ -49,82 +70,24 @@ conda activate paper
 
 ## 3 - Install Jupyter Lab Extensions
 # RUN /opt/conda/bin/conda install -c conda-forge/label/cf202003 -y nodejs && \
-/opt/conda/envs/paper/bin/jupyter labextension install jupyterlab-plotly && \
-/opt/conda/envs/paper/bin/jupyter labextension install @jupyter-widgets/jupyterlab-manager plotlywidget && \
-/opt/conda/envs/paper/bin/jupyter labextension install @axlair/jupyterlab_vim && \
-/opt/conda/envs/paper/bin/jupyter labextension update --all
+/opt/conda/envs/paper/bin/jupyter labextension install jupyterlab-plotly &&
+	/opt/conda/envs/paper/bin/jupyter labextension install @jupyter-widgets/jupyterlab-manager plotlywidget &&
+	/opt/conda/envs/paper/bin/jupyter labextension install @axlair/jupyterlab_vim &&
+	/opt/conda/envs/paper/bin/jupyter labextension update --all
 
 # blpapi - BBG api
-/opt/conda/envs/paper/bin/python -m pip install --index-url=https://bcms.bloomberg.com/pip/simple blpapi \
+/opt/conda/envs/paper/bin/python -m pip install --index-url=https://bcms.bloomberg.com/pip/simple blpapi
+
+# -------------------- Tmuxinator -------------------- #
+git clone https://github.com/gpakosz/.tmux.git $HOME/.tmux
+ln -sf $HOME/.tmux/.tmux.conf $HOME/.tmux.conf
+ln -sf $HOME/.files/tmux/.tmux.conf.local $HOME/.tmux.conf.local
+ln -sf $HOME/.files/tmuxinator $HOME/.tmuxinator
 
 exit
 
-
-# -------------------- System Packages -------------------- #
-# System prerequisites
-RUN apt-get update &&
-	apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-
-# Install required packages && upgrade
-RUN add-apt-repository ppa:neovim-ppa/unstable &&
-	apt-get update &&
-	yes | apt-get install -y zsh fish fonts-powerline neovim openssh-server nano sudo gosu npm python3-pip ripgrep git apt-utils unzip gcc g++ make shellcheck codespell cowsay fortune lolcat trash-cli tmux tmuxinator locales &&
-	yes | apt-get upgrade -y &&
-	chsh --shell /bin/bash root
-
-# NodeJS packages
-# RUN curl -sL https://deb.nodesource.com/setup_17.x | /bin/bash - && \
-RUN apt install -y nodejs
-
-# Yarn
-RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null &&
-	echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list &&
-	apt update &&
-	yes | apt install -y yarn
-
-# Rustc
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-
-# Docker
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg &&
-	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list >/dev/null &&
-	apt-get update &&
-	apt-get install -y docker-ce docker-ce-cli containerd.io
-
-# sc-im
-# RUN apt-get install -y bison libncurses5-dev libncursesw5-dev libxml2-dev libzip-dev pkg-config && \
-#     git clone https://github.com/jmcnamara/libxlsxwriter.git /tmp/libxlsxwriter && \
-#     cd /tmplibxlsxwriter/ && make && make install && \
-#     ldconfig && \
-#     git clone https://github.com/andmarti1424/sc-im.git /tmp/sc-im && \
-#     cd /tmp/sc-im/src && make && make install
-
-# -------------------- User Apps -------------------- #
-# Starship
-RUN curl -fsSL https://starship.rs/install.sh | sh -s -- -y
-
-# EXA
-RUN EXA_VERSION=$(curl -s "https://api.github.com/repos/ogham/exa/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+') &&
-	curl -Lo exa.zip "https://github.com/ogham/exa/releases/latest/download/exa-linux-x86_64-v${EXA_VERSION}.zip" &&
-	unzip -q exa.zip bin/exa -d /usr/local &&
-	rm -f exa.zip
-
-# Prettier
-RUN yarn add --dev --exact prettier
-
-# tree-sitter
-RUN npm install -y -g --save-dev tree-sitter-cli
-
-# batcat
-RUN /root/.cargo/bin/cargo install --locked bat
-
 # -------------------- QuantConnect / Lean CLI -------------------- #
-# Install Mono & Environment for QuantConnect/Lean
-RUN yes | DEBIAN_FRONTEND=noninteractive apt install -y nuget dirmngr gnupg apt-transport-https ca-certificates &&
-	apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF &&
-	sh -c 'echo "deb https://download.mono-project.com/repo/ubuntu stable-jammy main" > /etc/apt/sources.list.d/mono-official-stable.list' &&
-	apt update --allow-unauthenticated --allow-insecure-repositories --allow-releaseinfo-change | true &&
-	yes | DEBIAN_FRONTEND=noninteractive apt install -y mono-complete
+brew install mono
 
 # Restore dependency for QuantConnect/Lean
 # RUN nuget restore /lab/lean/QuantConnect.Lean.sln
