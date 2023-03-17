@@ -7,16 +7,58 @@
 # platform:      any
 # description:   DockerFile to build the TradeStation Image.
 
-FROM ubuntu:jammy
 
-# ts_env: Choice of 'paper' or 'prod'
-ARG ts_env
+## 2 - Create the environment
+exit
 
-# username and password for linux credentials
-ARG ts_uid
-ARG ts_user
-ARG ts_password
-ARG ts_shell
+
+# -------------------- Python (Conda) -------------------- #
+
+## 1 - Download MiniConda installer
+mkdir -p /opt && \
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+bash /tmp/miniconda.sh -b -u -p /opt/conda && \
+rm -rf /tmp/miniconda.sh
+
+## 2 - Create the environment
+opt/conda/bin/conda config --add channels conda-forge && \
+/opt/conda/bin/conda config --set channel_priority strict && \
+/opt/conda/bin/conda create -y -c conda-forge --name paper python=3.9 pip --file /lab/paper/tradestation/docker/conda/requirements-conda-install.txt
+
+conda activate paper
+
+## Install Python libraries
+/opt/conda/envs/paper/bin/python -m pip install -r /lab/paper/tradestation/docker/conda/conda/requirements.txt
+
+/opt/conda/envs/paper/bin/python -m pip install exchange-calendars
+/opt/conda/envs/paper/bin/python -m pip install pandas-market-calendars
+/opt/conda/envs/paper/bin/python -m pip install country-converter
+/opt/conda/envs/paper/bin/python -m pip install iexfinance
+/opt/conda/envs/paper/bin/python -m pip install quantrocket-moonshot
+/opt/conda/envs/paper/bin/python -m pip install kaleido
+
+# #################### Trading / Data Science ####################
+/opt/conda/envs/paper/bin/python -m pip install bta-lib
+/opt/conda/envs/paper/bin/python -m pip install quantrocket-client
+/opt/conda/envs/paper/bin/python -m pip install ta
+/opt/conda/envs/paper/bin/python -m pip install trendln
+/opt/conda/envs/paper/bin/python -m pip install pandas_ta
+/opt/conda/envs/paper/bin/python -m pip install numpy_ext
+
+# RUN /opt/conda/envs/paper/bin/python -m pip install quantrocket-moonchart
+
+## 3 - Install Jupyter Lab Extensions
+# RUN /opt/conda/bin/conda install -c conda-forge/label/cf202003 -y nodejs && \
+/opt/conda/envs/paper/bin/jupyter labextension install jupyterlab-plotly && \
+/opt/conda/envs/paper/bin/jupyter labextension install @jupyter-widgets/jupyterlab-manager plotlywidget && \
+/opt/conda/envs/paper/bin/jupyter labextension install @axlair/jupyterlab_vim && \
+/opt/conda/envs/paper/bin/jupyter labextension update --all
+
+# blpapi - BBG api
+/opt/conda/envs/paper/bin/python -m pip install --index-url=https://bcms.bloomberg.com/pip/simple blpapi \
+
+exit
+
 
 # -------------------- System Packages -------------------- #
 # System prerequisites
@@ -75,49 +117,6 @@ RUN npm install -y -g --save-dev tree-sitter-cli
 
 # batcat
 RUN /root/.cargo/bin/cargo install --locked bat
-
-# -------------------- Python (Conda) -------------------- #
-
-## 1 - Download MiniConda installer
-RUN mkdir -p /opt &&
-	wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh &&
-	bash /tmp/miniconda.sh -b -u -p /opt/conda &&
-	rm -rf /tmp/miniconda.sh
-
-## 2 - Create the environment
-COPY ./docker/conda /tmp/conda
-RUN /opt/conda/bin/conda config --add channels conda-forge &&
-	/opt/conda/bin/conda config --set channel_priority strict &&
-	/opt/conda/bin/conda create -y -c conda-forge --name ${ts_env} python=3.9 pip --file /tmp/conda/requirements-conda-install.txt
-
-## Install Python libraries
-RUN /opt/conda/envs/paper/bin/python -m pip install -r /tmp/conda/requirements.txt
-RUN /opt/conda/envs/paper/bin/python -m pip install exchange-calendars
-RUN /opt/conda/envs/paper/bin/python -m pip install pandas-market-calendars
-RUN /opt/conda/envs/paper/bin/python -m pip install country-converter
-RUN /opt/conda/envs/paper/bin/python -m pip install iexfinance
-RUN /opt/conda/envs/paper/bin/python -m pip install quantrocket-moonshot
-RUN /opt/conda/envs/paper/bin/python -m pip install kaleido
-
-# #################### Trading / Data Science ####################
-RUN /opt/conda/envs/paper/bin/python -m pip install bta-lib
-RUN /opt/conda/envs/paper/bin/python -m pip install quantrocket-client
-RUN /opt/conda/envs/paper/bin/python -m pip install ta
-RUN /opt/conda/envs/paper/bin/python -m pip install trendln
-RUN /opt/conda/envs/paper/bin/python -m pip install pandas_ta
-RUN /opt/conda/envs/paper/bin/python -m pip install numpy_ext
-
-# RUN /opt/conda/envs/paper/bin/python -m pip install quantrocket-moonchart
-
-## 3 - Install Jupyter Lab Extensions
-# RUN /opt/conda/bin/conda install -c conda-forge/label/cf202003 -y nodejs && \
-RUN /opt/conda/envs/paper/bin/jupyter labextension install jupyterlab-plotly &&
-	/opt/conda/envs/paper/bin/jupyter labextension install @jupyter-widgets/jupyterlab-manager plotlywidget &&
-	/opt/conda/envs/paper/bin/jupyter labextension install @axlair/jupyterlab_vim &&
-	/opt/conda/envs/paper/bin/jupyter labextension update --all
-
-# blpapi - BBG api
-RUN /opt/conda/envs/paper/bin/python -m pip install --index-url=https://bcms.bloomberg.com/pip/simple blpapi
 
 # -------------------- QuantConnect / Lean CLI -------------------- #
 # Install Mono & Environment for QuantConnect/Lean
