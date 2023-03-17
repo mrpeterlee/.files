@@ -24,6 +24,7 @@ eval "$(zoxide init zsh)"
 function setenv() { export "$1=$2"; }
 
 export TZ=America/New_York
+export TERM=xterm
 
 # Set zsh function path
 fpath=( /usr/local/bin /lab/lib/finclab/sh/zsh "${fpath[@]}")
