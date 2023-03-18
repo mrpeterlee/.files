@@ -69,11 +69,17 @@ conda activate paper
 # RUN /opt/conda/envs/paper/bin/python -m pip install quantrocket-moonchart
 
 ## 3 - Install Jupyter Lab Extensions
-conda install -y -c anaconda notebook
-/opt/conda/envs/paper/bin/jupyter labextension install jupyterlab-plotly &&
-	/opt/conda/envs/paper/bin/jupyter labextension install @jupyter-widgets/jupyterlab-manager plotlywidget &&
-	/opt/conda/envs/paper/bin/jupyter labextension install @axlair/jupyterlab_vim &&
-	/opt/conda/envs/paper/bin/jupyter labextension update --all
+python -m pip install notebook jupyter_contrib_nbextensions
+# Jupyter lab plugins - Vim Bindings
+rm -rf $(jupyter --data-dir)/nbextensions
+mkdir -p $(jupyter --data-dir)/nbextensions
+git clone https://github.com/lambdalisue/jupyter-vim-binding $(jupyter --data-dir)/nbextensions/vim_binding
+chmod -R go-w $(jupyter --data-dir)/nbextensions/vim_binding
+jupyter nbextension enable vim_binding/vim_binding
+jupyter labextension install jupyterlab-plotly
+jupyter labextension install @jupyter-widgets/jupyterlab-manager plotlywidget
+jupyter labextension install @axlair/jupyterlab_vim
+jupyter labextension update --all
 
 # blpapi - BBG api
 /opt/conda/envs/paper/bin/python -m pip install --index-url=https://bcms.bloomberg.com/pip/simple blpapi
