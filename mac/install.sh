@@ -18,6 +18,7 @@ brew install zoxide
 brew install --cask julia
 brew install golang
 brew install ripgrep git make shellcheck codespell cowsay fortune lolcat tmux tmuxinator tree-sitter openvpn
+brew install taskwarrior-tui
 
 # Docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg &&
@@ -46,6 +47,9 @@ mkdir -p /opt &&
 opt/conda/bin/conda config --add channels conda-forge &&
 	/opt/conda/bin/conda config --set channel_priority strict &&
 	/opt/conda/bin/conda create -y -c conda-forge --name paper python=3.9 pip --file /lab/paper/tradestation/docker/conda/requirements-conda-install.txt
+
+## Sync Notes from OneDrive
+ln -sf "/Users/peter/OneDrive - Astro Capital Management/Documents/Notes" "$HOME/notes"
 
 conda activate paper
 
