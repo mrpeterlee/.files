@@ -20,6 +20,7 @@ brew install golang
 brew install ripgrep git make shellcheck codespell cowsay fortune lolcat tmux tmuxinator tree-sitter openvpn
 brew install taskwarrior-tui
 brew install --cask docker
+brew install ctags
 
 # Docker
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg &&
@@ -70,6 +71,7 @@ conda activate paper
 /opt/conda/envs/paper/bin/python -m pip install trendln
 /opt/conda/envs/paper/bin/python -m pip install pandas_ta
 /opt/conda/envs/paper/bin/python -m pip install numpy_ext
+/opt/conda/envs/paper/bin/python -m pip install tasklib
 # RUN /opt/conda/envs/paper/bin/python -m pip install quantrocket-moonchart
 
 ## 3 - Install Jupyter Lab Extensions
@@ -93,6 +95,10 @@ git clone https://github.com/gpakosz/.tmux.git $HOME/.tmux
 ln -sf $HOME/.tmux/.tmux.conf $HOME/.tmux.conf
 ln -sf $HOME/.files/tmux/.tmux.conf.local $HOME/.tmux.conf.local
 ln -sf $HOME/.files/tmuxinator $HOME/.tmuxinator
+
+# -------------------- Task Warrior -------------------- #
+ln -sf $HOME/.files/task_warrior/.taskrc $HOME/.taskrc
+task sync
 
 # -------------------- QuantConnect / Lean CLI -------------------- #
 brew install mono nuget
