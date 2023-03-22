@@ -67,8 +67,8 @@ style = "bright-white"
 [hostname]
 ssh_only = false
 style = "dimmed white"
-format = "[$ssh_symbol](bold blue)[ 淚](bold yellow)[$hostname](bold white) "
-trim_at = ".finclab.com"
+format = "[$ssh_symbol](bold blue)[  ](bold yellow)[$hostname](bold white) "
+trim_at = ".astrocapital.net"
 disabled = false
 
 [julia]
@@ -132,4 +132,3 @@ disabled = false
 
 [container]
 format = "[$container](bold blue) "
-
