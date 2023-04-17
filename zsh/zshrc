@@ -156,6 +156,10 @@ for file in $files; do
     fi
 done
 
+# After `brew install curl` in mac os
+if [ -f /usr/local/opt/curl/bin/curl ]; then
+    export PATH="/usr/local/opt/curl/bin:$PATH"
+fi
 
 # ------------------================== General Settings ==================------------------ #
 # Zsh-VI-Mode changing the escape key to `kj`

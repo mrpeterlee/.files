@@ -29,6 +29,9 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /
 	apt-get install -y docker-ce docker-ce-cli containerd.io
 
 # -------------------- Rust -------------------- #
+npm install remark_cli
+
+# -------------------- Rust -------------------- #
 brew install rustup
 rustup-init
 

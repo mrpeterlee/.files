@@ -18,11 +18,18 @@
 data.location=$HOME/.task
 
 # Sync with inthe.am
-taskd.certificate=$HOME/.files/task_warrior/inthe.am/private.certificate.pem
-taskd.key=$HOME/.files/task_warrior/inthe.am/private.key.pem
-taskd.ca=$HOME/.files/task_warrior/inthe.am/ca.cert.pem
-taskd.server=inthe.am:53589
-taskd.credentials=inthe_am/drpetlee/85dcca7f-0482-4d0e-bebc-1979dd792f48
+# taskd.certificate=$HOME/.files/task_warrior/inthe.am/private.certificate.pem
+# taskd.key=$HOME/.files/task_warrior/inthe.am/private.key.pem
+# taskd.ca=$HOME/.files/task_warrior/inthe.am/ca.cert.pem
+# taskd.server=inthe.am:53589
+# taskd.credentials=inthe_am/drpetlee/85dcca7f-0482-4d0e-bebc-1979dd792f48
+# taskd.trust=strict
+
+taskd.certificate=\/Users\/peter\/.lab\/taskd\/peter.lee.cert.pem
+taskd.key=\/Users\/peter\/.lab\/taskd\/peter.lee.key.pem
+taskd.ca=\/Users\/peter\/.lab\/taskd\/ca.cert.pem
+taskd.server=vpn.finclab.com:10028
+# taskd.credentials=inthe_am/drpetlee/85dcca7f-0482-4d0e-bebc-1979dd792f48
 taskd.trust=strict
 
 # To use the default location of the XDG directories,
@@ -56,3 +63,4 @@ dateformat=D-M-Y
 dateformat.edit=D-M-Y H:N:S
 dateformat.holiday=DMY
 dateformat.info=D-M-Y H:N:S
+taskd.credentials=astrocapital\/peter\/07466028-5724-4fca-b1d7-9f3858389871

@@ -4,41 +4,33 @@ name: mac
 root: ~/
 
 windows:
-  - general:
-      layout: even-vertical
-      panes:
-        - workspace1:
-            - cd $HOME/lab/paper
-          # - conda deactivate && conda activate finclab
-        - workspace2:
-            - cd $HOME/lab/paper
-          # - conda deactivate && conda activate finclab
-          #- fswatch:
-          #  - cd $HOME/project
-          #  - conda deactivate && conda activate finclab
-          #  - fswatch $HOME/lab/paper true
-
-  - finclab:
+  - notes:
       layout: even-horizontal
       panes:
         - workspace1:
-            - cd $HOME/lab/paper/finclab
+            - cd /lab/paper/finclab
+            - nvim -c "VimwikiIndex"
 
-  - flightlog:
+  - general:
+      layout: even-horizontal
+      panes:
+        - workspace1:
+            - cd /lab/paper/finclab
+
+  - ts:
       layout: even-vertical
       panes:
-        - pane2:
-            - cd $HOME/lab/paper
-            - ts flightlog stream -d
+        - workspace1:
+            - cd /lab/paper/ts/lean/equity/watchdog
 
-  - server-monitor:
-      layout: tiled
+  - nvim:
+      layout: even-vertical
       panes:
-        - glances:
-            - sleep 5
-            - glances
+        - astronvim:
+            - cd /lab/paper/astronvim
+            - nvim ./local/mappings.lua ./local/plugins/peter.lua
 
-  - background-apps:
+  - background:
       layout: tiled
       panes:
         # - jupyter_notebook:
@@ -49,6 +41,9 @@ windows:
         - NB-Svr:
             - cd /lab/paper/ts/lean/equity/watchdog
             - jupyter notebook --ip="*" --port=51002 --no-browser --NotebookApp.password="$jupyter_password" --NotebookApp.token="" --NotebookApp.allow_remote_access=True --notebook-dir=.
+        - flightlog:
+            - cd /lab/paper
+            - ts flightlog stream -d
 # Optional tmux socket
 # socket_name: foo
 
