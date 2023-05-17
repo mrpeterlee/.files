@@ -92,8 +92,12 @@ done
 # System Paths
 export PATH="/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 export GOPATH=$HOME/lab/go-workspace # don't forget to change your path correctly!
-export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
+if [[ "$(uname)" == "Darwin" ]]; then
+    export GOROOT=/usr/local/opt/go/libexec
+else
+    export GOROOT=/usr/local/opt/go
+fi
 export PATH=$PATH:$GOROOT/bin
 
 # '/opt/conda/bin' \
@@ -283,15 +287,16 @@ bindkey '^x' edit-command-line
 
 # Default repos -- integrate the variable of default environment
 unset PYTHONPATH
-export PYTHONPATH=/lab/lib:~/lab/lib
 
 # Activate corresponding environment
 conda activate base
 if [ -f /opt/conda/envs/prod/bin/python ]; then
     conda activate prod
+    export PYTHONPATH=/lab/lib:~/lab/lib:$(find /opt/conda/envs/prod -type d -path "*/python*/site-packages" | head -n 1)
     echo "Activated env PROD: $(python --version) @ $(which python)" | lolcat
 elif [ -f /opt/conda/envs/paper/bin/python ]; then
     conda activate paper
+    export PYTHONPATH=/lab/lib:~/lab/lib:$(find /opt/conda/envs/paper -type d -path "*/python*/site-packages" | head -n 1)
     echo "Activated env PAPER: $(python --version) @ $(which python)" | lolcat
 fi
 

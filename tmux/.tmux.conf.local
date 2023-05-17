@@ -8,7 +8,7 @@
 set-option -g default-shell /usr/bin/zsh
 
 # set true color
-set-option -sa terminal-overrides ',screen-256color:RGB'
+# set-option -sa terminal-overrides ',screen-256color:RGB'
 # tell Tmux that outside terminal supports true color
 # set -ga terminal-overrides ",xterm-256color*:Tc"
 
