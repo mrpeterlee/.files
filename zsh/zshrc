@@ -30,7 +30,8 @@ export TERM=xterm-256color
 fpath=( /usr/local/bin /lab/lib/finclab/sh/zsh "${fpath[@]}")
 # autoload -Uz parse_yml
 
-
+# Enter the most recently modified directories
+alias latest='cd $(find . -type d -printf "%T@ %p\n" | sort -n | tail -2 | head -1 | cut -f2- -d" ") && cd ..'
 
 # check of os type
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -143,6 +144,7 @@ fi
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
+
 
 # Starfish theme
 # Ensure zsh tab-complete prompts works correctly

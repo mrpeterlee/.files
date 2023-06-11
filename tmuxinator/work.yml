@@ -117,7 +117,14 @@ windows:
       layout: tiled
       panes:
         - glances:
-            # glances running in background
+            # Create Ramdisk to store lean data
+            - mkdir /tmp/ramdisk/data
+            - chmod 777 /tmp/ramdisk/data
+            - rm -f /lab/paper/ts/lean/cloud/data
+            - ln -sf /tmp/ramdisk/data /lab/paper/ts/lean/cloud/data
+            - rm -f /lab/paper/ts/lean/data
+            - ln -sf /tmp/ramdisk/data /lab/paper/ts/lean/data
+            - rsync -avH --delete /lab/data/samba/peter/data/lean/data/ /tmp/ramdisk/data
             - glances -w -t 5
               #- jupyter-notebook:
               #    - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
