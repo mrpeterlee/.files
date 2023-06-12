@@ -24,7 +24,8 @@ eval "$(zoxide init zsh)"
 function setenv() { export "$1=$2"; }
 
 export TZ=America/New_York
-export TERM=xterm-256color
+# export TERM=xterm-256color
+export TERM=tmux-256color
 
 # Set zsh function path
 fpath=( /usr/local/bin /lab/lib/finclab/sh/zsh "${fpath[@]}")
@@ -291,7 +292,6 @@ bindkey '^x' edit-command-line
 unset PYTHONPATH
 
 # Activate corresponding environment
-conda activate base
 if [ -f /opt/conda/envs/prod/bin/python ]; then
     conda activate prod
     export PYTHONPATH=/lab/lib:~/lab/lib:$(find /opt/conda/envs/prod -type d -path "*/python*/site-packages" | head -n 1)
