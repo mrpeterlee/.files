@@ -27,10 +27,10 @@ alias lt='exa -lah --group-directories-first -l -g --icons --classify --tree --l
 alias tree='tree --gitignore -I __pycache__ --dirsfirst'
 
 # Replacement for ps:: human friendly show processes
-if type -f "procs" > /dev/null; then
-    # cargo install procs
-    alias ps='procs'
-fi
+# if type -f "procs" > /dev/null; then
+#     # cargo install procs
+#     alias ps='procs'
+# fi
 
 # Replacement for top:: colorful and human friendly
 if type -f "btm" > /dev/null; then

@@ -14,9 +14,6 @@ set-window-option -g pane-active-border-style ''
 
 
 # -- navigation ----------------------------------------------------------------
-# Move window using CTRL-H and CTRL-L
-bind-key -n C-h previous-window     # select next window
-bind-key -n C-l next-window     # select next window
 
 # Pane Navigation
 is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
@@ -409,6 +406,9 @@ bind-key Space send-prefix
 set -g focus-events on
 
 # Windows navigation (Vim-like)
+# Move window using CTRL-H and CTRL-L
+# bind-key -n C-h previous-window     # select next window
+# bind-key -n C-l next-window     # select next window
 bind-key -n C-M-h previous-window
 bind-key -n C-M-l next-window
 bind-key -n C-M-p last-window
