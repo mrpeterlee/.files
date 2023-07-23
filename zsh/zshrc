@@ -92,7 +92,7 @@ done
 
 # ------------------================== Paths ==================------------------ #
 # System Paths
-export PATH="/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH="/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/.local.bin"
 export GOPATH=$HOME/lab/go-workspace # don't forget to change your path correctly!
 export PATH=$PATH:$GOPATH/bin
 if [[ "$(uname)" == "Darwin" ]]; then
