@@ -134,6 +134,8 @@ windows:
               #    - export JUPYTER_PORT_RETRIES=0
               #    - jupyter notebook --port=$JUPYTER_PORT --no-browser --NotebookApp.token="" --notebook-dir=$HOME
         - neovim-headless:
+            - /lab/paper/datalab_core/datalab_core/bin/check_docker_image
+            - /lab/paper/datalab_equities/datalab_equities/bin/check_docker_image
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
             - nvim --headless --listen 10.1.1.100:60001
         #- make -C /lab/prod/labenv start
