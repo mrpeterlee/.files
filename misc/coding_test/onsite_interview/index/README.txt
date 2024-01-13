@@ -1,0 +1,32 @@
+Index Historical Dataset
+========================= 
+
+NOTE: Only intraday-bars with trading volume are included. Bars with zero volume are excluded. 
+
+Timeframes : 1-minute, 5-minutes, 30-minutes, 1-hour, 1-day
+ 
+
+Format
+-------
+Data is in the format : { DateTime (yyyy-MM-dd HH:mm:ss), Open, High, Low, Close}  
+ 
+- Timestamps run from the start of the period (eg 1min bars stamped 09:30 run from 09:30.00 to 09:30.59) 
+
+
+Updates
+-------
+This dataset is updated daily (update files are available by 11.45pm US Eastern time and 3am the following day for the full historical archive files)*
+
+ 
+
+Notes
+-----
+ 
+- Timezone is US Eastern Time    
+- Excel will usually fail to open large files directly. 
+  To use the data in Excel, open the files using notepad and then break into smaller files or copy/paste into Excel 
+ 
+  
+ 
+* update times are approximate and users may experience small delays in the event of a server or network outage.
+
