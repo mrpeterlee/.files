@@ -1,6 +1,6 @@
 """
 id:            Peter Lee (peter.lee@astrocapital.net)
-last_update:   2023-Dec-24 23:56:06
+last_update:   2024-Jan-12 23:16:35
 type:          lib
 sensitivity:   datalab@astrocapital.net
 platform:      any
@@ -111,7 +111,6 @@ def should_redownload(filename) -> bool:
 
 
 # Download Index data
-
 request_types = ["index"]
 periods = ["full", "day"]
 timeframes = ["1day"]

@@ -1,13 +1,13 @@
 name: cronlab
 root: /lab/lib/aquamesh
 # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
-startup_window: "1"
+startup_window: 1
 # Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
-startup_pane: "1"
+startup_pane: 1
 
 windows:
-  - Engine:
-      - cd /lab/lib/aquamesh/bin
+  - Live-BitFinex:
+      - cd /lab/paper/ts/lean
       # - python run.py
   - Cron-US:
       - cd /lab/lib/ts/cronlab
@@ -48,4 +48,6 @@ windows:
             - ofelia daemon --config=/lab/schedule.ini
   - NB-Svr:
       - cd /lab/paper/ts/ts/result/
-      - jupyter notebook --ip="*" --port=51001 --no-browser --NotebookApp.password=$jupyter_password --NotebookApp.token="" --NotebookApp.allow_remote_access=True --notebook-dir=.
+      - pip install --upgrade quantconnect-stubs
+      - pip install --upgrade lean
+      # - jupyter notebook --ip="*" --port=51001 --no-browser --NotebookApp.password=$jupyter_password --NotebookApp.token="" --NotebookApp.allow_remote_access=True --notebook-dir=.

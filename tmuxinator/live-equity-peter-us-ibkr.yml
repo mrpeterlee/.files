@@ -1,0 +1,21 @@
+name: live-crypto-bitfinex-peter
+root: /lab/paper/ts/lean
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+startup_window: "1"
+# Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
+startup_pane: 1
+
+windows:
+  - Live:
+      layout: even-vertical
+      panes:
+        - main:
+            - sleep 600
+            - cd /lab/paper/ts/lean
+            - lean data download --dataset "US Equity Security Master"
+            - export latest_folder=$(find /lab/paper/ts/lean/ -maxdepth 1 -name "live-equity-peter-us-ibkr-v*" -type d | sort -t '\0' -n | tail -n 1)
+            - echo Running live Equity US Peter-IBKR account from location $latest_folder
+            - cd $latest_folder
+            # - ac live start . --brokerage InteractiveBrokers --data-feed InteractiveBrokers
+            # hack: disable --data-provider local ==> see if it works.
+            # --data-provider Local
