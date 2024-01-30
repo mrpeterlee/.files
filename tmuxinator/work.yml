@@ -117,6 +117,8 @@ windows:
       layout: tiled
       panes:
         - glances:
+            # Update xtquant lib
+            - rm -rf /lab/lib/xtquant && cp /lab/data/app/xtquant.zip /lab/lib/xtquant.zip && cd /lab/lib && unzip -a xtquant.zip && rm -f xtquant.zip
             # Create Ramdisk to store lean data
             - mkdir /tmp/ramdisk/data
             - chmod 777 /tmp/ramdisk/data

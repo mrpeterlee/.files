@@ -90,39 +90,6 @@ done
 #     fi
 # done
 
-# ------------------================== Paths ==================------------------ #
-# System Paths
-export PATH="/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/.local.bin"
-export GOPATH=$HOME/lab/go-workspace # don't forget to change your path correctly!
-export PATH=$PATH:$GOPATH/bin
-if [[ "$(uname)" == "Darwin" ]]; then
-    export GOROOT=/usr/local/opt/go/libexec
-else
-    export GOROOT=/usr/local/opt/go
-fi
-export PATH=$PATH:$GOROOT/bin
-
-# '/opt/conda/bin' \
-dirs=( '/snap/bin' \
-
-       ~/.local/bin \
-       ~/.files/bin \
-       ~/.cargo/bin \
-
-       '/lab/lib/finclab/sh/bin' \
-       '/lab/lib/finclab/sh/bash' \
-       '/lab/lib/finclab/sh/zsh' \
-       '/lab/lib/finclab/sh/fish' \
-   )
-for folderpath in $dirs; do
-    if [ -d "$folderpath" ]; then
-        export PATH="$folderpath:$PATH"
-    fi
-done
-
-# Additional cowsay..
-COWPATH=$COWPATH:~/.cowsay/cowfiles
-
 
 # ------------------================== Env Variables ==================------------------ #
 # Grab env variables

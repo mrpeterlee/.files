@@ -105,7 +105,7 @@ fi
 # Path
 ## Anaconda
 export PATH="/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
-export PATH=$PATH:/usr/bin:/usr/sbin:/opt/conda/bin:$HOME/.local/bin:$HOME/.files/bin:/lab/lib/finclab/sh/bin:/lab/lib/finclab/sh/bash:/lab/lib/finclab/sh/zsh:/lab/lib/finclab/sh/fish:/home/peter/.local/bin
+export PATH=$PATH:/usr/bin:/usr/sbin:/opt/conda/bin:$HOME/.local/bin:$HOME/.files/bin:/lab/lib/finclab/sh/bin:/lab/lib/finclab/sh/bash:/lab/lib/finclab/sh/zsh:/lab/lib/finclab/sh/fish:/home/peter/.local/bin:/opt/conda/envs/paper/bin
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
