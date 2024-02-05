@@ -65,3 +65,6 @@
 # automatically launch merge tool without displaying a prompt
 [mergetool]
   prompt = false
+[safe]
+	directory = /mnt/diskstation-us1/nfs/public/vm/finclab/wiki
+	directory = /mnt/diskstation-us1/nfs/public/vm/finclab
