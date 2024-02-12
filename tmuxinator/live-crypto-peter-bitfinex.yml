@@ -10,11 +10,12 @@ windows:
       layout: even-vertical
       panes:
         - main:
-            - sleep 600
+            - sleep 900
+            - python -m pip install --upgrade lean lxml
             - export latest_folder=$(find /lab/paper/ts/lean/ -maxdepth 1 -name "live-bitfinex-v*" -type d | sort -t '\0' -n | tail -n 1)
             - echo Running live Bitfinex-Peter account from location $latest_folder
             - cd $latest_folder
-            - ac live start . --brokerage Bitfinex --data-feed Bitfinex
+            - ac live start . --brokerage Bitfinex --data-provider-live Bitfinex
             # hack: disable --data-provider local ==> see if it works.
             # --data-provider Local
             # --image "quantconnect/lean:latest"

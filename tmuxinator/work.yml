@@ -17,10 +17,13 @@ windows:
             - cd $HOME/lab/paper/winclient && git pull
             - cd $HOME/lab/paper/tradestation && git pull
             - cd $HOME/lab/paper/lab && git pull
+            # - python -m pip install lean --upgrade
+            # - python -m pip install --no-binary lxml
             - python -m pip install black --upgrade
             - cd /lab/lib
             # - /usr/bin/inxi
             - /usr/bin/screenfetch && curl "wttr.in/newyork?m&lang=zh-cn"
+            - cd /mnt/diskstation-us1/nfs/public/vm/finclab/finclab/io/api/qmt
 
   - python:
       layout: even-horizontal
