@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# EC2 - Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
 function_source="/lab/lib/finclab/sh/bash/function"
 if [[ ! -f "$function_source" ]]; then
 	function_source="$HOME/.files/bash/function"
@@ -128,8 +133,10 @@ export PYTHONPATH=/lab/lib:~/lab/lib
 
 # Grab env variables
 parse_yaml_env "${HOME}/.lab/labenv.yml"
-for package in cryptocompare datalab datastore docstore dotfiles finclab labenv tickstore tushare iex; do
-	parse_yaml_env "${HOME}/.lab/${package}.yml" ${package}_
+for package in datalab datastore finclab labenv; do
+	if [[ -f "${HOME}/.lab/${package}.yml" ]]; then
+		parse_yaml_env "${HOME}/.lab/${package}.yml" ${package}_
+	fi
 done
 
 # log in to docker registry
