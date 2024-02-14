@@ -155,7 +155,10 @@ done
 ## Set files to: -rw-r-----
 # find $HOME/ts/ -type f -exec chmod 600 {} \;
 #
-. "/home/peter/.cargo/env"
+
+if [[ -f /home/peter/.cargo/env ]]; then
+	source /home/peter/.cargo/env
+fi
 
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
