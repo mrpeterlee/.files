@@ -154,7 +154,6 @@ done
 # find $HOME/ts/ -type d -exec chmod 700 {} \;
 ## Set files to: -rw-r-----
 # find $HOME/ts/ -type f -exec chmod 600 {} \;
-#
 
 if [[ -f /home/peter/.cargo/env ]]; then
 	source /home/peter/.cargo/env
