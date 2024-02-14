@@ -10,6 +10,6 @@ windows:
       layout: even-vertical
       panes:
         - main:
-            - export latest_folder=$(find /lab/paper/ts/lean/ -maxdepth 1 -name "live-binance-v*" -type d | sort -t '\0' -n | tail -n 1)
-            - echo Running live Binance-Peter account from location $latest_folder
-            - cd /lab/paper/ts/lean && lean live deploy live-binance-v021 --brokerage Binance --data-provider-live Binance --binance-exchange-name Binance --binance-use-testnet live
+            - export LATEST_FOLDER=$(find /lab/paper/ts/lean/ -maxdepth 1 -name "live-binance-v*" -type d | sort -t '\0' -n | tail -n 1)
+            - echo Running live Binance-Peter account from location $LATEST_FOLDER
+            - cd /lab/paper/ts/lean && lean live deploy $LATEST_FOLDER --brokerage Binance --data-provider-live Binance --binance-exchange-name Binance --binance-use-testnet live --data-provider-historical QuantConnect
