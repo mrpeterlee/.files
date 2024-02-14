@@ -11,5 +11,7 @@ windows:
       panes:
         - main:
             - export LATEST_FOLDER=$(find /lab/paper/ts/lean/ -maxdepth 1 -name "live-binance-v*" -type d | sort -t '\0' -n | tail -n 1)
-            - echo Running live Binance-Peter account from location $LATEST_FOLDER
-            - cd /lab/paper/ts/lean && lean live deploy $LATEST_FOLDER --brokerage Binance --data-provider-live Binance --binance-exchange-name Binance --binance-use-testnet live --data-provider-historical QuantConnect
+	        - export FOLDER_STEM="${LATEST_FOLDER%"${dirname##*[!/]}"}"
+	        - FOLDER_STEM="${FOLDER_STEM##*/}"
+	        - echo Located live Binance-Peter folder from location: "$LATEST_FOLDER" 
+            - cd /lab/paper/ts/lean && lean live deploy $FOLDER_STEM --brokerage Binance --data-provider-live Binance --binance-exchange-name Binance --binance-use-testnet live --data-provider-historical QuantConnect
