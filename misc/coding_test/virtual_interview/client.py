@@ -1,6 +1,6 @@
 """
 id:            Peter Lee (peter.lee@astrocapital.net)
-last_update:   2023-Dec-16 00:10:21
+last_update:   2024-Feb-16 23:27:32
 type:          lib
 sensitivity:   datalab@astrocapital.net
 platform:      any
@@ -52,7 +52,17 @@ class BybitClient:
             print("No trade data")
             return
 
-        # TODO: Add condition here to make sure we have 1 minute length of data
+        # Ensure that there is at least 1 trade that happens before a minute ago
+        now = pd.Timestamp.utcnow()
+        mask = df["datetime"] < (now - pd.Timedelta(minutes=1)).tz_localize(None)
+
+        if mask.sum()==0:
+            print(f"Not yet a minute. Waiting for more data...")
+            return
+
+        if mask.all():
+            print(f"\n[{now}] 过去1分钟内没有交易")
+            return
 
         # Filter for trades that happpens in the last 1 minute
         now = pd.Timestamp.utcnow()
@@ -61,7 +71,7 @@ class BybitClient:
 
         total_amount = df["notional"].sum()
         print(f"\n[{now}] 过去1分钟内的交易数量: {len(df):,}, 交易总额: USDT {total_amount:,.02f}")
-        print(df)
+        print(df.tail())
 
     def extract_df(self, trade_data) -> pd.DataFrame:
         """Extract df from self.trade_data"""
