@@ -1,4 +1,4 @@
-name: live-crypto-bitfinex-peter
+name: us-svr-bitfinex-ibkr
 root: /lab/paper/ts/lean
 
 # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
@@ -13,8 +13,7 @@ windows:
         - us-bitfinex:
             - sleep 900
             - python -m pip install --upgrade lean lxml
-            - export LATEST_FOLDER=$(find /lab/paper/ts/lean/ -maxdepth 1 -name "live-bitfinex-v*" -type d | sort -t '\0' -n | tail -n 1)
-            - echo Running live Bitfinex-Peter account from location $LATEST_FOLDER
+            - export LATEST_FOLDER=$(find /lab/paper/ts/lean/live -maxdepth 1 -name "crypto.peter-bitfinex.cash.v*" -type d | sort -t '\0' -n | tail -n 1) && echo Running live Bitfinex Peter (cash) account from location "$LATEST_FOLDER"
             - cd $LATEST_FOLDER
             - ac live start . --brokerage Bitfinex --data-provider-live Bitfinex
             # hack: disable --data-provider local ==> see if it works.
@@ -25,7 +24,6 @@ windows:
             - current_epoch=$(date +%s) && target_epoch=$(date -d "$(date '+%Y-%m-%d') 10:00" +%s) && sleep_seconds=$(( $target_epoch - $current_epoch )) && echo "IBKR live trading to be launched at EST 10 AM Sunday ($sleep_seconds seconds from now..)"
             - sleep $sleep_seconds
             - cd /lab/paper/ts/lean && lean data download --dataset "US Equity Security Master"
-            - export LATEST_FOLDER=$(find /lab/paper/ts/lean/ -maxdepth 1 -name "live-equity-peter-us-ibkr-v*" -type d | sort -t '\0' -n | tail -n 1)
-            - echo Running live Equity US Peter-IBKR account from location $LATEST_FOLDER
+            - export LATEST_FOLDER=$(find /lab/paper/ts/lean/live -maxdepth 1 -name "equity.peter-us-ibkr.cash.v*" -type d | sort -t '\0' -n | tail -n 1) && echo Running live Equity US Peter-IBKR account from location "$LATEST_FOLDER"
             - cd $LATEST_FOLDER
             - ac live start . --brokerage "Interactive Brokers" --data-provider-live "Interactive Brokers"
