@@ -10,7 +10,7 @@ windows:
       layout: even-vertical
       panes:
         - main:
-            - export LATEST_FOLDER=$(find /lab/paper/ts/lean/ -maxdepth 1 -name "live-binance-v*" -type d | sort -t '\0' -n | tail -n 1)
+            - export LATEST_FOLDER=$(find /lab/paper/ts/lean/live -maxdepth 1 -name "crypto.peter-binance.cash*" -type d | sort -t '\0' -n | tail -n 1)
 	        - export FOLDER_STEM="${LATEST_FOLDER%"${dirname##*[!/]}"}"
 	        - FOLDER_STEM="${FOLDER_STEM##*/}"
 	        - echo Located live Binance-Peter folder from location: "$LATEST_FOLDER" 
