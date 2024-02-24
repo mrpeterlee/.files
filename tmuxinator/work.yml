@@ -89,7 +89,7 @@ windows:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
             - vim $HOME/.tmux.conf.local
 
-  - flightlog:
+  - misc:
       layout: even-horizontal
       panes:
         - pane1:
@@ -98,7 +98,7 @@ windows:
         - pane2:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
             - cd $HOME/lab/paper
-            - ts flightlog stream -d
+            # - ts flightlog stream -d
 
   - server-monitor:
       layout: tiled

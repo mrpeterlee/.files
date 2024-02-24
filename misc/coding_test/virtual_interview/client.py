@@ -1,6 +1,6 @@
 """
 id:            Peter Lee (peter.lee@astrocapital.net)
-last_update:   2024-Feb-16 23:27:32
+last_update:   2024-Feb-21 23:45:10
 type:          lib
 sensitivity:   datalab@astrocapital.net
 platform:      any
@@ -33,13 +33,47 @@ class BybitClient:
         while True:
             data = self.ws.recv()
             trade_info = json.loads(data)
-            # 这里假设trade_info包含交易数据，具体结构取决于API返回的数据
             self.trade_data.append(trade_info)
 
     def run(self):
         while True:
+            # Refresh stats every second
             self.process_data()
-            time.sleep(1)  # 每1秒刷新一次数据
+            time.sleep(1)
+
+    def extract_df(self, trade_data) -> pd.DataFrame:
+        """Extract df from self.trade_data"""
+        if len(trade_data) == 0:
+            return pd.DataFrame()
+
+        data = []
+        for x in list(self.trade_data):
+            if "data" not in x:
+                continue
+            data += x["data"]
+        df = pd.DataFrame(data)
+
+        if len(df) == 0:
+            return df
+
+        df = df.rename(
+            columns={
+                "T": "datetime",
+                "s": "symbol",
+                "S": "side",
+                "v": "qty",
+                "p": "price",
+                "i": "trade_id",
+                "BT": "block_trade",
+            }
+        )
+
+        df["qty"] = pd.to_numeric(df["qty"])
+        df["price"] = pd.to_numeric(df["price"])
+
+        df["datetime"] = pd.to_datetime(pd.to_numeric(df["datetime"]), unit="ms")
+        df["notional"] = df["qty"] * df["price"]
+        return df
 
     def process_data(self):
         # Preserve memory
@@ -72,41 +106,6 @@ class BybitClient:
         total_amount = df["notional"].sum()
         print(f"\n[{now}] 过去1分钟内的交易数量: {len(df):,}, 交易总额: USDT {total_amount:,.02f}")
         print(df.tail())
-
-    def extract_df(self, trade_data) -> pd.DataFrame:
-        """Extract df from self.trade_data"""
-        if len(trade_data) == 0:
-            return pd.DataFrame()
-
-        data = []
-        for x in list(self.trade_data):
-            if "data" not in x:
-                continue
-            data += x["data"]
-        df = pd.DataFrame(data)
-
-        if len(df) == 0:
-            return df
-
-        df = df.rename(
-            columns={
-                "T": "datetime",
-                "s": "symbol",
-                "S": "side",
-                "v": "qty",
-                "p": "price",
-                "i": "trade_id",
-                "BT": "block_trade",
-            }
-        )
-
-        df["qty"] = pd.to_numeric(df["qty"])
-        df["price"] = pd.to_numeric(df["price"])
-
-        df["datetime"] = pd.to_numeric(df["datetime"])
-        df["datetime"] = pd.to_datetime(df["datetime"], unit="ms")
-        df["notional"] = df["qty"] * df["price"]
-        return df
 
 
 if __name__ == "__main__":
