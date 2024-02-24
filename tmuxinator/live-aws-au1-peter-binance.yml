@@ -1,4 +1,4 @@
-name: live-crypto-binance-peter
+name: live-aws-au1-peter-binance
 root: /lab/paper/ts/lean
 # Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
 startup_window: "1"

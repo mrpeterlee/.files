@@ -20,7 +20,7 @@ alias fd=fdfind
 alias vpn='sudo /usr/local/Cellar/openvpn/2.4.9/sbin/openvpn --config ~/peter.ovpn'
 
 # alias ls='exa --group-directories-first -l -g --icons --classify --grid'
-alias ls='exa -l --classify --git --icons --color=always --group-directories-first'
+alias ls='exa -l --classify --icons --color=always --group-directories-first'
 alias l='exa -lah --group-directories-first -l -g --icons --classify --grid'
 alias ll='exa -lah --group-directories-first -l -g --icons --classify --grid'
 alias lt='exa -lah --group-directories-first -l -g --icons --classify --tree --level=2'
