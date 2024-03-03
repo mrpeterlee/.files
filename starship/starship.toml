@@ -4,10 +4,10 @@
 # Disabled prompt (too slow): $git_status
 
 format = """
-[┌────ﱤ ](dimmed blue)$directory\
+[┌──── ](dimmed blue)$directory\
 $conda$python$container$git_branch$git_commit$dotnet \
-$fill $username$hostname[ﱤ────┐ ](dimmed blue)
-[╘═ﱣ](dimmed blue) $character
+$fill $username$hostname[────┐ ](dimmed blue)
+[╘═󰺊](dimmed blue) $character
 """
 right_format = """
 $shell[ﱣ═╛](dimmed blue)
@@ -25,7 +25,7 @@ continuation_prompt = "▶▶"
 symbol = " "
 
 [conda]
-symbol = " "
+symbol = "󱜚 "
 format = " [$symbol$environment](bold cyan) "
 disabled = false
 
@@ -113,8 +113,8 @@ style = "green"
 heuristic = false
 
 [shell]
-fish_indicator = ""
-zsh_indicator = ""
+fish_indicator = "󰈺"
+zsh_indicator = "󰰸"
 bash_indicator = ""
 powershell_indicator = ""
 unknown_indicator = "mystery shell"
