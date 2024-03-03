@@ -1,0 +1,41 @@
+# Ensure that a non-login, non-interactive shell has a defined environment.
+if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprofile"
+fi
+
+if [[ -f $HOME/.cargo/env ]]; then
+    source $HOME/.cargo/env
+fi
+
+# ------------------================== Paths ==================------------------ #
+# System Paths
+export PATH="/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/.local/bin:/opt/conda/envs/paper/bin"
+export GOPATH=$HOME/lab/go-workspace # don't forget to change your path correctly!
+export PATH=$PATH:$GOPATH/bin
+if [[ "$(uname)" == "Darwin" ]]; then
+    export GOROOT=/usr/local/opt/go/libexec
+else
+    export GOROOT=/usr/local/opt/go
+fi
+export PATH=$PATH:$GOROOT/bin
+
+# '/opt/conda/bin' \
+dirs=( '/snap/bin' \
+
+       ~/.local/bin \
+       ~/.files/bin \
+       ~/.cargo/bin \
+
+       '/lab/lib/finclab/sh/bin' \
+       '/lab/lib/finclab/sh/bash' \
+       '/lab/lib/finclab/sh/zsh' \
+       '/lab/lib/finclab/sh/fish' \
+   )
+for folderpath in $dirs; do
+    if [ -d "$folderpath" ]; then
+        export PATH="$folderpath:$PATH"
+    fi
+done
+
+# Additional cowsay..
+COWPATH=$COWPATH:~/.cowsay/cowfiles
