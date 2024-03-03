@@ -18,6 +18,11 @@
 
 # ------------------================== Helper Functions ==================------------------ #
 # ------------------================== zoxide:: replacement of `cd`  ==================------------------ #
+if [ -f $HOME/.zshenv ]; then
+    . $HOME/.zshenv
+fi
+
+
 eval "$(zoxide init zsh)"
 
 # setenv is compatible in both Zsh and Fish
