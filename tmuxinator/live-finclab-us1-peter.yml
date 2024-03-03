@@ -24,6 +24,11 @@ windows:
             - current_epoch=$(date +%s) && target_epoch=$(date -d "$(date '+%Y-%m-%d') 10:00" +%s) && sleep_seconds=$(( $target_epoch - $current_epoch )) && echo "IBKR live trading to be launched at EST 10 AM Sunday ($sleep_seconds seconds from now..)"
             - sleep $sleep_seconds
             - cd /lab/paper/ts/lean && lean data download --dataset "US Equity Security Master"
-            - export LATEST_FOLDER=$(find /lab/paper/ts/lean/live -maxdepth 1 -name "equity.peter-us-ibkr.cash*" -type d | sort -t '\0' -n | tail -n 1) && echo Running live Equity US Peter-IBKR account from location "$LATEST_FOLDER"
+            - export LATEST_FOLDER=$(find /lab/paper/ts/lean/live -maxdepth 1 -name "equity.peter-us-ibkr.margin*" -type d | sort -t '\0' -n | tail -n 1) && echo Running live Equity US Peter-IBKR account from location "$LATEST_FOLDER"
             - cd $LATEST_FOLDER
-            - ac live start . --brokerage "Interactive Brokers" --data-provider-live "Interactive Brokers"
+            - ac live start . --brokerage "Interactive Brokers" --data-provider-live "Interactive Brokers" --data-provider-historical "Local"
+
+        - us-ibkr-cron:
+            - cd /lab/paper/ts/ts/cronlab
+            - ipython
+            - run cron.equity.peter-us-ibkr.margin.py

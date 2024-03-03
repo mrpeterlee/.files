@@ -7,7 +7,7 @@
 [core]
 	editor    = nvim
 	pager = diff-so-fancy | less --tabs=4 -RFX
-	autocrlf = input
+	autocrlf = false
 	whitespace = cr-at-eol
 ; }}}
 ; alias {{{
