@@ -57,7 +57,7 @@
                 "icon": "D:\\home\\peter\\OneDrive - FincLab Technologies\\Pictures\\Icons\\matrix.png",
                 "intenseTextStyle": "bold",
                 "name": "Wsl-Ubuntu",
-                "commandline": "powershell.exe -ExecutionPolicy ByPass -NoExit -Command d:\\tool\\conda\\shell\\condabin\\conda-hook.ps1; conda activate d:\\tool\\conda; conda activate paper; d:; cd D:\\lab; $env:PYTHONPATH = 'D:/lab/paper/binance_gateway;D:/lab/paper/finclab;d:/lab/paper/datalab_equities;d:/lab/paper/datalab_crypto;d:/lab/paper/datalab_core;d:/lab/paper/datalab_utilities;d:/lab/paper/datalab;d:/lab/paper/datalab_alternative;d:/lab/paper/datastore;d:/lab/paper/openvpn;d:/lab/paper/execengines_aquamesh;d:/lab/paper/corporate;d:/lab/paper/acap_gateway;d:/lab/paper/lean;d:/lab/paper/binance_gateway;d:/lab/paper/scheduler;d:/lab/paper/docker-deploy-webhook;d:/lab/paper/tickstore;d:/lab/paper/docstore;d:/lab/paper/winclient'; wsl",
+                "commandline": "wsl",
                 "tabTitle": "Zsh"
             },
             {

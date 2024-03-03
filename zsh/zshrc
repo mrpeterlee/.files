@@ -293,6 +293,12 @@ function cowsayfortune {
     #echo "Selected cow: ${THISCOW}, from ${WHICHCOW}"
     fortune | cowsay -f $THISCOW -W 100
 }
-cowsayfortune | lolcat --spread 1.0
 
-
+# Get the current hostname
+current_hostname=$(hostname)
+# Check if the hostname matches "USR-000001-US1"
+if [ "$current_hostname" = "USR-000001-US1" ]; then
+    tmux attach || mux us1
+else
+    cowsayfortune | lolcat --spread 1.0
+fi

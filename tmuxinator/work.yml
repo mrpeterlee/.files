@@ -10,16 +10,9 @@ windows:
       panes:
         - terminal:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            - cd $HOME/lab/paper/finclab && git pull
-            - cd $HOME/lab/paper/finclab && git pull
-            - cd $HOME/lab/paper/datalab && git pull
-            - cd $HOME/lab/paper/ts && git pull
-            - cd $HOME/lab/paper/winclient && git pull
-            - cd $HOME/lab/paper/tradestation && git pull
-            - cd $HOME/lab/paper/lab && git pull
             # - python -m pip install lean --upgrade
             # - python -m pip install --no-binary lxml
-            - python -m pip install black --upgrade
+            # - python -m pip install black --upgrade
             - cd /lab/lib
             # - /usr/bin/inxi
             - /usr/bin/screenfetch && curl "wttr.in/newyork?m&lang=zh-cn"
@@ -120,6 +113,12 @@ windows:
       layout: tiled
       panes:
         - glances:
+            - cd $HOME/lab/paper/finclab && git pull
+            - cd $HOME/lab/paper/datalab && git pull
+            - cd $HOME/lab/paper/ts && git pull
+            - cd $HOME/lab/paper/winclient && git pull
+            - cd $HOME/lab/paper/tradestation && git pull
+            - cd $HOME/lab/paper/lab && git pull
             # Update xtquant lib
             - rm -rf /lab/lib/xtquant && cp /lab/data/app/xtquant.zip /lab/lib/xtquant.zip && cd /lab/lib && unzip -a xtquant.zip && rm -f xtquant.zip
             # Create Ramdisk to store lean data
