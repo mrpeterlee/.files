@@ -1,0 +1,13 @@
+[user]
+	email = peter.lee@astrocapital.net
+	name = Peter Lee
+[core]
+	autocrlf = false
+	whitespace = cr-at-eol
+	[alias]
+	lod       = log --oneline --decorate --all --graph
+	lol       = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(red)%d%Creset %s %C(green)(%cr)'
+	loa       = log --graph --pretty=format:'%C(yellow)%h%Creset -%C(red)%d%Creset %s %C(green)(%cr) %C(cyan)[%an]'
+[pull]
+	rebase = true
+
