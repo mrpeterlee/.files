@@ -56,7 +56,7 @@
 [diff-so-fancy]
 	markEmptyLines = false
 [pull]
-	rebase = false
+	rebase = true
 # define command which will be used when "nvim" is set as a merge tool
 [mergetool "nvim"]
   cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
