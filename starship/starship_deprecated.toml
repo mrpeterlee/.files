@@ -1,0 +1,134 @@
+# ~/.config/starship.toml
+
+# Prompt
+# Disabled prompt (too slow): $git_status
+
+format = """
+[┌──── ](dimmed blue)$directory\
+$conda$python$container$git_branch$git_commit$dotnet \
+$fill $username$hostname[────┐ ](dimmed blue)
+[╘═󰺊](dimmed blue) $character
+"""
+right_format = """
+$shell[ﱣ═╛](dimmed blue)
+"""
+# symbol = " "
+
+# Wait 10 milliseconds for starship to check files under the current directory.
+scan_timeout = 10
+# Disable the blank line at the start of the prompt
+add_newline = true
+command_timeout = 2500
+continuation_prompt = "▶▶"
+
+[fill]
+symbol = " "
+
+[conda]
+symbol = "󱜚 "
+format = " [$symbol$environment](bold cyan) "
+disabled = false
+
+[character]
+success_symbol = "[](bold green)"
+error_symbol = "[](bold red)"
+
+[directory]
+truncation_length = 5
+truncate_to_repo = false
+truncation_symbol = ".../"
+style = "bold green"
+#prefix = "in "
+
+[git_branch]
+symbol = " "
+style = "bold red"
+format = " [$symbol$branch]($style) "
+
+[git_state]
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+cherry_pick = "[🍒 PICKING](bold red)"
+
+[git_status]
+conflicted = "⚔️ "
+untracked = "🛤️  ×"
+stashed = "📦 "
+modified = "📝 ×"
+staged = "🗃️  ×"
+renamed = "📛 ×"
+deleted = "🗑️  ×"
+ahead = "⇡${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
+# prefix = ""
+# suffix = ""
+style = "bright-white"
+
+[hostname]
+ssh_only = false
+style = "dimmed white"
+format = "[$ssh_symbol](bold blue)[  ](bold yellow)[$hostname](bold white) "
+trim_at = ".astrocapital.net"
+disabled = false
+
+[julia]
+symbol = "ஃ "
+style = "bold green"
+disabled = false
+
+[memory_usage]
+threshold = 50
+symbol = "🐏"
+style = "bold dimmed white"
+disabled = false
+
+[package]
+disabled = true
+
+[python]
+symbol = ""
+python_binary = ["python", "./venv/bin/python", "python3", "python2"]
+style = "cyan"
+format = '[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style) '
+
+
+[time]
+format = '🕙[\[ $time \]]($style) '
+use_12hr = true
+utc_time_offset = "-5"
+style = "bright-white"
+time_format = "%T"
+disabled = false
+
+[username]
+style_root = "black bold"
+style_user = "bold white"
+format = "[$user]($style)"
+disabled = false
+show_always = true
+
+[dotnet]
+symbol = "🥅 "
+style = "green"
+heuristic = false
+
+[shell]
+fish_indicator = "󰈺"
+zsh_indicator = "󰰸"
+bash_indicator = ""
+powershell_indicator = ""
+unknown_indicator = "mystery shell"
+style = "dimmed white"
+disabled = false
+
+[status]
+style = "bg:blue"
+symbol = "🔴 "
+success_symbol = "🟢 "
+format = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false
+
+
+[container]
+format = "[$container](bold blue) "
