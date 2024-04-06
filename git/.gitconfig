@@ -69,3 +69,5 @@
 [safe]
 	directory = /mnt/diskstation-us1/nfs/public/vm/finclab/wiki
 	directory = /mnt/diskstation-us1/nfs/public/vm/finclab
+[reset]
+	quiet = true
