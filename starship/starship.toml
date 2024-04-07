@@ -2,7 +2,6 @@
 
 # disabled due to slow performance
 # [](fg:color_yellow bg:color_aqua)\
-# $git_branch\
 # $git_status\
 
 format = """
@@ -11,6 +10,7 @@ $os\
 $username\
 [](bg:color_yellow fg:color_orange)\
 $directory\
+$git_branch\
 [](fg:color_aqua bg:color_blue)\
 $c\
 $rust\
