@@ -1,4 +1,5 @@
 #! /usr/bin/env zsh
+alias ipy='ipython --no-autoindent -i ~/.files/python/ipython_startup.py'
 
 # Make projects shorter
 alias p='pj'
