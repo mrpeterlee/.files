@@ -9,8 +9,10 @@ alias po='pjo'
 # abbr sud="sudo -E -s"
 alias d='dirs -v | head -10'
 
-alias paper='cd ${$(pwd):gs/\/lab\/prod/\/lab\/paper}'
-alias prod='cd ${$(pwd):gs/\/lab\/paper/\/lab\/prod}'
+alias paper='cd ${$(pwd):gs/\/lab\/prod/\/lab\/paper} && cd ${$(pwd):gs/\/lab\/dev/\/lab\/paper}'
+alias prod='cd ${$(pwd):gs/\/lab\/paper/\/lab\/prod} && cd ${$(pwd):gs/\/lab\/dev/\/lab\/prod}'
+alias dev='cd ${$(pwd):gs/\/lab\/paper/\/lab\/dev} && cd ${$(pwd):gs/\/lab\/prod/\/lab\/dev}'
+
 alias lg=lazygit
 alias man=manp
 # Login to TradeStation (default to paper)
