@@ -17,10 +17,6 @@
 
 
 # ------------------================== Helper Functions ==================------------------ #
-paper() {
-    cd "${PWD//\/lab\/prod\//\/lab\/paper\/}"
-}
-
 # ------------------================== zoxide:: replacement of `cd`  ==================------------------ #
 if [ -f $HOME/.zshenv ]; then
     . $HOME/.zshenv
@@ -159,7 +155,7 @@ export EDITOR='nvim'
 export VISUAL='nvim'
 
 # Ensure correct alias of vim to `nvim` or `nvr` (if running inside nvim)
-if [[ ${#${NVIM_LISTEN_ADDRESS}} -eq 0 ]]; then
+if [[ ${#${NVIM}} -eq 0 ]]; then
     # echo "Running in SHELL: ${#${NVIM_LISTEN_ADDRESS}} - $NVIM_LISTEN_ADDRESS"
     alias v='nvim'
     alias vim='nvim'
