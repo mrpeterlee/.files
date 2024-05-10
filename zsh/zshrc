@@ -50,6 +50,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
 elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
     # Do something under GNU/Linux platform
     export os_type='linux'
+    alias fd=fdfind
 elif [[ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]]; then
     # Do something under 32 bits Windows NT platform
     export os_type='windows'
