@@ -15,4 +15,5 @@ windows:
             # - FOLDER_STEM="${FOLDER_STEM##*/}"
             - export LATEST_FOLDER="/lab/paper/ts/lean/live/crypto.peter-binance.cash"
             - echo "Located live Binance-Peter folder from location '$LATEST_FOLDER'"
+            - docker pull quantconnect/lean
             - cd /lab/paper/ts/lean && lean live deploy live/crypto.peter-binance.cash --brokerage Binance --data-provider-live Binance --binance-exchange-name Binance --binance-use-testnet live --data-provider-historical QuantConnect
