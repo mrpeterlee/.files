@@ -1,16 +1,19 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": [
+    "actions": 
+    [
         {
-            "command": {
+            "command": 
+            {
                 "action": "sendInput",
                 "input": "\u001b[13;5u"
             },
             "keys": "ctrl+enter"
         },
         {
-            "command": {
+            "command": 
+            {
                 "action": "sendInput",
                 "input": "\u001b[13;2u"
             },
@@ -28,20 +31,25 @@
     "defaultProfile": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
     "focusFollowMouse": true,
     "launchMode": "maximized",
-    "newTabMenu": [
+    "newTabMenu": 
+    [
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles": {
-        "defaults": {
-            "adjustIndistinguishableColors": "always",
+    "profiles": 
+    {
+        "defaults": 
+        {
+            "adjustIndistinguishableColors": "never",
             "closeOnExit": "graceful",
             "colorScheme": "VibrantTom",
             "cursorColor": "#FFFFFF",
             "cursorHeight": 10,
             "cursorShape": "vintage",
-            "font": {
+            "experimental.retroTerminalEffect": false,
+            "font": 
+            {
                 "face": "Hack Nerd Font",
                 "size": 12.0
             },
@@ -51,32 +59,48 @@
             "snapOnInput": true,
             "useAcrylic": true
         },
-        "list": [
+        "list": 
+        [
             {
+                "commandline": "wsl",
                 "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
                 "hidden": false,
                 "historySize": 9999999,
                 "icon": "D:\\home\\peter\\OneDrive - FincLab Technologies\\Pictures\\Icons\\matrix.png",
                 "intenseTextStyle": "bold",
                 "name": "Wsl-Ubuntu",
-                "commandline": "wsl",
+                "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc",
                 "tabTitle": "Zsh"
             },
             {
+                "antialiasingMode": "aliased",
+                "bellStyle": "window",
+                "closeOnExit": "automatic",
+                "colorScheme": "Tango Dark",
                 "commandline": "powershell.exe -ExecutionPolicy ByPass -NoExit -Command d:\\tool\\conda\\shell\\condabin\\conda-hook.ps1; conda activate d:\\tool\\conda; conda activate paper; d:; cd D:\\lab; $env:PYTHONPATH = 'D:/lab/paper/binance_gateway;D:/lab/paper/finclab;d:/lab/paper/datalab_equities;d:/lab/paper/datalab_crypto;d:/lab/paper/datalab_core;d:/lab/paper/datalab_utilities;d:/lab/paper/datalab;d:/lab/paper/datalab_alternative;d:/lab/paper/datastore;d:/lab/paper/openvpn;d:/lab/paper/execengines_aquamesh;d:/lab/paper/corporate;d:/lab/paper/ibkr_gateway;d:/lab/paper/lean;d:/lab/paper/binance_gateway;d:/lab/paper/scheduler;d:/lab/paper/docker-deploy-webhook;d:/lab/paper/tickstore;d:/lab/paper/docstore;d:/lab/paper/winclient'",
+                "cursorShape": "filledBox",
                 "guid": "{8f8ee4a6-ee66-4447-9eef-1b84853d3072}",
                 "hidden": false,
                 "historySize": 9999999,
+                "intenseTextStyle": "all",
                 "name": "Windows PowerShell",
                 "suppressApplicationTitle": true,
                 "tabTitle": "Terminal"
             },
             {
+                "antialiasingMode": "aliased",
+                "bellStyle": "window",
+                "closeOnExit": "automatic",
+                "colorScheme": "Tango Dark",
                 "commandline": "cmd.exe /s /k d:\\tool\\conda\\Scripts\\activate.bat d:\\tool\\conda & conda activate paper & D:\\lab\\paper\\winclient\\bin\\clink\\clink_x64.exe inject --profile D:\\home\\peter\\.clink",
+                "cursorShape": "filledBox",
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "historySize": 9999999,
-                "name": "Command Prompt"
+                "intenseTextStyle": "bold",
+                "name": "Command Prompt",
+                "scrollbarState": "visible",
+                "suppressApplicationTitle": true
             },
             {
                 "commandline": "cmd.exe /s /k d:\\tool\\conda\\Scripts\\activate.bat d:\\tool\\conda & conda activate paper & D:\\lab\\paper\\winclient\\bin\\clink\\clink_x64.exe inject --profile D:\\home\\peter\\.clink  & d: & cd D:\\lab & set PYTHONPATH=%PYTHONPATH%;D:\\lab\\paper\\binance_gateway;D:\\lab\\paper\\finclab;d:\\lab\\paper\\datalab_equities;d:\\lab\\paper\\datalab_crypto;d:\\lab\\paper\\datalab_core;d:\\lab\\paper\\datalab_utilities;d:\\lab\\paper\\datalab;d:\\lab\\paper\\datalab_alternative;d:\\lab\\paper\\datastore;d:\\lab\\paper\\openvpn;d:\\lab\\paper\\execengines_aquamesh;d:\\lab\\paper\\corporate;d:\\lab\\paper\\ibkr_gateway;d:\\lab\\paper\\lean;d:\\lab\\paper\\binance_gateway;d:\\lab\\paper\\scheduler;d:\\lab\\paper\\docker-deploy-webhook;d:\\lab\\paper\\tickstore;d:\\lab\\paper\\docstore;d:\\lab\\paper\\winclient & ssh -L 3388:localhost:3388 -L 51001:localhost:51001 -L 8888:localhost:8888 10.1.1.100 -t \"/usr/bin/tmuxinator work\"",
@@ -120,28 +144,11 @@
                 "historySize": 9999999,
                 "name": "Azure Cloud Shell",
                 "source": "Windows.Terminal.Azure"
-            },
-            {
-                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-                "hidden": true,
-                "name": "Ubuntu",
-                "source": "Windows.Terminal.Wsl"
-            },
-            {
-                "guid": "{f8086d01-b831-5791-a842-38227069c09a}",
-                "hidden": false,
-                "name": "Developer Command Prompt for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{b89c5391-a37e-5882-bd2d-9ff132681a04}",
-                "hidden": false,
-                "name": "Developer PowerShell for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
             }
         ]
     },
-    "schemes": [
+    "schemes": 
+    [
         {
             "background": "#1D2342",
             "black": "#101116",
