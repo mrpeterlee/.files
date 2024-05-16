@@ -50,7 +50,7 @@
       "historySize": 9999999,
       "opacity": 100,
       "padding": "0, 0, 0, 0",
-      "antialiasingMode": "aliased",
+      "antialiasingMode": "cleartype",
       "bellStyle": "window",
       "suppressApplicationTitle": true,
       "tabTitle": "Terminal",
