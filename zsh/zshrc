@@ -22,6 +22,7 @@ if [ -f $HOME/.zshenv ]; then
     . $HOME/.zshenv
 fi
 
+export COLORTERM=truecolor
 
 eval "$(zoxide init zsh)"
 
