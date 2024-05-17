@@ -1,4 +1,10 @@
 #! /usr/bin/env zsh
+# @Author     : Peter Lee
+# @Email      : peter.lee@astrocapital.net
+# @Last Update: 2024-05-16 20:54:16 EDT
+# @Type       : lib
+# @Sensitivity: global_equities@astrocapital.net
+# @Platform   : any
 
 # -------------------========================================------------------- #
 #                                                                                #
@@ -10,19 +16,20 @@
 #  ██║     ███████╗██║  ██║██████╔╝    ███████╗███████║██║  ██║██║  ██║╚██████╗  #
 #  ╚═╝     ╚══════╝╚═╝  ╚═╝╚═════╝     ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  #
 #                                                                                #
-# Author: Peter Lee (peter.lee@finclab.com)                                      #
-# Last Update: 2022-May                                                          #
-
+#                                                                                #
 # -------------------========================================------------------- #
 
 
+# True color support
+export COLORTERM=truecolor
+
+export EDITOR='nvim'
+export VISUAL='nvim'
+
 # ------------------================== Helper Functions ==================------------------ #
-# ------------------================== zoxide:: replacement of `cd`  ==================------------------ #
 if [ -f $HOME/.zshenv ]; then
     . $HOME/.zshenv
 fi
-
-export COLORTERM=truecolor
 
 eval "$(zoxide init zsh)"
 
@@ -104,12 +111,12 @@ if [ -f "${HOME}/.lab/labenv.yml" ]; then
     echo "Bash ENV - Extracted config from 'labenv' (${HOME}/.lab/labenv.yml)..."
     . parse_yml "${HOME}/.lab/labenv.yml" >/dev/null
     # for package in ${HOME}/.lab/*.yml ; do
-    for package in "${HOME}/.lab/finclab.yml" "${HOME}/.lab/datastore.yml" "${HOME}/.lab/OPENAI.yml" "${HOME}/.lab/github.yml" ; do
-        test "$package" = "${HOME}/.lab/labenv.yml" && continue
-        filestem=$(basename -s .yml $package)
-        echo "Bash ENV - Extracted config from '${filestem}' (${package})..."
-        . parse_yml "${package}" "${filestem}_" >/dev/null
-    done
+    # for package in "${HOME}/.lab/finclab.yml" "${HOME}/.lab/datastore.yml" "${HOME}/.lab/OPENAI.yml" "${HOME}/.lab/github.yml" ; do
+    #     test "$package" = "${HOME}/.lab/labenv.yml" && continue
+    #     filestem=$(basename -s .yml $package)
+    #     echo "Bash ENV - Extracted config from '${filestem}' (${package})..."
+    #     . parse_yml "${package}" "${filestem}_" >/dev/null
+    # done
 fi
 
 
@@ -128,9 +135,8 @@ export LANG=en_US.UTF-8
 eval "$(starship init zsh)"
 
 # ------------------================== Functions ==================------------------ #
-files=( ~/.files/zsh/zalias \
-       /lab/lib/finclab/sh/zsh/utils \
-      )
+files=( ~/.files/zsh/zalias)
+# /lab/lib/finclab/sh/zsh/utils
 for file in $files; do 
     if [ -f $file ]; then
        source $file
@@ -143,24 +149,13 @@ if [ -f /usr/local/opt/curl/bin/curl ]; then
 fi
 
 # ------------------================== General Settings ==================------------------ #
-# Zsh-VI-Mode changing the escape key to `kj`
-# ZVM_VI_ESCAPE_BINDKEY=kj
-# ZVM_VI_INSERT_ESCAPE_BINDKEY=kj
-# ZVM_VI_VISUAL_ESCAPE_BINDKEY=kj
-# ZVM_VI_OPPEND_ESCAPE_BINDKEY=kj
 # Change to Zsh's default readkey engine
 ZVM_READKEY_ENGINE=$ZVM_READKEY_ENGINE_ZLE
-zvm_bindkey viins '^H' up-line-or-history
-zvm_bindkey viins '^L' down-line-or-history
-
-export EDITOR='nvim'
-export VISUAL='nvim'
 
 # Ensure correct alias of vim to `nvim` or `nvr` (if running inside nvim)
 if [[ ${#${NVIM}} -eq 0 ]]; then
     # echo "Running in SHELL: ${#${NVIM_LISTEN_ADDRESS}} - $NVIM_LISTEN_ADDRESS"
     alias v='nvim'
-    alias vim='nvim'
 else
     # echo "Running inside NVIM: ${#${NVIM_LISTEN_ADDRESS}} - $NVIM_LISTEN_ADDRESS"
     alias v='nvr -cc "ToggleTerm || vsplit" -c "ToggleTerm" --remote-silent'
@@ -223,11 +218,14 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 # export KEYTIMEOUT=20
 bindkey -s '^o' 'vim $(fzf)^M'
 
+zvm_bindkey viins '^k' up-line-or-history
+zvm_bindkey viins '^j' down-line-or-history
+
 # autocomplete CTRL-; to move to the end of auto-suggestions
 bindkey '^f' end-of-line
 # bindkey '^j' end-of-line
-# bindkey '^l' forward-word
-# bindkey '^h' backward-word
+bindkey '^l' forward-word
+bindkey '^h' backward-word
 
 # Make home and end to work
 bindkey '\e[1~' beginning-of-line
@@ -266,31 +264,27 @@ bindkey '^x' edit-command-line
 # ------------------================== Conda Activation ==================------------------ #
 
 # Default repos -- integrate the variable of default environment
-unset PYTHONPATH
+# unset PYTHONPATH
 
-# Activate corresponding environment
-if [ -f /opt/conda/envs/prod/bin/python ]; then
-    conda activate prod
-    export PYTHONPATH=/lab/lib:~/lab/lib:$(find /opt/conda/envs/prod -type d -path "*/python*/site-packages" | head -n 1)
-    echo "Activated env PROD: $(python --version) @ $(which python)" | lolcat
-elif [ -f /opt/conda/envs/paper/bin/python ]; then
-    conda activate paper
-    export PYTHONPATH=/lab/lib:~/lab/lib:$(find /opt/conda/envs/paper -type d -path "*/python*/site-packages" | head -n 1)
-    echo "Activated env PAPER: $(python --version) @ $(which python)" | lolcat
-fi
+# # Activate corresponding environment
+# if [ -f /opt/conda/envs/prod/bin/python ]; then
+#     conda activate prod
+#     export PYTHONPATH=/lab/lib:~/lab/lib:$(find /opt/conda/envs/prod -type d -path "*/python*/site-packages" | head -n 1)
+#     echo "Activated env PROD: $(python --version) @ $(which python)" | lolcat
+# elif [ -f /opt/conda/envs/paper/bin/python ]; then
+#     conda activate paper
+#     export PYTHONPATH=/lab/lib:~/lab/lib:$(find /opt/conda/envs/paper -type d -path "*/python*/site-packages" | head -n 1)
+#     echo "Activated env PAPER: $(python --version) @ $(which python)" | lolcat
+# fi
 
 # Config for jupyter_ascending
 export JUPYTER_ASCENDING_EXECUTE_PORT=8888
 
 # ------------------================== Custom Modules ==================------------------ #
-PROJECT_PATHS=( /lab/paper ~ ~/lean )
+PROJECT_PATHS=( /lab/paper /lab/lean ~/.files )
 if [ -f ~/.files/zsh/modules/project_jump.zsh ]; then
     source ~/.files/zsh/modules/project_jump.zsh
 fi
-
-# RUFF for shell completion
-# fpath+=~/.zfunc
-# autoload -Uz compinit && compinit
 
 # ------------------================== Login script ==================------------------ #
 # Cow-spoken fortunes every time you open a terminal

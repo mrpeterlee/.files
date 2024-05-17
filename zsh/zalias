@@ -56,8 +56,7 @@ fi
 if type -f "bat" > /dev/null; then
     # apt install -y exa
     alias cat='bat'
-fi
-if type -f "batcat" > /dev/null; then
+elif type -f "batcat" > /dev/null; then
     alias cat='batcat'
 fi
 
@@ -95,35 +94,7 @@ alias trl='trash-list'
 alias tre='trash-empty'
 alias trun='trash `git ls-files . --exclude-standard --others`' # mv git untracked 
 
-# Apt
-alias aptedit='sudo apt edit-sources'
-alias aptdep='apt-cache depends'
-alias aptpol='apt-cache policy'
-alias aptsea='apt-cache search'
-alias aptsho='apt-cache show'
-alias aptver='apt-cache madison'
-alias aptbin='apt-get download'
-alias aptsrc='apt-get source'
-alias aptins='sudo apt-get install'
-alias aptsid='sudo apt-get -t sid install'
-alias aptrem='sudo apt-get remove'
-alias aptaut='sudo apt-get autoremove'
-alias aptupg='sudo apt-get update && sudo apt-get upgrade'
-
-# Surfraw
-alias srd='surfraw duckduckgo'
-alias srg='surfraw github'
-alias srl='surfraw slinuxdoc'
-alias srm='surfraw mdn'
-alias srs='surfraw stack'
-alias srw='surfraw wikipedia'
-alias srwca='surfraw wikipedia -l=CA'
-alias srwes='surfraw wikipedia -l=ES'
-alias sry='surfraw youtube'
-
 # Faster git alias
-
-alias gg='git status'
 alias gd='git diff'
 alias gds='git diff --staged'
 alias gdn='git diff --name-only'
