@@ -30,9 +30,8 @@ eval "$(zoxide init zsh)"
 function setenv() { export "$1=$2"; }
 
 export TZ=America/New_York
-# export TERM=xterm-256color
+export TERM=xterm-256color
 # export TERM=tmux-256color
-export TERM=tmux-256color
 
 # Set zsh function path
 fpath=( /usr/local/bin /lab/lib/finclab/sh/zsh "${fpath[@]}")
@@ -288,6 +287,10 @@ PROJECT_PATHS=( /lab/paper ~ ~/lean )
 if [ -f ~/.files/zsh/modules/project_jump.zsh ]; then
     source ~/.files/zsh/modules/project_jump.zsh
 fi
+
+# RUFF for shell completion
+# fpath+=~/.zfunc
+# autoload -Uz compinit && compinit
 
 # ------------------================== Login script ==================------------------ #
 # Cow-spoken fortunes every time you open a terminal

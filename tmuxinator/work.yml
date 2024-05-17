@@ -109,7 +109,7 @@ windows:
           #       - cpu_temperature:
           #         - watch -n 10 -d sensors
 
-  - background-apps:
+  - background:
       layout: tiled
       panes:
         - glances:
