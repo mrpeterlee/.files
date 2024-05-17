@@ -108,7 +108,7 @@ done
 # ------------------================== Env Variables ==================------------------ #
 # Grab env variables
 if [ -f "${HOME}/.lab/labenv.yml" ]; then
-    echo "Bash ENV - Extracted config from 'labenv' (${HOME}/.lab/labenv.yml)..."
+    # echo "ENV - Extracted config from 'labenv' (${HOME}/.lab/labenv.yml)..."
     . parse_yml "${HOME}/.lab/labenv.yml" >/dev/null
     # for package in ${HOME}/.lab/*.yml ; do
     # for package in "${HOME}/.lab/finclab.yml" "${HOME}/.lab/datastore.yml" "${HOME}/.lab/OPENAI.yml" "${HOME}/.lab/github.yml" ; do
