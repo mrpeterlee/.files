@@ -53,24 +53,6 @@ windows:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
             - cd $HOME/lab/paper/winclient/winclient
 
-  - aquamesh:
-      layout: even-horizontal
-      panes:
-        - workspace1:
-            - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            - cd $HOME/lab/paper/aquamesh
-            - vim README.md
-          # - ssh_ts
-          # - conda activate base
-          # - conda deactivate && conda activate finclab
-          # - cd $HOME/ts
-        - workspace2:
-            - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            - cd $HOME/lab/paper/aquamesh/aquamesh
-          # - ssh_ts
-          # - conda activate base
-          # - cd $HOME/ts
-
   - atronvim:
       layout: even-horizontal
       panes:

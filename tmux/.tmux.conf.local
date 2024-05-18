@@ -1,5 +1,6 @@
 # Default to zsh
 set-option -g default-shell /usr/bin/zsh
+set-option -g mouse-utf8 off
 
 # Something suggested to avoid flickering in zsh
 set-window-option -g window-style 'bg=#181818'
