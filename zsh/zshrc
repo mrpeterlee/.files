@@ -85,24 +85,23 @@ for folderpath in $dirs; do
     fi
 done
 
-# repos=("finclab" \
-#        "datalab" \
-#        "datalab_utilities" \
-#        "execengines_aquamesh" \
-#        "ts" \
-#        "winclient")
+repos=("finclab" \
+       "datalab" \
+       "datalab_utilities" \
+       "ts" \
+       "winclient")
 
-# for repo in $repos; do 
-#     if [ -d ${HOME}/lab/paper/${repo} ]; then
-#         export PYTHONPATH=${HOME}/lab/paper/${repo}:${PYTHONPATH}
-#         echo "Python Path - included additional source lib ${HOME}/lab/paper/${repo}"
-#     else
-#         if [ -d /lab/${repo} ]; then
-#             export PYTHONPATH="/lab/${repo}:${PYTHONPATH}"
-#             echo "Python Path - included additional source lib /lab/${repo}"
-#         fi
-#     fi
-# done
+for repo in $repos; do 
+    if [ -d ${HOME}/lab/paper/${repo} ]; then
+        export PYTHONPATH=${HOME}/lab/paper/${repo}:${PYTHONPATH}
+        echo "Python Path - included additional source lib ${HOME}/lab/paper/${repo}"
+    else
+        if [ -d /lab/${repo} ]; then
+            export PYTHONPATH="/lab/${repo}:${PYTHONPATH}"
+            echo "Python Path - included additional source lib /lab/${repo}"
+        fi
+    fi
+done
 
 
 # ------------------================== Env Variables ==================------------------ #
@@ -156,6 +155,7 @@ ZVM_READKEY_ENGINE=$ZVM_READKEY_ENGINE_ZLE
 if [[ ${#${NVIM}} -eq 0 ]]; then
     # echo "Running in SHELL: ${#${NVIM_LISTEN_ADDRESS}} - $NVIM_LISTEN_ADDRESS"
     alias v='nvim'
+    alias vim='nvim'
 else
     # echo "Running inside NVIM: ${#${NVIM_LISTEN_ADDRESS}} - $NVIM_LISTEN_ADDRESS"
     alias v='nvr -cc "ToggleTerm || vsplit" -c "ToggleTerm" --remote-silent'
