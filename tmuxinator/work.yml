@@ -16,20 +16,33 @@ windows:
             - cd /lab/lib
             # - /usr/bin/inxi
             - /usr/bin/screenfetch && curl "wttr.in/newyork?m&lang=zh-cn"
-            - cd /mnt/diskstation-us1/nfs/public/vm/finclab/finclab/io/api/qmt
+            # - cd /mnt/diskstation-us1/nfs/public/vm/finclab/finclab/io/api/qmt
 
   - python:
       layout: even-horizontal
       panes:
         - python:
-            - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
             # - sudo apt install neovim --upgrade
             # - nvim --headless -c 'autocmd User PackerComplete quitall' -c 'AstroUpdate' -c 'PackerClean' -c 'PackerSync' -c 'PackerCompile'
             - cd /lab/lib
-            - nvim /lab/lib/finclab/__init__.py
+            # - nvim /lab/lib/finclab/__init__.py
         - terminal:
-            - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
             - cd /lab/lib
+            - ipy
+
+  - strat:
+      layout: even-horizontal
+      panes:
+        - workspace1:
+            - cd $HOME/lab/ts/lean
+
+  - ts:
+      layout: even-horizontal
+      panes:
+        - workspace1:
+            - cd $HOME/lab/paper/ts/ts
+        - workspace2:
+            - cd $HOME/lab/paper/ts/ts
 
   - finclab:
       layout: even-horizontal
@@ -48,40 +61,27 @@ windows:
         - workspace1:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
             - cd $HOME/lab/paper/winclient/
-            - vim README.md
         - workspace2:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
             - cd $HOME/lab/paper/winclient/winclient
 
-  - atronvim:
+  - nvim:
       layout: even-horizontal
       panes:
         - workspace1:
-            - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
             - cd /lab/paper/astronvim
-            - vim init.lua
+            # - vim init.lua
         - workspace2:
-            - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            - vim $HOME/.tmux.conf.local
+            - cd /lab/paper/astronvim
 
-  - misc:
-      layout: even-horizontal
-      panes:
-        - pane1:
-            - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            - cd $HOME/lab/paper
-        - pane2:
-            - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
-            - cd $HOME/lab/paper
-            # - ts flightlog stream -d
-
-  - server-monitor:
+  - monitor:
       layout: tiled
       panes:
         - glances:
             - if [ "$SHELL" = "/bin/sh" ]; then zsh; fi;
             - cd
           #- glances
+          # - ts flightlog stream -d
 
           # - docker-monitor:
           #     layout: tiled
