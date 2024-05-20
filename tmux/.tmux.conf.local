@@ -200,7 +200,7 @@ tmux_conf_theme_colour_6="#1d2021"    # dark gray   (left corner, font)
 tmux_conf_theme_colour_7="#ebdbb2"    # white
 tmux_conf_theme_colour_8="#1d2021"    # dark gray
 tmux_conf_theme_colour_9="#d5d5da"    # yellow (left bottom bg)
-tmux_conf_theme_colour_10="#b162d6"   # pink       (uptime bg)
+tmux_conf_theme_colour_10="#fb4934"   # pink       (uptime bg)
 tmux_conf_theme_colour_11="#8ec07c"   # green
 tmux_conf_theme_colour_12="#ebdbb2"   # light gray (weather, font)
 tmux_conf_theme_colour_13="#fbf1c7"   # white (username, font)
@@ -474,6 +474,7 @@ set -g mode-keys vi
 set -gu prefix2
 unbind-key C-a
 set -g prefix C-Space
+set -g prefix2 C-F12
 # bind C-a send-prefix
 
 # if you don't want Oh my tmux! to alter a binding, use #!important
