@@ -9,6 +9,9 @@ alias po='pjo'
 # abbr sud="sudo -E -s"
 alias d='dirs -v | head -10'
 
+## Enter the most recently modified directories
+alias latest='cd $(find . -maxdepth 1 -type d -printf "%f\n" | sort | tail -n1)'
+
 alias paper='cd ${$(pwd):gs/\/lab\/prod/\/lab\/paper} && cd ${$(pwd):gs/\/lab\/dev/\/lab\/paper}'
 alias prod='cd ${$(pwd):gs/\/lab\/paper/\/lab\/prod} && cd ${$(pwd):gs/\/lab\/dev/\/lab\/prod}'
 alias dev='cd ${$(pwd):gs/\/lab\/paper/\/lab\/dev} && cd ${$(pwd):gs/\/lab\/prod/\/lab\/dev}'

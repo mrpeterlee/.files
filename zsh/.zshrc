@@ -1,4 +1,4 @@
-#! /usr/bin/env zsh
+# !/usr/bin/env zsh
 # @Author     : Peter Lee
 # @Email      : peter.lee@astrocapital.net
 # @Last Update: 2024-05-16 20:54:16 EDT
@@ -19,6 +19,29 @@
 #                                                                                #
 # -------------------========================================------------------- #
 
+# ------------------- zprezto ------------------- #
+# Set zsh function path
+fpath=( /usr/local/bin /lab/lib/finclab/sh/zsh "${fpath[@]}")
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# ------------------- General ------------------- #
+#export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # True color support
 export COLORTERM=truecolor
@@ -26,22 +49,9 @@ export COLORTERM=truecolor
 export EDITOR='nvim'
 export VISUAL='nvim'
 
-# ------------------================== Helper Functions ==================------------------ #
-eval "$(zoxide init zsh)"
-
-# setenv is compatible in both Zsh and Fish
-function setenv() { export "$1=$2"; }
-
 export TZ=America/New_York
 export TERM=xterm-256color
 # export TERM=tmux-256color
-
-# Set zsh function path
-fpath=( /usr/local/bin /lab/lib/finclab/sh/zsh "${fpath[@]}")
-# autoload -Uz parse_yml
-
-# Enter the most recently modified directories
-alias latest='cd $(find . -maxdepth 1 -type d -printf "%f\n" | sort | tail -n1)'
 
 # check of os type
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -63,89 +73,8 @@ elif [[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]]; then
     export os_type='windows'
 fi
 
-
-# ------------------================== Rust ==================------------------ #
-## Source Cargo
-if [[ ( -f "$HOME/.cargo/env" ) ]]; then
-  . "$HOME/.cargo/env"
-fi
-
-
-# ------------------================== Python ==================------------------ #
-# Trigger conda environment
-dirs=( '/opt/conda' \
-       '/opt/anaconda' )
-for folderpath in $dirs; do 
-    if [ -d $folderpath ]; then
-       . "$folderpath/etc/profile.d/conda.sh"
-    fi
-done
-
-repos=("finclab" \
-       "datalab" \
-       "datalab_utilities" \
-       "ts" \
-       "winclient")
-
-for repo in $repos; do 
-    if [ -d ${HOME}/lab/paper/${repo} ]; then
-        export PYTHONPATH=${HOME}/lab/paper/${repo}:${PYTHONPATH}
-        echo "Python Path - included additional source lib ${HOME}/lab/paper/${repo}"
-    else
-        if [ -d /lab/${repo} ]; then
-            export PYTHONPATH="/lab/${repo}:${PYTHONPATH}"
-            echo "Python Path - included additional source lib /lab/${repo}"
-        fi
-    fi
-done
-
-
-# ------------------================== Env Variables ==================------------------ #
-# Grab env variables
-if [ -f "${HOME}/.lab/labenv.yml" ]; then
-    # echo "ENV - Extracted config from 'labenv' (${HOME}/.lab/labenv.yml)..."
-    . parse_yml "${HOME}/.lab/labenv.yml" >/dev/null
-    # for package in ${HOME}/.lab/*.yml ; do
-    # for package in "${HOME}/.lab/finclab.yml" "${HOME}/.lab/datastore.yml" "${HOME}/.lab/OPENAI.yml" "${HOME}/.lab/github.yml" ; do
-    #     test "$package" = "${HOME}/.lab/labenv.yml" && continue
-    #     filestem=$(basename -s .yml $package)
-    #     echo "Bash ENV - Extracted config from '${filestem}' (${package})..."
-    #     . parse_yml "${package}" "${filestem}_" >/dev/null
-    # done
-fi
-
-
-## ------------------================== Themes ==================------------------ #
-# Source Prezto.
-# if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  # source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-# fi
-
-# Disabled Starfish
-# Ensure zsh tab-complete prompts works correctly
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-# eval "$(starship init zsh)"
-
-
-
-# ------------------================== Functions ==================------------------ #
-# files=( "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ~/.files/zsh/zshenv ~/.files/zsh/zalias ~/.files/zsh/zpreztorc )
-# # /lab/lib/finclab/sh/zsh/utils
-# for file in $files; do 
-#     if [ -f $file ]; then
-#        source $file
-#     fi
-# done
-
-# After `brew install curl` in mac os
-if [ -f /usr/local/opt/curl/bin/curl ]; then
-    export PATH="/usr/local/opt/curl/bin:$PATH"
-fi
-
-# ------------------================== General Settings ==================------------------ #
 # Change to Zsh's default readkey engine
-ZVM_READKEY_ENGINE=$ZVM_READKEY_ENGINE_ZLE
+# ZVM_READKEY_ENGINE=$ZVM_READKEY_ENGINE_ZLE
 
 # Ensure correct alias of vim to `nvim` or `nvr` (if running inside nvim)
 if [[ ${#${NVIM}} -eq 0 ]]; then
@@ -172,6 +101,7 @@ manp() {
 
 export HOUSTON_URL=http://10.1.1.100:1969
 export BBG_ROOT=/lab/data/samba/tradestation/data/interim/xbbg
+export JUPYTER_ASCENDING_EXECUTE_PORT=8888
 
 # why would you type 'cd dir' if you could just type 'dir'?
 setopt AUTO_CD
@@ -210,12 +140,43 @@ setopt RC_EXPAND_PARAM
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
 
+
+# ------------------- System Env ------------------- #
+# Grab env variables
+# autoload -Uz parse_yml
+if [ -f "${HOME}/.lab/labenv.yml" ]; then
+    # echo "ENV - Extracted config from 'labenv' (${HOME}/.lab/labenv.yml)..."
+    # . parse_yml "${HOME}/.lab/labenv.yml" >/dev/null
+    # for package in ${HOME}/.lab/*.yml ; do
+    # for package in "${HOME}/.lab/finclab.yml" "${HOME}/.lab/datastore.yml" "${HOME}/.lab/OPENAI.yml" "${HOME}/.lab/github.yml" ; do
+    #     test "$package" = "${HOME}/.lab/labenv.yml" && continue
+    #     filestem=$(basename -s .yml $package)
+    #     echo "Bash ENV - Extracted config from '${filestem}' (${package})..."
+    #     . parse_yml "${package}" "${filestem}_" >/dev/null
+    # done
+fi
+
+files=( ~/.files/zsh/zshenv ~/.files/zsh/zalias  )
+# /lab/lib/finclab/sh/zsh/utils
+for file in $files; do 
+    if [ -f $file ]; then
+       source $file
+    fi
+done
+
+# After `brew install curl` in mac os
+if [ -f /usr/local/opt/curl/bin/curl ]; then
+    export PATH="/usr/local/opt/curl/bin:$PATH"
+fi
+
 # ------------------================== Bindings ==================------------------ #
 # export KEYTIMEOUT=20
 bindkey -s '^o' 'vim $(fzf)^M'
 
-zvm_bindkey viins '^k' up-line-or-history
-zvm_bindkey viins '^j' down-line-or-history
+# zvm_bindkey viins '^k' up-line-or-history
+bindkey '^k' up-line-or-history
+# zvm_bindkey viins '^j' down-line-or-history
+bindkey '^j' down-line-or-history
 
 # autocomplete CTRL-; to move to the end of auto-suggestions
 bindkey '^f' end-of-line
@@ -224,6 +185,7 @@ bindkey '^l' forward-word
 bindkey '^h' backward-word
 
 # Make home and end to work
+bindkey '^a' beginning-of-line
 bindkey '\e[1~' beginning-of-line
 bindkey '\e[4~' end-of-line
 
@@ -257,47 +219,68 @@ bindkey '^x' edit-command-line
 # autoload -Uz bracketed-paste-magic
 # zle -N bracketed-paste bracketed-paste-magic
 
-# ------------------================== Conda Activation ==================------------------ #
 
-# Default repos -- integrate the variable of default environment
-# unset PYTHONPATH
+# ------------------- Other Modules------------------- #
+eval "$(zoxide init zsh)"
 
-# # Activate corresponding environment
-# if [ -f /opt/conda/envs/prod/bin/python ]; then
-#     conda activate prod
-#     export PYTHONPATH=/lab/lib:~/lab/lib:$(find /opt/conda/envs/prod -type d -path "*/python*/site-packages" | head -n 1)
-#     echo "Activated env PROD: $(python --version) @ $(which python)" | lolcat
-# elif [ -f /opt/conda/envs/paper/bin/python ]; then
-#     conda activate paper
-#     export PYTHONPATH=/lab/lib:~/lab/lib:$(find /opt/conda/envs/paper -type d -path "*/python*/site-packages" | head -n 1)
-#     echo "Activated env PAPER: $(python --version) @ $(which python)" | lolcat
-# fi
-
-# Config for jupyter_ascending
-export JUPYTER_ASCENDING_EXECUTE_PORT=8888
-
-# ------------------================== Custom Modules ==================------------------ #
 PROJECT_PATHS=( /lab/paper /lab/lean ~/.files )
 if [ -f ~/.files/zsh/modules/project_jump.zsh ]; then
     source ~/.files/zsh/modules/project_jump.zsh
 fi
 
-# ------------------================== Login script ==================------------------ #
-# Cow-spoken fortunes every time you open a terminal
-function cowsayfortune {
-    NUMOFCOWS=`cowsay -l | tail -n +2 | wc -w`
-    WHICHCOW=$((RANDOM%$NUMOFCOWS+1))
-    THISCOW=`cowsay -l | tail -n +2 | sed -e 's/\ /\'$'\n/g' | sed $WHICHCOW'q;d'`
 
-    #echo "Selected cow: ${THISCOW}, from ${WHICHCOW}"
-    fortune | cowsay -f $THISCOW -W 100
-}
 
-# Get the current hostname
-current_hostname=$(hostname)
-# Check if the hostname matches "USR-000001-US1"
-if [ "$current_hostname" = "USR-000001-US1" ]; then
-    tmux attach || mux us1
-else
-    cowsayfortune | lolcat --spread 1.0
+# ------------------- Rust ------------------- #
+## Source Cargo
+if [[ ( -f "$HOME/.cargo/env" ) ]]; then
+  . "$HOME/.cargo/env"
 fi
+
+
+# ------------------ Python ---------------- #
+# Trigger conda environment
+dirs=( '/opt/conda' \
+       '/opt/anaconda' )
+for folderpath in $dirs; do 
+    if [ -d $folderpath ]; then
+       . "$folderpath/etc/profile.d/conda.sh"
+    fi
+done
+
+repos=("finclab" \
+       "datalab" \
+       "datalab_utilities" \
+       "ts" \
+       "winclient")
+
+for repo in $repos; do 
+    if [ -d ${HOME}/lab/paper/${repo} ]; then
+        export PYTHONPATH=${HOME}/lab/paper/${repo}:${PYTHONPATH}
+        # echo "Python Path - included additional source lib ${HOME}/lab/paper/${repo}"
+    else
+        if [ -d /lab/${repo} ]; then
+            export PYTHONPATH="/lab/${repo}:${PYTHONPATH}"
+            # echo "Python Path - included additional source lib /lab/${repo}"
+        fi
+    fi
+done
+
+# # ------------------================== Login script ==================------------------ #
+# # Cow-spoken fortunes every time you open a terminal
+# function cowsayfortune {
+#     NUMOFCOWS=`cowsay -l | tail -n +2 | wc -w`
+#     WHICHCOW=$((RANDOM%$NUMOFCOWS+1))
+#     THISCOW=`cowsay -l | tail -n +2 | sed -e 's/\ /\'$'\n/g' | sed $WHICHCOW'q;d'`
+#
+#     #echo "Selected cow: ${THISCOW}, from ${WHICHCOW}"
+#     fortune | cowsay -f $THISCOW -W 100
+# }
+#
+# # Get the current hostname
+# current_hostname=$(hostname)
+# # Check if the hostname matches "USR-000001-US1"
+# if [ "$current_hostname" = "USR-000001-US1" ]; then
+#     tmux attach || mux us1
+# else
+#     cowsayfortune | lolcat --spread 1.0
+# fi

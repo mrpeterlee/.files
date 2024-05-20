@@ -39,11 +39,11 @@
       "closeOnExit": "automatic",
       "colorScheme": "Tango Dark",
       "cursorShape": "filledBox",
-      "cursorColor": "#FFFFFF",
+      "cursorColor": "#ff00af",
       "cursorHeight": 10,
       "experimental.retroTerminalEffect": false,
       "font": {
-        "face": "Hack Nerd Font",
+        "face": "MesloLGS NF",
         "size": 14.0
       },
       "intenseTextStyle": "bold",
