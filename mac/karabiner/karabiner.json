@@ -92,6 +92,487 @@
             ]
           },
           {
+            "description": "Map CMD 1 to Alt 1 & CMD 2 to Alt 2 in iTerm2",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "1",
+                  "modifiers": {
+                    "mandatory": ["option"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "1",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "1",
+                  "modifiers": {
+                    "mandatory": ["command"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "1",
+                    "modifiers": ["option"]
+                  }
+                ],
+                "type": "basic"
+              },
+
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "2",
+                  "modifiers": {
+                    "mandatory": ["option"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "2",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "2",
+                  "modifiers": {
+                    "mandatory": ["command"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "2",
+                    "modifiers": ["option"]
+                  }
+                ],
+                "type": "basic"
+              },
+
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "3",
+                  "modifiers": {
+                    "mandatory": ["option"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "3",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "3",
+                  "modifiers": {
+                    "mandatory": ["command"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "3",
+                    "modifiers": ["option"]
+                  }
+                ],
+                "type": "basic"
+              },
+
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "4",
+                  "modifiers": {
+                    "mandatory": ["option"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "4",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "4",
+                  "modifiers": {
+                    "mandatory": ["command"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "4",
+                    "modifiers": ["option"]
+                  }
+                ],
+                "type": "basic"
+              },
+
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "5",
+                  "modifiers": {
+                    "mandatory": ["option"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "5",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "5",
+                  "modifiers": {
+                    "mandatory": ["command"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "5",
+                    "modifiers": ["option"]
+                  }
+                ],
+                "type": "basic"
+              },
+
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "6",
+                  "modifiers": {
+                    "mandatory": ["option"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "6",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "6",
+                  "modifiers": {
+                    "mandatory": ["command"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "6",
+                    "modifiers": ["option"]
+                  }
+                ],
+                "type": "basic"
+              },
+
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "mandatory": ["option"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "7",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "mandatory": ["command"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "7",
+                    "modifiers": ["option"]
+                  }
+                ],
+                "type": "basic"
+              },
+
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "8",
+                  "modifiers": {
+                    "mandatory": ["option"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "8",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "8",
+                  "modifiers": {
+                    "mandatory": ["command"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "8",
+                    "modifiers": ["option"]
+                  }
+                ],
+                "type": "basic"
+              },
+
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "9",
+                  "modifiers": {
+                    "mandatory": ["option"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "9",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.vim\\.",
+                      "^com.googlecode.iterm2",
+                      "com\\.microsoft\\.rdc\\.macos"
+                    ],
+                    "file_paths": ["/usr/local/bin/neovide"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "9",
+                  "modifiers": {
+                    "mandatory": ["command"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "9",
+                    "modifiers": ["option"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
             "description": "Map CMD-. to Alt-. & CMD- & CMD/ in iTerm2",
             "manipulators": [
               {
