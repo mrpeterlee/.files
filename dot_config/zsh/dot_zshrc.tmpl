@@ -113,7 +113,7 @@ zinit snippet OMZP::tmux
 zinit snippet OMZP::tmuxinator
 zinit snippet OMZP::rsync
 
-zinit cdreplay -q
+# cdreplay moved to deferred compinit block below
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -135,6 +135,8 @@ zsh-defer '
   if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
     zcompile "$zcompdump"
   fi
+  # Replay deferred compdef calls now that compinit is loaded
+  zinit cdreplay -q
 '
 
 # # MacOS-specific services
