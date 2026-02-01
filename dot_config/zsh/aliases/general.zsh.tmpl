@@ -233,7 +233,7 @@ alias vgd='nvim `git diff --name-only`'
 
 # Docker
 ## Show all docker name and port
-alias ddc="docker ps -q | xargs -n 1 docker inspect --format '{{ .Name }} {{range .NetworkSettings.Networks}} {{.IPAddress}}{{end}}' | sed 's#^/##';"
+alias ddc="docker ps -q | xargs -n 1 docker inspect --format '{{ "{{" }} .Name {{ "}}" }} {{ "{{" }}range .NetworkSettings.Networks{{ "}}" }} {{ "{{" }}.IPAddress{{ "}}" }}{{ "{{" }}end{{ "}}" }}' | sed 's#^/##';"
 
 # Time
 alias cal1='ncal -M1b'
