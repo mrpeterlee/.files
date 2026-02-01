@@ -187,7 +187,7 @@ fi
 # fi
 
 # Add Zoxide (for cd, quick jump) to shell
-unalias zi
+unalias zi 2>/dev/null || true
 # zoxide is light; load immediately so `z` works even in non-prompt shells
 if hash zoxide 2> /dev/null; then
   eval "$(zoxide init zsh)"

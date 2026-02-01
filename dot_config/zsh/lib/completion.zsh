@@ -41,4 +41,10 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' \
     hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 
 # Allow SSH tab completion for mosh hostnames
-compdef mosh=ssh
+# Defer compdef until after compinit has been loaded
+if (( $+functions[compdef] )); then
+  compdef mosh=ssh
+else
+  # Queue for later when compinit loads (zinit cdreplay will handle this)
+  zsh-defer compdef mosh=ssh
+fi
