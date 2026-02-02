@@ -1,0 +1,14 @@
+# SSH Config - managed by chezmoi
+
+Host *
+    ForwardX11 yes
+    ServerAliveInterval 60
+    ServerAliveCountMax 60
+{{- if not .isWindows }}
+    AddKeysToAgent yes
+{{- end }}
+
+Host tapai-admin
+    HostName 13.251.46.169
+    User ec2-user
+    IdentityFile ~/.ssh/tapai-admin-ec2-peterlee.pem
