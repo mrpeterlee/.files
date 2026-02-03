@@ -50,10 +50,10 @@
         },
         {
           "type": "python",
-          "style": "powerline",
-          "powerline_symbol": "\ue0b0",
+          "style": "diamond",
           "foreground": "#1E1E2E",
           "background": "#56B6C2",
+          "trailing_diamond": "\ue0b0",
           "template": " \ue235 {{ if .Venv }}{{ .Venv }}{{ end }} ",
           "properties": {
             "display_mode": "environment",
@@ -74,14 +74,13 @@
         },
         {
           "type": "status",
-          "style": "diamond",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
           "foreground": "#1E1E2E",
           "background": "#98C379",
           "background_templates": [
             "{{ if gt .Code 0 }}#E06C75{{ end }}"
           ],
-          "leading_diamond": "<parentBackground>\ue0b0</>",
-          "trailing_diamond": "\ue0b4",
           "template": " \ue23a ",
           "properties": {
             "always_enabled": true
