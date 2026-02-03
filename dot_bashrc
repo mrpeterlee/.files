@@ -9,7 +9,9 @@ function_source="/lab/lib/finclab/sh/bash/function"
 if [[ ! -f "$function_source" ]]; then
 	function_source="$HOME/.files/bash/function"
 fi
-source "$function_source"
+if [[ -f "$function_source" ]]; then
+	source "$function_source"
+fi
 
 # If not running interactively, don't do anything
 # case $- in
@@ -109,19 +111,21 @@ fi
 
 # Path
 ## Anaconda
-export PATH="$PATH:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/conda/bin:/opt/conda/envs/paper/bin:/usr/bin:/usr/sbin:$HOME/bin:$HOME/.local/bin:/lab/lib/finclab/sh/bin:/lab/lib/finclab/sh/bash:/lab/lib/finclab/sh/zsh:/lab/lib/finclab/sh/fish:/home/peter/.local/bin"
+export PATH="$PATH:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/conda/bin:/opt/conda/envs/prod/bin:$HOME/bin:$HOME/.local/bin:/lab/lib/finclab/sh/bin:/lab/lib/finclab/sh/bash:/lab/lib/finclab/sh/zsh:/lab/lib/finclab/sh/fish"
 
 # Default repos -- integrate the variable of default environment
 # unset PYTHONPATH
 export PYTHONPATH=/lab/lib:~/lab/lib:$PYTHONPATH
 
-# Grab env variables
-parse_yaml_env "${HOME}/.lab/labenv.yml"
-for package in datalab datastore finclab labenv; do
-	if [[ -f "${HOME}/.lab/${package}.yml" ]]; then
-		parse_yaml_env "${HOME}/.lab/${package}.yml" ${package}_
-	fi
-done
+# Grab env variables (only if parse_yaml_env function exists)
+if command -v parse_yaml_env &>/dev/null; then
+	parse_yaml_env "${HOME}/.lab/labenv.yml"
+	for package in datalab datastore finclab labenv; do
+		if [[ -f "${HOME}/.lab/${package}.yml" ]]; then
+			parse_yaml_env "${HOME}/.lab/${package}.yml" ${package}_
+		fi
+	done
+fi
 
 # log in to docker registry
 # echo $dockerhub_password | docker login --username $dockerhub_username --password-stdin
@@ -139,14 +143,17 @@ done
 ## Set files to: -rw-r-----
 # find $HOME/ts/ -type f -exec chmod 600 {} \;
 
-if [[ -f /home/peter/.cargo/env ]]; then
-	source /home/peter/.cargo/env
+if [[ -f "$HOME/.cargo/env" ]]; then
+	source "$HOME/.cargo/env"
 fi
 
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-. "/home/peter/.local/lib/cargo/env"
+# Source cargo env if it exists
+if [[ -f "$HOME/.local/lib/cargo/env" ]]; then
+	. "$HOME/.local/lib/cargo/env"
+fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -162,4 +169,6 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-conda activate paper
+if command -v conda &>/dev/null; then
+	conda activate /opt/conda/envs/prod 2>/dev/null || true
+fi

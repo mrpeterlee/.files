@@ -60,6 +60,9 @@
 {{-   $baseDomain = onepasswordRead "op://AstroCapital/Infrastructure/base_domain" -}}
 {{- end -}}
 
+# Root-level chezmoi configuration (must be before any sections)
+sourceDir = {{ joinPath .chezmoi.homeDir ".files" | quote }}
+
 [data]
     email = {{ $email | quote }}
     name = {{ $name | quote }}
@@ -89,8 +92,6 @@
         internal_ip = {{ $internalIp | quote }}
         internal_port = {{ $internalPort | quote }}
         base_domain = {{ $baseDomain | quote }}
-
-sourceDir = {{ joinPath .chezmoi.homeDir ".files" | quote }}
 
 [edit]
     command = "nvim"

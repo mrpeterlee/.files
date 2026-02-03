@@ -1,0 +1,96 @@
+# Conda packages for the acap environment
+# Installed via: conda create -p <prefix> -c conda-forge --channel-priority strict --file conda-packages.txt
+
+# Core runtime
+python=3.11
+nodejs
+rust
+uv
+
+# Scientific computing
+numpy
+scipy
+pandas
+statsmodels
+matplotlib
+seaborn
+plotly
+
+# Database
+psycopg2
+psycopg2-binary
+sqlalchemy
+
+# Scheduling & async
+apscheduler
+httpx
+
+# Dev tools
+black
+isort
+pylint
+yapf
+coverage
+debugpy
+pytest
+pytest-cov
+pytest-mock
+codespell
+
+# Terminal utilities
+bat
+ripgrep
+fzf
+zoxide
+git-delta
+eza
+lazygit
+tmux
+c-compiler
+
+# Type stubs & extensions
+pandas-stubs
+typing_extensions
+pydantic
+
+# Data formats
+pyyaml
+commentjson
+openpyxl
+xlrd
+tabulate
+
+# Networking & APIs
+requests
+requests-file
+slack-sdk
+
+# Utilities
+deprecated
+docker-compose
+faker
+filelock
+fire
+loguru
+mock
+more-itertools
+munch
+pandarallel
+pretty_html_table
+psutil
+retrying
+rich
+simple-parsing
+watchdog
+wheel
+zipp
+
+# Finance
+pandas-datareader
+ta
+trading-calendars
+xbbg
+
+# Misc
+ipython
+pynvim

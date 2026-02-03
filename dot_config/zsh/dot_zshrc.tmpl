@@ -24,13 +24,6 @@ zsh_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 zcompdump="${zsh_cache}/.zcompdump"
 mkdir -p "$zsh_cache"
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # ------------------================== Vim Bindings ==================------------------ #
 
 # The plugin will auto execute this zvm_config function
@@ -68,10 +61,10 @@ fi
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
-# Prompt: keep eager; everything else should move off the critical path.
-# Speed tip: export POWERLEVEL9K_DISABLE_GITSTATUS=1 to skip repo scans.
-zinit ice depth=1
-zinit light romkatv/powerlevel10k
+# Prompt: Oh My Posh
+if command -v oh-my-posh &>/dev/null; then
+  eval "$(oh-my-posh init zsh --config ${zsh_dir}/ohmyposh.json)"
+fi
 
 # Lightweight deferrer that runs tasks *after* the first prompt.
 zinit ice depth=1
@@ -114,19 +107,6 @@ zinit snippet OMZP::tmuxinator
 zinit snippet OMZP::rsync
 
 # cdreplay moved to deferred compinit block below
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Completion styling
-# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-# zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-# zstyle ':completion:*' menu no
-# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-# zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-
-# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
 # Defer completion setup to after first prompt
 zsh-defer '
@@ -422,6 +402,7 @@ if [ -z "${DISABLE_CONDA_AUTO:-}" ] && { [ -x "/opt/conda/bin/conda" ] || [ -f "
       export PATH="/opt/conda/bin:$PATH"
     fi
     unset __conda_setup
+    conda activate /opt/conda/envs/prod 2>/dev/null || true
   '
 fi
 

@@ -1,19 +1,4 @@
 # Disabled because time-consuming
-# Example:
-# if command_exists dust; then
-# cargo install du-dust
-# alias du='dust'
-# fi
-
-# command_exists () {
-# hash "$1" 2> /dev/null
-# }
-
-# Disabled because time-consuming
-# Example: if alias_not_used a; then; alias a='alias'; fi
-# alias_not_used () {
-# ! alias "$1" >/dev/null && ! hash "$1" 2> /dev/null
-# }
 
 # Single-letter aliases, for frequently used basics, only if not already set
 alias a='alias'
@@ -84,36 +69,6 @@ ls-archive() {
   fi
 }
 
-alias lz='ls-archive'
-
-# Make directory, and cd into it
-mkcd() {
-  local dir="$*"
-  mkdir -p "$dir" && cd "$dir"
-}
-
-# Make dir and copy
-mkcp() {
-  local dir="$2"
-  local tmp="$2"
-  tmp="${tmp: -1}"
-  [ "$tmp" != "/" ] && dir="$(dirname "$2")"
-  [ -d "$dir" ] ||
-    mkdir -p "$dir" &&
-    cp -r "$@"
-}
-
-# Move dir and move into it
-mkmv() {
-  local dir="$2"
-  local tmp="$2"
-  tmp="${tmp: -1}"
-  [ "$tmp" != "/" ] && dir="$(dirname "$2")"
-  [ -d "$dir" ] ||
-    mkdir -p "$dir" &&
-    mv "$@"
-}
-
 # Getting outa directories
 alias ..='cd ..'
 alias ...='cd ../../'
@@ -144,18 +99,6 @@ fzf-history-widget() {
   zle redisplay
 }
 zle -N fzf-history-widget
-
-# Command line head / tail shortcuts
-alias -g H='| head'                   # Pipes output to head (the first part of a file)
-alias -g T='| tail'                   # Pipes output to tail (the last part of a file)
-alias -g G='| grep'                   # Pipes output to grep to search for some word
-alias -g L="| less"                   # Pipes output to less, useful for paging
-alias -g M="| most"                   # Pipes output to more, useful for paging
-alias -g LL="2>&1 | less"             # Writes stderr to stdout and passes it to less
-alias -g CA="2>&1 | cat -A"           # Writes stderr to stdout and passes it to cat
-alias -g NE="2> /dev/null"            # Silences stderr
-alias -g NUL="> /dev/null 2>&1"       # Silences both stdout and stderr
-alias -g P="2>&1| pygmentize -l pytb" # Writes stderr to stdout, and passes to pygmentize
 
 # Use color diff, if availible
 alias diff='diff-so-fancy --colors'
@@ -189,39 +132,22 @@ alias joke='curl https://icanhazdadjoke.com'
 alias hackernews='curl hkkr.in'
 alias worldinternet='curl https://status.plaintext.sh/t'
 
-# Random lolz
 alias cls='clear'                                  # Clear
 alias plz="fc -l -1 | cut -d' ' -f2- | xargs sudo" # Re-run last cmd as root
-alias yolo='git add .; git commit -m "YOLO"; git push origin main'
-alias when='date' # Show date
-alias whereami='pwd'
-alias dog='cat'
-alias gtfo='exit'
 
 ## Enter the most recently modified directories
 alias latest='cd $(find . -maxdepth 1 -type d -printf "%f\n" | sort | tail -n1)'
 alias paper='cd ${$(pwd):gs/\/lab\/prod/\/lab\/paper} && cd ${$(pwd):gs/\/lab\/dev/\/lab\/paper}'
 alias prod='cd ${$(pwd):gs/\/lab\/paper/\/lab\/prod} && cd ${$(pwd):gs/\/lab\/dev/\/lab\/prod}'
-alias dev='cd ${$(pwd):gs/\/lab\/paper/\/lab\/dev} && cd ${$(pwd):gs/\/lab\/prod/\/lab\/dev}'
-
-# Login to TradeStation (default to paper)
-alias tsprod='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 30000 peter@{{ .infra.internal_ip }}'
-alias tspaper='ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "ServerAliveInterval 60" -p 50000 peter@{{ .infra.internal_ip }}'
-alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v /home/peter/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker'
-
-# Replacement for ps:: human friendly show processes
-# alias ps='procs'
-
-# Replacement for top:: colorful and human friendly
-alias top='btm'
 
 # Replacement for du:: human friendly show disk usage
-alias du='dust'
+# alias du='dust'
 
 alias cat='bat'
 
 alias unbz='tar -jxvf'
 alias ungz='tar -zxvf'
+
 alias cleanswap='sudo swapoff -a && sudo swapon -a'
 
 # Zsh
@@ -248,6 +174,7 @@ alias ipr='ip route'
 alias ip_public='curl -s icanhazip.com'
 
 alias mux='tmuxinator'
+
 # ssh copy back to local
 # https://stackoverflow.com/questions/1152362/how-to-send-data-to-local-clipboard-from-a-remote-ssh-session
 alias cb='ssh -p 2222 127.0.0.1 pbcopy'

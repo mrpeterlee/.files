@@ -3,6 +3,21 @@ set -euo pipefail
 
 echo "==> Installing system packages..."
 
+# Check if we can use sudo (non-interactive mode without passwordless sudo will skip)
+CAN_SUDO=false
+if sudo -n true 2>/dev/null; then
+    CAN_SUDO=true
+elif [[ -t 0 ]]; then
+    # Interactive mode - sudo will prompt for password
+    CAN_SUDO=true
+fi
+
+if [[ "$CAN_SUDO" != "true" ]]; then
+    echo "==> Skipping package installation (sudo not available in non-interactive mode)"
+    echo "==> Run './cli prereq' interactively to install system packages"
+    exit 0
+fi
+
 {{ if eq .pkgmgr "apt" -}}
 sudo apt update
 sudo apt install -y \

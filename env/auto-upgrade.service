@@ -1,0 +1,9 @@
+[Unit]
+Description=FincLab conda env auto-upgrade
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/peter/.files/cli env build
+StandardOutput=journal
+StandardError=journal

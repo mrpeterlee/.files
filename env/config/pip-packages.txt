@@ -1,0 +1,44 @@
+# Pip packages for the acap environment
+# Installed via: uv pip install --python <prefix>/bin/python -r pip-packages.txt
+
+# Finance
+alpha-vantage
+bta-lib
+exchange_calendars
+ib_insync
+iexfinance
+pandas-market-calendars
+python-binance
+tushare
+
+# Quant
+lean
+quantconnect-stubs
+
+# Data
+cachier
+clickhouse-connect
+country-converter
+singleton_decorator
+
+# Plotting
+kaleido
+
+# Numpy extensions
+numpy_ext
+trendln
+
+# Dev tools
+autofake
+doq
+neovim-remote
+
+# Config & env
+python-dotenv
+nbformat
+
+# Cloud CLI
+awscli
+
+# Microsoft integration
+O365
