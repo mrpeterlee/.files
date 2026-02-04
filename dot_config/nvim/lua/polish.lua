@@ -24,6 +24,20 @@ vim.g.loaded_ruby_provider = 0
 -- Align TERM with tmux default to avoid color issues
 if vim.env.TMUX and vim.env.TERM ~= "screen-256color" then vim.env.TERM = "screen-256color" end
 
+-- Clipboard: use the same yank script that tmux uses (OSC 52 + DCS passthrough)
+vim.opt.clipboard = "unnamedplus"
+vim.g.clipboard = {
+  name = "yank",
+  copy = {
+    ["+"] = "yank",
+    ["*"] = "yank",
+  },
+  paste = {
+    ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+  },
+}
+
 -- ==================== Mapping Graphite Layout ==================== --
 -- k --> ,
 -- , --> '
