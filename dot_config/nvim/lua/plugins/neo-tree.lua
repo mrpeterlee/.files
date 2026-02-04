@@ -10,9 +10,35 @@ return {
 
         mappings = {
           -- Graphite layout
-          ["a"] = "prev_sibling", -- up
+          ["a"] = {
+            function(state)
+              local node = state.tree:get_node()
+              local siblings = state.tree:get_nodes(node:get_parent_id())
+              if not siblings then return end
+              for i, sibling in ipairs(siblings) do
+                if sibling:get_id() == node:get_id() and i > 1 then
+                  require("neo-tree.ui.renderer").focus_node(state, siblings[i - 1]:get_id())
+                  return
+                end
+              end
+            end,
+            desc = "prev sibling",
+          },
           ["y"] = "navigate_up", -- up a level (built-in)
-          ["h"] = "next_sibling", -- down
+          ["h"] = {
+            function(state)
+              local node = state.tree:get_node()
+              local siblings = state.tree:get_nodes(node:get_parent_id())
+              if not siblings then return end
+              for i, sibling in ipairs(siblings) do
+                if sibling:get_id() == node:get_id() and i < #siblings then
+                  require("neo-tree.ui.renderer").focus_node(state, siblings[i + 1]:get_id())
+                  return
+                end
+              end
+            end,
+            desc = "next sibling",
+          },
           ["e"] = "open", -- into folder/file
           ["<space>"] = {
             "toggle_node",
