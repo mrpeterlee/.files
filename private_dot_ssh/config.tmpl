@@ -8,6 +8,11 @@ Host *
     AddKeysToAgent yes
 {{- end }}
 
+Host acap-admin
+    HostName 52.221.6.72
+    User peter
+    IdentityFile ~/.ssh/acap-admin-key.pem
+
 Host tapai-admin
     HostName 13.251.46.169
     User ec2-user
