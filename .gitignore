@@ -1,6 +1,9 @@
 # Chezmoi state (don't track)
 .chezmoistate.boltdb
 
+# tmux placement file
+dot_config/tmuxinator/no
+
 # OS artifacts
 .DS_Store
 Thumbs.db
