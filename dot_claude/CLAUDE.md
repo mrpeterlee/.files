@@ -2,6 +2,15 @@
 
 This document provides context for AI coding assistants (Claude, etc.) working with this dotfiles repository.
 
+## NON-NEGOTIABLE: Verify Before Returning
+
+**Before returning any result to the user, CLAUDE MUST run and verify that the changes complete successfully and the outputs match expectations.** This means:
+- Run the relevant commands (`chezmoi apply`, `chezmoi diff`, shell source, etc.) after making changes
+- Inspect the actual output files to confirm they rendered correctly
+- Confirm environment variables are set, configs are valid, and no errors occurred
+- If verification fails, fix the issue and re-verify before responding
+- Never assume a change works — prove it
+
 ## Repository Overview
 
 This is a **chezmoi-managed dotfiles** repository with:
