@@ -18,21 +18,9 @@ Host acap-admin
     # User peter
     # IdentityFile ~/.ssh/tapai-admin-ec2-peterlee.pem
 
-Host bastionhost
-    HostName cudauktdth-public.bastionhost.aliyuncs.com
-    Port 60022
-    User LiWenXu_1
-    IdentityFile ~/.ssh/tapai-peterlee.pem
-
 # Via acap-admin jumphost
 Host tapai-admin
     HostName 13.251.46.169
     User peter
     IdentityFile ~/.ssh/tapai-peterlee.pem
     ProxyJump acap-admin
-
-# Via BastionHost (bastion requires IP, not hostname, for tunneling)
-Host tapai-via-bastion
-    HostName 13.251.46.169
-    User peter
-    ProxyCommand ssh -q -W %h:%p bastionhost
