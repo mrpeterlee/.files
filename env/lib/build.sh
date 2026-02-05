@@ -12,6 +12,14 @@ build_env() {
         --strict-channel-priority \
         --file "${config_dir}/conda-packages.txt"
 
+    # Remove conda tmux if pulled in as a dependency — the conda-forge
+    # build (3.6) crashes on client attach.  System tmux (/usr/bin/tmux)
+    # is stable and already on PATH.
+    if [[ -x "${prefix}/bin/tmux" ]]; then
+        rm -f "${prefix}/bin/tmux"
+        info "Removed conda tmux (using system tmux instead)"
+    fi
+
     local env_python="${prefix}/bin/python"
     local env_uv="${prefix}/bin/uv"
 

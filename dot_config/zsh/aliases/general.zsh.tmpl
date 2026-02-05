@@ -12,9 +12,9 @@ alias i='id'
 alias j='jobs'
 m() {
   if [[ $# -eq 0 ]]; then
-    tmuxinator "$HOST"
+    tmuxinator "$(hostname)"
   elif [[ "$1" == "stop" && $# -eq 1 ]]; then
-    tmuxinator stop "$HOST"
+    tmuxinator stop "$(hostname)"
   else
     tmuxinator "$@"
   fi

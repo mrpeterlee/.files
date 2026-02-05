@@ -607,12 +607,6 @@ cmd_install() {
         fi
     fi
 
-    # Ensure tmuxinator is installed
-    if ! has_cmd tmuxinator; then
-        info "Installing tmuxinator..."
-        sudo apt update && sudo apt install -y tmuxinator
-    fi
-
     info "Applying dotfiles..."
     "$CHEZMOI" apply
 

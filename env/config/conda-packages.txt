@@ -5,6 +5,7 @@
 python=3.11
 nodejs
 rust
+ruby
 uv
 
 # Scientific computing
@@ -45,7 +46,6 @@ zoxide
 git-delta
 eza
 lazygit
-tmux
 c-compiler
 
 # Type stubs & extensions

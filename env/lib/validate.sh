@@ -54,7 +54,7 @@ validate_env() {
     fi
 
     # Check all CLI tools expected in the env
-    local -a env_cli_tools=(codex wrangler gh kubectl argocd helm aliyun aws bat rg fzf zoxide delta eza lazygit tmux nvim yazi sesh twm oh-my-posh)
+    local -a env_cli_tools=(codex wrangler gh kubectl argocd helm aliyun aws bat rg fzf zoxide delta eza lazygit nvim yazi sesh twm oh-my-posh)
     for tool in "${env_cli_tools[@]}"; do
         if [[ -x "${prefix}/bin/${tool}" ]]; then
             success "${tool} present"
@@ -63,12 +63,15 @@ validate_env() {
         fi
     done
 
-    # Check op is available system-wide (installed via cli prereq)
-    if command -v op &>/dev/null; then
-        success "op present (system)"
-    else
-        warn "op not found on system PATH (install via: cli prereq)"
-    fi
+    # Check tools expected on system PATH (not in the conda env)
+    local -a system_tools=(tmux op)
+    for tool in "${system_tools[@]}"; do
+        if command -v "$tool" &>/dev/null; then
+            success "${tool} present (system)"
+        else
+            warn "${tool} not found on system PATH"
+        fi
+    done
 
     if [[ "$failed" -eq 0 ]]; then
         success "Validation passed"
