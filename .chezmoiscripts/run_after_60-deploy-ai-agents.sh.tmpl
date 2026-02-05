@@ -84,3 +84,9 @@ for prompt_file in "$AI_AGENTS_DIR"/codex/prompts/acap-*.md; do
 done
 
 echo "==> AI agent configuration deployed."
+
+# --- User-level agent configs (~/.agents) ---
+if [[ -d "$HOME/.agents" ]] && [[ -x "$HOME/.agents/cli" ]]; then
+    echo "==> Applying user-level agent configs from ~/.agents..."
+    "$HOME/.agents/cli" install
+fi

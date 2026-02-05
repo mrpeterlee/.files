@@ -311,6 +311,13 @@ ssh acap-admin 'echo "<password>" | sudo -S true 2>/dev/null \
 `deploy-host.sh` is safe to re-run: it skips miniconda install if `/opt/conda` already exists.
 `setup-bashrc.sh` is idempotent: it only appends the conda block if not already present.
 
+## AI Agent Configs
+
+Agent configs (Claude Code, Codex, OpenClaw) have moved to `~/.agents` (separate repo).
+- `~/.agents/cli install` — install all agent configs
+- `~/.agents/cli snapshot` — capture evolved workspace files
+- The deploy script (`.chezmoiscripts/run_after_60-deploy-ai-agents.sh.tmpl`) triggers `~/.agents/cli install` automatically.
+
 ## Related Documentation
 
 - `README.md` - User-facing documentation
