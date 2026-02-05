@@ -94,6 +94,37 @@ build_shared_env() {
 
 setup_system_zshenv() {
     local zshenv="/etc/zsh/zshenv"
+
+    # Install zsh if not present (required for /etc/zsh/ to exist)
+    if ! command -v zsh &>/dev/null; then
+        info "Installing zsh..."
+        if command -v apt-get &>/dev/null; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq zsh
+        elif command -v dnf &>/dev/null; then
+            sudo dnf install -y -q zsh
+        elif command -v yum &>/dev/null; then
+            sudo yum install -y -q zsh
+        elif command -v pacman &>/dev/null; then
+            sudo pacman -S --noconfirm zsh
+        else
+            warn "Could not install zsh - unknown package manager"
+            return 1
+        fi
+        success "zsh installed"
+    fi
+
+    # Create /etc/zsh directory if it doesn't exist
+    if [[ ! -d /etc/zsh ]]; then
+        info "Creating /etc/zsh directory..."
+        sudo mkdir -p /etc/zsh
+    fi
+
+    # Create zshenv if it doesn't exist
+    if [[ ! -f "$zshenv" ]]; then
+        info "Creating ${zshenv}..."
+        sudo touch "$zshenv"
+    fi
+
     if grep -q 'ZDOTDIR' "$zshenv" 2>/dev/null; then
         success "ZDOTDIR already set in ${zshenv}"
         return 0
@@ -154,6 +185,29 @@ setup_user_bashrc() {
     success "${user}: conda block added to bashrc"
 }
 
+# ── Step 6: Change default shell to zsh ──────────────────────────────────────
+
+setup_user_shell() {
+    local user="$1"
+    local current_shell
+    current_shell=$(getent passwd "$user" | cut -d: -f7)
+    local zsh_path="/usr/bin/zsh"
+
+    if [[ "$current_shell" == "$zsh_path" ]]; then
+        success "${user}: default shell already zsh"
+        return 0
+    fi
+
+    if [[ ! -x "$zsh_path" ]]; then
+        warn "${user}: zsh not found at ${zsh_path}, skipping shell change"
+        return 1
+    fi
+
+    info "Changing default shell to zsh for ${user}..."
+    sudo chsh -s "$zsh_path" "$user"
+    success "${user}: default shell changed to zsh"
+}
+
 # ── Main ─────────────────────────────────────────────────────────────────────
 
 main() {
@@ -171,30 +225,37 @@ main() {
     fi
 
     # Step 1
-    echo -e "\n${BOLD}[1/5] Miniconda${RESET}"
+    echo -e "\n${BOLD}[1/6] Miniconda${RESET}"
     echo "────────────────────────────────────────"
     install_miniconda
 
     # Step 2
-    echo -e "\n${BOLD}[2/5] Permissions${RESET}"
+    echo -e "\n${BOLD}[2/6] Permissions${RESET}"
     echo "────────────────────────────────────────"
     fix_permissions
 
     # Step 3
-    echo -e "\n${BOLD}[3/5] Build Shared Environment${RESET}"
+    echo -e "\n${BOLD}[3/6] Build Shared Environment${RESET}"
     echo "────────────────────────────────────────"
     build_shared_env
 
     # Step 4
-    echo -e "\n${BOLD}[4/5] System ZSH Config${RESET}"
+    echo -e "\n${BOLD}[4/6] System ZSH Config${RESET}"
     echo "────────────────────────────────────────"
     setup_system_zshenv
 
     # Step 5
-    echo -e "\n${BOLD}[5/5] User Shell Setup${RESET}"
+    echo -e "\n${BOLD}[5/6] User Bashrc Setup${RESET}"
     echo "────────────────────────────────────────"
     for user in "${USERS[@]}"; do
         setup_user_bashrc "$user"
+    done
+
+    # Step 6
+    echo -e "\n${BOLD}[6/6] Default Shell${RESET}"
+    echo "────────────────────────────────────────"
+    for user in "${USERS[@]}"; do
+        setup_user_shell "$user"
     done
 
     echo ""

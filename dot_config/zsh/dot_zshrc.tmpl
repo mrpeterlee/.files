@@ -392,18 +392,16 @@ bindkey '^e' edit-command-line
 # ------------------================== Conda Activation ==================------------------ #
 # Skip if you don't need conda every shell: export DISABLE_CONDA_AUTO=1
 if [ -z "${DISABLE_CONDA_AUTO:-}" ] && { [ -x "/opt/conda/bin/conda" ] || [ -f "/opt/conda/etc/profile.d/conda.sh" ]; }; then
-  zsh-defer '
-    __conda_setup="$('"'"/opt/conda/bin/conda"'"' 'shell.zsh' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-      eval "$__conda_setup"
-    elif [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then
-      . "/opt/conda/etc/profile.d/conda.sh"
-    else
-      export PATH="/opt/conda/bin:$PATH"
-    fi
-    unset __conda_setup
-    conda activate /opt/conda/envs/prod 2>/dev/null || true
-  '
+  __conda_setup="$('/opt/conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+  if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+  elif [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then
+    . "/opt/conda/etc/profile.d/conda.sh"
+  else
+    export PATH="/opt/conda/bin:$PATH"
+  fi
+  unset __conda_setup
+  conda activate /opt/conda/envs/prod 2>/dev/null || true
 fi
 
 # To set activating last env by default, run the below
