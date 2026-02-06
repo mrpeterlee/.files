@@ -24,22 +24,6 @@ zsh_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 zcompdump="${zsh_cache}/.zcompdump"
 mkdir -p "$zsh_cache"
 
-# ------------------================== Vim Bindings ==================------------------ #
-
-# The plugin will auto execute this zvm_config function
-zvm_config() {
-  # Retrieve default cursor styles
-  local ncur=$(zvm_cursor_style $ZVM_NORMAL_MODE_CURSOR)
-  local icur=$(zvm_cursor_style $ZVM_INSERT_MODE_CURSOR)
-
-  # Append your custom color for your cursor
-  ZVM_INSERT_MODE_CURSOR=$icur'\e\e]12;red\a'
-  ZVM_NORMAL_MODE_CURSOR=$ncur'\e\e]12;#008800\a'
-
-  # ZVM_VI_INSERT_ESCAPE_BINDKEY=ae
-}
-
-
 # ------------------================== SESSION END ==================------------------ #
 
 
@@ -77,6 +61,9 @@ zinit light-mode for \
   zsh-users/zsh-autosuggestions
 # Optional (adds compdefs/latency): MichaelAquilina/zsh-you-should-use
 
+zinit ice depth=1 wait lucid
+zinit light kutsan/zsh-system-clipboard
+
 # Codex CLI completion (replaces zsh-users/zsh-completions) – defer
 if command -v codex >/dev/null 2>&1; then
   zsh-defer eval "$(codex completion zsh)"
@@ -110,6 +97,7 @@ zinit snippet OMZP::rsync
 
 # Defer completion setup to after first prompt
 zsh-defer '
+  zmodload zsh/complist
   autoload -Uz compinit
   compinit -C -d "$zcompdump"
   if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
@@ -117,6 +105,11 @@ zsh-defer '
   fi
   # Replay deferred compdef calls now that compinit is loaded
   zinit cdreplay -q
+  # Menu selection with Graphite layout (needs complist loaded)
+  bindkey -M menuselect "y" vi-backward-char
+  bindkey -M menuselect "h" vi-down-line-or-history
+  bindkey -M menuselect "a" vi-up-line-or-history
+  bindkey -M menuselect "e" vi-forward-char
 '
 
 # # MacOS-specific services
@@ -182,25 +175,34 @@ fi
 
 
 # ------------------================== Vim Bindings ==================------------------ #
+export KEYTIMEOUT=10
+
+# Graphite layout navigation (vicmd)
+autoload -U up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
 bindkey -M vicmd y vi-backward-char
-bindkey -M vicmd h vi-down-line-or-history
-bindkey -M vicmd a vi-up-line-or-history
-bindkey -M vicmd e vi-forward-char 
+bindkey -M vicmd h down-line-or-beginning-search
+bindkey -M vicmd a up-line-or-beginning-search
+bindkey -M vicmd e vi-forward-char
 
 bindkey -M vicmd l vi-add-next
 bindkey -M vicmd "L" vi-add-eol
 bindkey -M vicmd j vi-forward-word-end
-# bindkey -M vicmd J vi-forward-blank-word-end
 bindkey -M vicmd "'" vi-yank
 bindkey -M vicmd "_" vi-yank-whole-line
 
-# bindkey -M vicmd "y" vi-goto-mark-line
+# Redo (Ctrl-R in normal mode)
+bindkey -M vicmd '^R' redo
 
-# Add bindings to the vicmd keymap
-# bindkey -a h backward-char
-# bindkey -a e forward-char
-# bindkey -a h down-history
-# bindkey -a a up-history
+# Increment/decrement numbers (Ctrl-A / Ctrl-X in normal mode)
+autoload -Uz incarg
+zle -N incarg
+bindkey -M vicmd '^A' incarg
+decarg() { zle incarg -- -1; }
+zle -N decarg
+bindkey -M vicmd '^X' decarg
 
 # ------------------================== SESSION END ==================------------------ #
 
@@ -330,7 +332,7 @@ setopt AUTO_PUSHD PUSHD_MINUS PUSHD_TO_HOME PUSHD_IGNORE_DUPS
 setopt AUTO_NAME_DIRS
 setopt GLOB_COMPLETE NO_CASE_GLOB NUMERIC_GLOB_SORT EXTENDED_GLOB
 setopt RM_STAR_WAIT            # guard against rm *
-setopt ZLE NO_HUP IGNORE_EOF NO_FLOW_CONTROL
+setopt NO_HUP IGNORE_EOF NO_FLOW_CONTROL
 setopt NO_CLOBBER              # avoid clobbering with >
 # arrays expand nicely: ${arr} -> element-wise
 setopt RC_EXPAND_PARAM
@@ -383,7 +385,7 @@ bindkey -M vicmd "q" push-line
 
 # Edit line in vim
 autoload edit-command-line; zle -N edit-command-line
-bindkey '^e' edit-command-line
+bindkey '^s' edit-command-line
 
 # Enable bracketed-paste-magic
 # autoload -Uz bracketed-paste-magic

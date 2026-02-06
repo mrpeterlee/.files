@@ -442,6 +442,7 @@ cmd_prereq() {
         tree
         htop
         ripgrep
+        xclip
     )
 
     # Add platform-specific package names
