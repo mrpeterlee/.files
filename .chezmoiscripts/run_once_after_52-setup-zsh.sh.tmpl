@@ -9,11 +9,10 @@ mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}/zsh"
 mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
 
 {{ if and .isLinux (not .isWSL) -}}
-# Set ZDOTDIR in /etc/zsh/zshenv if writable and not already set
-if [[ -w /etc/zsh/zshenv ]] && ! grep -q 'ZDOTDIR' /etc/zsh/zshenv 2>/dev/null; then
+# Set ZDOTDIR in /etc/zsh/zshenv so zsh finds config in ~/.config/zsh
+if ! grep -q 'ZDOTDIR' /etc/zsh/zshenv 2>/dev/null; then
+    sudo mkdir -p /etc/zsh
     echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zsh/zshenv
-elif [[ -d /etc/zsh ]] && [[ ! -f /etc/zsh/zshenv ]]; then
-    echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee /etc/zsh/zshenv
 fi
 {{ end -}}
 
