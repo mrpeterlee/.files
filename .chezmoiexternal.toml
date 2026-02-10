@@ -14,13 +14,7 @@
     [".local/share/zinit/zinit.git".pull]
         args = ["--ff-only"]
 
-# Lazy.nvim (Neovim plugin manager)
-[".local/share/nvim/lazy/lazy.nvim"]
-    type = "git-repo"
-    url = "https://github.com/folke/lazy.nvim.git"
-    refreshPeriod = "168h"
-    [".local/share/nvim/lazy/lazy.nvim".clone]
-        args = ["--filter=blob:none", "--branch=stable"]
+
 
 {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.arch "amd64") -}}
 # fzf binary - Linux amd64
