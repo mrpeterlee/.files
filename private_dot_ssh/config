@@ -16,7 +16,7 @@ Host acap
     # IdentityFile ~/.ssh/tapai-admin-ec2-peterlee.pem
 
 # Via acap jumphost
-Host tapai-admin
+Host tapai
     HostName 13.251.46.169
     User peter
     IdentityFile ~/.ssh/tapai-peterlee.pem
