@@ -157,6 +157,11 @@ return {
         -- quick save
         -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
 
+        -- Disable default Ctrl-Y (scroll up) and Ctrl-E (scroll down) so they
+        -- don't fire when tmux forwards C-h / C-l for pane navigation.
+        ["<C-y>"] = false,
+        ["<C-e>"] = false,
+
         ----------==================== N: MY MAPPINGS (START) ====================----------
         -- ["<Leader>n"] = { desc = " Notes" },
         -- ["<Leader>a"] = { desc = " Edit" },
@@ -435,6 +440,10 @@ return {
         --   end,
         --   desc = "Run via Lua",
         -- },
+
+        -- Disable default Ctrl-Y/Ctrl-E scroll (same as normal mode)
+        ["<C-y>"] = false,
+        ["<C-e>"] = false,
 
         -- ==================== V: MY MAPPINGs (START) ====================
         -- ["<Leader>n"] = { desc = " Notes" },
