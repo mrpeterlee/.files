@@ -24,17 +24,22 @@ vim.g.loaded_ruby_provider = 0
 -- Align TERM with tmux default to avoid color issues
 if vim.env.TMUX and vim.env.TERM ~= "screen-256color" then vim.env.TERM = "screen-256color" end
 
--- Clipboard: use the same yank script that tmux uses (OSC 52 + DCS passthrough)
+-- Clipboard: OSC 52 for copy (works over SSH/tmux), internal register for paste
 vim.opt.clipboard = "unnamedplus"
+
+local function paste()
+  return { vim.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
+end
+
 vim.g.clipboard = {
-  name = "yank",
+  name = "OSC 52",
   copy = {
-    ["+"] = "yank",
-    ["*"] = "yank",
+    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
   },
   paste = {
-    ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
-    ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+    ["+"] = paste,
+    ["*"] = paste,
   },
 }
 
@@ -119,20 +124,6 @@ map("n", "<C-u>", "<C-u>zz", { noremap = true })
 
 -- Yank line to ''
 vim.keymap.set("n", "''", "<Cmd>normal! yy<CR>", { noremap = true, silent = true })
-
--- Make delete operations use system clipboard (since custom clipboard provider
--- doesn't sync delete operations automatically like yank does)
-map("n", "d", '"+d')
-map("n", "D", '"+D')
-map("n", "x", '"+x')
-map("n", "X", '"+X')
-map("n", "c", '"+c')
-map("n", "C", '"+C')
-map("v", "d", '"+d')
-map("v", "D", '"+D')
-map("v", "x", '"+x')
-map("v", "c", '"+c')
-map("v", "C", '"+C')
 
 -- Remap <A-v> to <C-v> for visual block mode
 vim.api.nvim_set_keymap("n", "<A-v>", "<C-v>", { noremap = true, silent = true })
