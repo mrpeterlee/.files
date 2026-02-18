@@ -19,7 +19,9 @@
 
 {{- /* Detect package manager */ -}}
 {{- $pkgmgr := "apt" -}}
-{{- if $isDarwin -}}
+{{- if $isWindows -}}
+{{-   $pkgmgr = "winget" -}}
+{{- else if $isDarwin -}}
 {{-   $pkgmgr = "brew" -}}
 {{- else if lookPath "pacman" -}}
 {{-   $pkgmgr = "pacman" -}}
@@ -93,6 +95,21 @@ sourceDir = {{ joinPath .chezmoi.homeDir ".files" | quote }}
         internal_port = {{ $internalPort | quote }}
         base_domain = {{ $baseDomain | quote }}
 
+{{ if $isWindows -}}
+[interpreters.ps1]
+    command = "pwsh"
+    args = ["-NoProfile", "-NoLogo"]
+
+[edit]
+    command = "nvim.exe"
+
+[diff]
+    pager = "delta"
+
+[merge]
+    command = "nvim.exe"
+    args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
+{{ else -}}
 [edit]
     command = "nvim"
 
@@ -102,6 +119,7 @@ sourceDir = {{ joinPath .chezmoi.homeDir ".files" | quote }}
 [merge]
     command = "nvim"
     args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
+{{ end -}}
 
 {{ if $hasOp -}}
 [onepassword]

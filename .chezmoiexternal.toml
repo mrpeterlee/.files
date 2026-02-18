@@ -1,3 +1,4 @@
+{{ if ne .chezmoi.os "windows" -}}
 # TPM (Tmux Plugin Manager)
 [".local/share/tmux/plugins/tpm"]
     type = "git-repo"
@@ -13,6 +14,7 @@
     refreshPeriod = "168h"
     [".local/share/zinit/zinit.git".pull]
         args = ["--ff-only"]
+{{ end -}}
 
 
 

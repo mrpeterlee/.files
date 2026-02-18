@@ -11,10 +11,9 @@ LICENSE
 # Platform-specific exclusions
 {{ if not (eq .chezmoi.os "windows") }}
 # Ignore Windows configs on non-Windows
-private_dot_config_windows/
-*.bat
-*.ps1
-*.exe
+.config_windows/**
+.config/powershell/**
+.chezmoiscripts/*.ps1
 {{ end }}
 
 {{ if not (eq .chezmoi.os "darwin") }}
@@ -23,10 +22,21 @@ private_dot_config_windows/
 {{ end }}
 
 {{ if eq .chezmoi.os "windows" }}
-# On Windows, ignore Unix-specific
-.chezmoiscripts/run_once_before_00-install-packages.sh.tmpl
-.chezmoiscripts/run_once_before_10-install-1password.sh.tmpl
+# On Windows, ignore all Unix-specific files
+.bashrc
+.bash_profile
+.bash_alias
+.condarc
+.config/zsh/**
+.config/tmux/**
+.config/tmuxinator/**
+.chezmoiscripts/*.sh
+cli
+env/**
 {{ end }}
+
+# Windows reserved filenames
+nul
 
 # Temporary and cache files
 *.zwc

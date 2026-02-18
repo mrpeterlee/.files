@@ -2,9 +2,12 @@
 	name = {{ .name }}
 	email = {{ .email }}
 [credential]
-	helper = cache
-{{- if .isDarwin }}
+{{- if .isWindows }}
+	helper = manager
+{{- else if .isDarwin }}
 	helper = osxkeychain
+{{- else }}
+	helper = cache
 {{- end }}
 [alias]
 	graphgpg = log --graph --color --pretty=format:"%C(yellow)%H%C(green)%d%C(reset)%n%x20%cd%n%x20%cn%C(blue)%x20(%ce)%x20%C(cyan)[gpg:%GK%x20%G?]%C(reset)%n%x20%s%n"
@@ -26,7 +29,11 @@
 	program = gpg
 [core]
 	attributesFile = ~/.config/git/gitattributes
+{{- if .isWindows }}
+	autocrlf = true
+{{- else }}
 	autocrlf = input
+{{- end }}
 	eol = lf
 	safecrlf = false
 [pull]

@@ -1,0 +1,37 @@
+# Windows package installation via winget
+# Runs once before other setup scripts
+
+$ErrorActionPreference = "Stop"
+
+Write-Host "==> Installing Windows packages via winget..."
+
+$packages = @(
+    @{ Id = "Neovim.Neovim";              Name = "Neovim" }
+    @{ Id = "wez.wezterm";                Name = "WezTerm" }
+    @{ Id = "AgileBits.1Password.CLI";    Name = "1Password CLI" }
+    @{ Id = "JanDeDobbeleer.OhMyPosh";   Name = "Oh My Posh" }
+    @{ Id = "sharkdp.bat";               Name = "bat" }
+    @{ Id = "BurntSushi.ripgrep.MSVC";   Name = "ripgrep" }
+    @{ Id = "junegunn.fzf";              Name = "fzf" }
+    @{ Id = "sharkdp.fd";               Name = "fd" }
+    @{ Id = "jesseduffield.lazygit";     Name = "lazygit" }
+    @{ Id = "ajeetdsouza.zoxide";        Name = "zoxide" }
+    @{ Id = "dandavison.delta";          Name = "delta" }
+    @{ Id = "eza-community.eza";         Name = "eza" }
+)
+
+foreach ($pkg in $packages) {
+    $installed = winget list --id $pkg.Id --accept-source-agreements 2>$null |
+        Select-String $pkg.Id
+    if ($installed) {
+        Write-Host "    [ok] $($pkg.Name) already installed"
+    } else {
+        Write-Host "    [install] $($pkg.Name)..."
+        winget install --id $pkg.Id --accept-source-agreements --accept-package-agreements --silent
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning "    [warn] Failed to install $($pkg.Name)"
+        }
+    }
+}
+
+Write-Host "==> Windows package installation complete."
