@@ -4,6 +4,10 @@ AGENTS.md
 CLAUDE.md
 LICENSE
 
+# CLI scripts (invoked from repo, not deployed to ~)
+cli.bat
+cli.ps1
+
 # Git-specific (chezmoi handles .git automatically)
 .gitignore
 .gitattributes

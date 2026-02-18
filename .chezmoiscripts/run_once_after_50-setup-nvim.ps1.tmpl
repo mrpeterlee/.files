@@ -22,14 +22,24 @@ foreach ($sub in @("", "shada", "swap", "undo", "backup")) {
 if (Test-Path $nvimConfigTarget) {
     if (Test-Path $nvimConfigLink) {
         $item = Get-Item $nvimConfigLink -Force
-        if ($item.LinkType -eq "SymbolicLink") {
-            Write-Host "    [ok] nvim config symlink already exists"
+        if ($item.LinkType -in @("SymbolicLink", "Junction")) {
+            Write-Host "    [ok] nvim config link already exists"
         } else {
             Write-Warning "    $nvimConfigLink exists but is not a symlink — skipping"
         }
     } else {
-        New-Item -ItemType SymbolicLink -Path $nvimConfigLink -Target $nvimConfigTarget -Force | Out-Null
-        Write-Host "    Linked $nvimConfigLink -> $nvimConfigTarget"
+        # Try symlink first (requires admin or Developer Mode), fall back to junction
+        try {
+            New-Item -ItemType SymbolicLink -Path $nvimConfigLink -Target $nvimConfigTarget -Force | Out-Null
+            Write-Host "    Linked $nvimConfigLink -> $nvimConfigTarget"
+        } catch {
+            try {
+                New-Item -ItemType Junction -Path $nvimConfigLink -Target $nvimConfigTarget | Out-Null
+                Write-Host "    Linked $nvimConfigLink -> $nvimConfigTarget (junction)"
+            } catch {
+                Write-Warning "    Could not create nvim config link (run as admin or enable Developer Mode)"
+            }
+        }
     }
 } else {
     Write-Warning "    nvim config source not found: $nvimConfigTarget"

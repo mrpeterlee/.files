@@ -24,13 +24,13 @@ function Ensure-Symlink {
 
     if (Test-Path $Link) {
         $item = Get-Item $Link -Force
-        if ($item.LinkType -eq "SymbolicLink") {
+        if ($item.LinkType -in @("SymbolicLink", "Junction")) {
             $existingTarget = $item.Target
             if ($existingTarget -eq $Target) {
                 Write-Host "    [ok] $Link"
                 return
             }
-            # Symlink exists but points elsewhere — remove and recreate
+            # Link exists but points elsewhere — remove and recreate
             Remove-Item $Link -Force
         } else {
             Write-Warning "    [skip] $Link exists and is not a symlink"
@@ -39,55 +39,65 @@ function Ensure-Symlink {
     }
 
     $targetIsDir = (Test-Path $Target -PathType Container)
-    if ($targetIsDir) {
+    try {
         New-Item -ItemType SymbolicLink -Path $Link -Target $Target -Force | Out-Null
-    } else {
-        New-Item -ItemType SymbolicLink -Path $Link -Target $Target -Force | Out-Null
+        Write-Host "    [link] $Link -> $Target"
+    } catch {
+        if ($targetIsDir) {
+            # Junction fallback for directories (no admin required)
+            try {
+                New-Item -ItemType Junction -Path $Link -Target $Target | Out-Null
+                Write-Host "    [link] $Link -> $Target (junction)"
+            } catch {
+                Write-Warning "    [fail] Could not link $Link (run as admin or enable Developer Mode)"
+            }
+        } else {
+            Write-Warning "    [fail] Could not link $Link (run as admin or enable Developer Mode)"
+        }
     }
-    Write-Host "    [link] $Link -> $Target"
 }
 
-$home = $env:USERPROFILE
+$homeDir = $env:USERPROFILE
 
 # Windows Terminal settings
 $wtLocalState = Join-Path $env:LOCALAPPDATA "Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState"
 if (Test-Path (Split-Path $wtLocalState -Parent)) {
     Ensure-Symlink `
         -Link (Join-Path $wtLocalState "settings.json") `
-        -Target (Join-Path $home ".config_windows\terminal\settings.json")
+        -Target (Join-Path $homeDir ".config_windows\terminal\settings.json")
 }
 
 # GlazeWM config
 Ensure-Symlink `
-    -Link (Join-Path $home ".glzr\glazewm\config.yaml") `
-    -Target (Join-Path $home ".config_windows\glazewm\config.yml")
+    -Link (Join-Path $homeDir ".glzr\glazewm\config.yaml") `
+    -Target (Join-Path $homeDir ".config_windows\glazewm\config.yml")
 
 # WSL config
 Ensure-Symlink `
-    -Link (Join-Path $home ".wslconfig") `
-    -Target (Join-Path $home ".config_windows\.wslconfig")
+    -Link (Join-Path $homeDir ".wslconfig") `
+    -Target (Join-Path $homeDir ".config_windows\.wslconfig")
 
 # Lazygit config (Windows uses %LOCALAPPDATA%\lazygit)
 Ensure-Symlink `
     -Link (Join-Path $env:LOCALAPPDATA "lazygit\config.yml") `
-    -Target (Join-Path $home ".config\lazygit\config.yml")
+    -Target (Join-Path $homeDir ".config\lazygit\config.yml")
 
 # PowerShell profile — handle OneDrive-redirected $PROFILE path
 $profilePath = "{{ output "pwsh" "-NoProfile" "-Command" "$PROFILE" | trim }}"
 if ($profilePath) {
     Ensure-Symlink `
         -Link $profilePath `
-        -Target (Join-Path $home ".config\powershell\profile.ps1")
+        -Target (Join-Path $homeDir ".config\powershell\profile.ps1")
 }
 
 # Source directory symlink: C:\Users\peter\.files -> D:\lab\.files
-$filesLink = Join-Path $home ".files"
+$filesLink = Join-Path $homeDir ".files"
 $filesTarget = "D:\lab\.files"
 if (-not (Test-Path $filesLink)) {
     Ensure-Symlink -Link $filesLink -Target $filesTarget
 } else {
     $item = Get-Item $filesLink -Force
-    if ($item.LinkType -eq "SymbolicLink") {
+    if ($item.LinkType -in @("SymbolicLink", "Junction")) {
         Write-Host "    [ok] $filesLink"
     } else {
         Write-Host "    [ok] $filesLink (directory exists)"
