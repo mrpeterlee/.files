@@ -22,7 +22,9 @@ Host tapai
     HostName 13.251.46.169
     User peter
     IdentityFile ~/.ssh/tapai-peterlee.pem
+{{- if ne .chezmoi.hostname "acap-admin" }}
     ProxyJump acap
+{{- end }}
 
 Host kayden
     HostName 13.228.5.236
