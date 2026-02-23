@@ -31,11 +31,28 @@ local function paste()
   return { vim.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
 end
 
+-- Custom OSC 52 copy that writes directly to the tmux client tty via printf
+-- tmux intercepts but does not reliably forward OSC 52 to the outer terminal,
+-- and Lua io.open doesn't properly write escape sequences to pty devices
+local function osc52_copy(reg)
+  local clipboard = reg == "+" and "c" or "p"
+  return function(lines)
+    local s = table.concat(lines, "\n")
+    local encoded = vim.base64.encode(s)
+    if vim.env.TMUX then
+      local tty = vim.fn.system("tmux display-message -p '#{client_tty}'"):gsub("%s+", "")
+      os.execute("printf '\\033]52;" .. clipboard .. ";" .. encoded .. "\\007' > " .. tty)
+    else
+      vim.api.nvim_chan_send(2, string.format("\027]52;%s;%s\a", clipboard, encoded))
+    end
+  end
+end
+
 vim.g.clipboard = {
   name = "OSC 52",
   copy = {
-    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    ["+"] = osc52_copy("+"),
+    ["*"] = osc52_copy("*"),
   },
   paste = {
     ["+"] = paste,
