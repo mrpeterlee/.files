@@ -61,6 +61,8 @@ zinit light-mode for \
   zsh-users/zsh-autosuggestions
 # Optional (adds compdefs/latency): MichaelAquilina/zsh-you-should-use
 
+# Use tmux clipboard on headless machines (avoids xclip "Can't open display" errors)
+[[ -z "$DISPLAY" && -n "$TMUX" ]] && export ZSH_SYSTEM_CLIPBOARD_METHOD="tmux"
 zinit ice depth=1 wait lucid
 zinit light kutsan/zsh-system-clipboard
 
