@@ -13,7 +13,7 @@ return {
     "lervag/wiki.vim",
     event = "VeryLazy",
     init = function()
-      vim.g.wiki_root = "/lab/paper/notes"
+      vim.g.wiki_root = vim.fn.expand("~/notes")
       vim.g.wiki_index_name = "todo.md"
     end,
   },
