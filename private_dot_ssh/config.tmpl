@@ -26,6 +26,18 @@ Host tapai
     ProxyJump acap
 {{- end }}
 
+Host sg-prod-1 sg
+    HostName sg-prod-1.acap.cc
+    Port 55555
+    User peter
+    IdentityFile ~/.ssh/sg-prod-1_peter_github
+
+Host sg-local
+    HostName 10.1.1.100
+    Port 22
+    User peter
+    IdentityFile ~/.ssh/sg-prod-1_peter_github
+
 Host kayden
     HostName 13.228.5.236
     User kayden
