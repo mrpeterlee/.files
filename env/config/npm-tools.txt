@@ -3,3 +3,4 @@
 @openai/codex
 pnpm@latest-10
 wrangler
+@infisical/cli
