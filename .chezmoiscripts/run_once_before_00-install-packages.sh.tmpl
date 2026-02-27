@@ -56,7 +56,8 @@ if ! command -v brew &>/dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-brew bundle --no-lock --file=/dev/stdin <<EOF
+# Allow partial failures (e.g. brew locks from concurrent builds on shared Homebrew)
+brew bundle --file=/dev/stdin <<EOF || echo "==> Warning: some brew packages failed to install (run 'cli prereq' to retry)"
 brew "zsh"
 brew "tmux"
 brew "git"
