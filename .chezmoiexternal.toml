@@ -50,9 +50,9 @@
 [".local/bin/fzf"]
     type = "archive-file"
     {{ if eq .chezmoi.arch "arm64" -}}
-    url = "https://github.com/junegunn/fzf/releases/download/v0.60.0/fzf-0.60.0-darwin_arm64.zip"
+    url = "https://github.com/junegunn/fzf/releases/download/v0.60.0/fzf-0.60.0-darwin_arm64.tar.gz"
     {{ else -}}
-    url = "https://github.com/junegunn/fzf/releases/download/v0.60.0/fzf-0.60.0-darwin_amd64.zip"
+    url = "https://github.com/junegunn/fzf/releases/download/v0.60.0/fzf-0.60.0-darwin_amd64.tar.gz"
     {{ end -}}
     path = "fzf"
     refreshPeriod = "720h"
