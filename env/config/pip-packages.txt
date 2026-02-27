@@ -40,6 +40,3 @@ nbformat
 
 # Microsoft integration
 O365
-
-# Cloud CLIs
-azure-cli
