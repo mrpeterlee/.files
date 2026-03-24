@@ -150,6 +150,11 @@ fi
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+# Bitwarden vault auto-unlock
+if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.secrets.local.zsh" ]]; then
+	source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.secrets.local.zsh"
+fi
+
 # Source cargo env if it exists
 if [[ -f "$HOME/.local/lib/cargo/env" ]]; then
 	. "$HOME/.local/lib/cargo/env"
