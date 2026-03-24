@@ -117,9 +117,26 @@ Files ending in `.tmpl` use these variables:
 | `{{ .infra.internal_port }}` | Internal service port | `8080` |
 | `{{ .infra.base_domain }}` | Base domain for services | `company.com` |
 
-### Without 1Password
+### Bitwarden / Vaultwarden (Tapai)
 
-If 1Password is not available, chezmoi uses placeholder values from `.chezmoidata.yaml`. You can also create a local secrets file:
+For Tapai project infrastructure, credentials are stored in Vaultwarden (`pw.tapai.com`) and retrieved via the `bw` CLI. Setup is machine-local (not in chezmoi):
+
+```bash
+# Create machine-local config
+mkdir -p ~/.config/bw
+cat > ~/.config/bw/env << 'EOF'
+BW_SERVER=https://pw.tapai.com
+BW_EMAIL=tapai.tech@acap.cc
+BW_PASSWORD=<master-password-here>
+EOF
+chmod 600 ~/.config/bw/env
+```
+
+A `bw-unlock` shell function in `~/.config/zsh/.secrets.local.zsh` reads this config and exports `BW_SESSION`. See `docs/secrets-management.md` for full setup.
+
+### Without 1Password or Bitwarden
+
+If neither is available, chezmoi uses placeholder values from `.chezmoidata.yaml`. You can also create a local secrets file:
 
 ```bash
 touch ~/.config/zsh/.secrets.local.zsh

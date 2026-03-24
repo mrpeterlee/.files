@@ -308,6 +308,124 @@ chezmoi init --force
 chezmoi apply --force
 ```
 
+## Bitwarden / Vaultwarden (Tapai)
+
+For Tapai project infrastructure, credentials are stored in a self-hosted Vaultwarden instance at `pw.tapai.com` and retrieved via the Bitwarden CLI (`bw`).
+
+### Architecture
+
+```
+~/.config/bw/env              Machine-local config (server, email, password)
+        │                     chmod 600, NOT in chezmoi
+        ▼
+~/.config/zsh/.secrets.local.zsh    Shell function: bw-unlock
+        │                           Sources bw/env, exports BW_SESSION
+        ▼
+bw CLI (/usr/local/bin/bw)    Configured for pw.tapai.com
+        │
+        ▼
+Vaultwarden (pw.tapai.com)    Tapai org, 29 vault items
+```
+
+### Setup on a New Host
+
+```bash
+# 1. Install Bitwarden CLI
+curl -sL "https://bitwarden.com/download/?app=cli&platform=linux" -o /tmp/bw.zip
+unzip -o /tmp/bw.zip -d /tmp/bw
+sudo mv /tmp/bw/bw /usr/local/bin/bw && chmod +x /usr/local/bin/bw
+rm -rf /tmp/bw.zip /tmp/bw
+
+# 2. Create machine-local config
+mkdir -p ~/.config/bw
+cat > ~/.config/bw/env << 'EOF'
+# Bitwarden CLI configuration (machine-local, not in chezmoi)
+# chmod 600 this file
+BW_SERVER=https://pw.tapai.com
+BW_EMAIL=tapai.tech@acap.cc
+BW_PASSWORD=<master-password-here>
+EOF
+chmod 600 ~/.config/bw/env
+
+# 3. Create bw-unlock shell function
+cat > ~/.config/zsh/.secrets.local.zsh << 'FUNC'
+# Machine-local secrets (not managed by chezmoi)
+
+# Bitwarden vault unlock helper
+bw-unlock() {
+    local bw_config="${XDG_CONFIG_HOME:-$HOME/.config}/bw/env"
+    if [[ ! -f "$bw_config" ]]; then
+        echo "Error: $bw_config not found" >&2
+        return 1
+    fi
+
+    local BW_SERVER BW_EMAIL BW_PASSWORD
+    source "$bw_config"
+
+    bw config server "$BW_SERVER" 2>/dev/null || true
+
+    if ! bw login --check &>/dev/null; then
+        bw login "$BW_EMAIL" "$BW_PASSWORD" --nointeraction
+    fi
+
+    export BW_SESSION=$(bw unlock "$BW_PASSWORD" --raw)
+    bw sync --quiet
+    echo "Vault unlocked (BW_SESSION exported)"
+}
+FUNC
+chmod 600 ~/.config/zsh/.secrets.local.zsh
+
+# 4. Test
+source ~/.config/zsh/.secrets.local.zsh
+bw-unlock
+bw list items | jq 'length'
+```
+
+### Files (Machine-Local, NOT in chezmoi)
+
+| File | Purpose | Permissions |
+|------|---------|-------------|
+| `~/.config/bw/env` | BW server URL, email, master password | `600` |
+| `~/.config/zsh/.secrets.local.zsh` | `bw-unlock` shell function | `600` |
+
+The `.secrets.local.zsh` file is automatically sourced by the chezmoi-managed `.secrets.zsh` if it exists.
+
+### Usage
+
+```bash
+# Unlock vault (in any zsh session)
+bw-unlock
+
+# Get a password
+bw get password "argocd-admin"
+
+# Get a secure note
+bw get notes "wireguard-plant-vpn"
+
+# List all items
+bw list items --pretty
+
+# Create a new item
+echo '{"type":1,"name":"my-item","login":{"username":"user","password":"pass"}}' \
+  | bw encode | bw create item
+
+# Launch Claude Code with MCP + vault access
+~/tapai/bin/claude-tapai
+```
+
+### Claude Code Integration
+
+A Bitwarden MCP server is configured in `~/.claude/settings.json`. The wrapper script `~/tapai/bin/claude-tapai` reads `~/.config/bw/env`, unlocks the vault, and launches Claude with `BW_SESSION` available to the MCP server.
+
+The credential registry (which vault item maps to which service) is in `~/tapai/CLAUDE.md`.
+
+### Cross-Platform Notes
+
+- `~/.config/bw/env` uses `XDG_CONFIG_HOME` (defaults to `~/.config` on all platforms)
+- The `bw` CLI binary differs per platform — use the correct download URL
+- The `.secrets.local.zsh` function works in both zsh and bash (source it manually in bash)
+- On macOS: `brew install bitwarden-cli` instead of the curl/unzip method
+
 ## Quick Reference
 
 ```bash
@@ -317,6 +435,16 @@ op item list --vault AstroCapital           # List items
 op item get Infrastructure --vault AstroCapital  # View item
 op read "op://AstroCapital/Infrastructure/field"  # Read field
 op item edit Infrastructure --vault AstroCapital "field=value"  # Update
+
+# Bitwarden CLI (Tapai Vaultwarden)
+bw-unlock                                    # Unlock vault (shell function)
+bw get password "item-name"                  # Get password
+bw get notes "item-name"                     # Get secure note
+bw get username "item-name"                  # Get username
+bw list items --pretty                       # List all items
+bw list items --search "keyword"             # Search items
+bw generate -uln --length 32                 # Generate password
+bw lock                                      # Lock vault
 
 # Chezmoi
 chezmoi data                                 # Show all template data
