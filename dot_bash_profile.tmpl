@@ -1,7 +1,11 @@
+# 1Password Service Accounts
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/op/service-accounts.env" ]; then
+    . "${XDG_CONFIG_HOME:-$HOME/.config}/op/service-accounts.env"
 {{ if .op_service_account_token -}}
-# 1Password Service Account
-export OP_SERVICE_ACCOUNT_TOKEN={{ .op_service_account_token | quote }}
+elif [ -z "$OP_SERVICE_ACCOUNT_TOKEN" ]; then
+    export OP_SERVICE_ACCOUNT_TOKEN={{ .op_service_account_token | quote }}
 {{ end -}}
+fi
 
 if [ -f ~/.config/bash/bashrc ]; then
 	. ~/.config/bash/bashrc

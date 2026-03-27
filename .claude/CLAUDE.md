@@ -19,22 +19,48 @@ This is a **chezmoi-managed dotfiles** repository with:
 
 **NEVER hardcode sensitive data in this repository.** All secrets are managed through 1Password.
 
-### 1Password Structure
+### 1Password Service Accounts
+
+Three service accounts are configured in `~/.config/op/service-accounts.env` (local only, 600 perms, NOT in git). Both zsh and bash source this file automatically on shell start.
+
+| Env Var | Vault | Scope |
+|---------|-------|-------|
+| `OP_SA_ACAP` | ACap | `~/acap`, acap openclaw in `~/.openclaws` |
+| `OP_SA_TAPAI` | Tapai | `~/tapai`, tapai openclaw in `~/.openclaws` |
+| `OP_SA_OPENCLAWS` | OpenClaws | all openclaws except xiong in `~/.openclaws` |
+
+`OP_SERVICE_ACCOUNT_TOKEN` defaults to `OP_SA_ACAP` on shell start.
+
+**Switching accounts:**
+```bash
+op-use acap                        # switch active account to ACap
+op-use tapai                       # switch to Tapai
+op-use openclaws                   # switch to OpenClaws
+op-which                           # show which account is active
+op-with tapai read "op://..."      # run one op command with a specific account (without switching)
+```
+
+**When reading secrets, use the correct vault for the context:**
+- Working in `~/acap` or acap openclaw → `op-use acap` (or already default)
+- Working in `~/tapai` or tapai openclaw → `op-use tapai`
+- Working with openclaws in `~/.openclaws` (except xiong) → `op-use openclaws`
+
+### 1Password Vault Structure
 
 | Vault | Item | Purpose |
 |-------|------|---------|
-| `AstroCapital` | `Infrastructure` | All infrastructure secrets (IPs, hostnames, AWS, etc.) |
+| `ACap` | `Infrastructure` | All infrastructure secrets (IPs, hostnames, AWS, etc.) |
 
 ### Reading Secrets
 
 In `.chezmoi.toml.tmpl`:
 ```go
-{{- $value := onepasswordRead "op://AstroCapital/Infrastructure/field_name" -}}
+{{- $value := onepasswordRead "op://ACap/Infrastructure/field_name" -}}
 ```
 
 In shell scripts (runtime):
 ```bash
-op read "op://AstroCapital/Infrastructure/field_name"
+op read "op://ACap/Infrastructure/field_name"
 ```
 
 ### Available Infrastructure Variables
@@ -185,9 +211,11 @@ chezmoi data              # Show all template data
 chezmoi doctor            # Diagnose issues
 
 # 1Password operations
-op signin                 # Sign in
-op item list --vault AstroCapital  # List items
-op item get Infrastructure --vault AstroCapital  # View item
+op-use acap|tapai|openclaws       # Switch active service account
+op-which                          # Show active account
+op-with acap op read "op://..."   # One-off command with specific account
+op item list --vault ACap         # List items in ACap vault
+op item get Infrastructure --vault ACap  # View item
 ```
 
 ## Conda Environment Management
