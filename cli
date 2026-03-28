@@ -12,6 +12,7 @@
 #   uninstall   Remove all chezmoi-managed files
 #   status      Show current installation status
 #   env         Manage conda environments (build, nuke, rollback, status)
+#   ai          Manage AI CLI tools (claude, codex, gemini)
 #   help        Show this help message
 #
 # Examples:
@@ -1368,6 +1369,7 @@ cmd_help() {
       uninstall     Remove all managed files
       status        Show installation status
       env           Manage conda environments
+      ai            Manage AI CLI tools (claude, codex, gemini)
       help          Show this help message
 
   ENV SUBCOMMANDS:
@@ -1376,6 +1378,11 @@ cmd_help() {
       env rollback       Revert prod symlink to previous environment
       env nuke           Destroy all envs and rebuild from scratch
       env install-timer  Install systemd timer for weekly auto-rebuild
+
+  AI SUBCOMMANDS:
+      ai update          Update claude, codex, and gemini to latest versions
+      ai status          Show installed versions and timer status
+      ai install-timer   Install systemd timer for daily auto-update
 
   PREREQ OPTIONS:
       --update      Also update existing packages
@@ -1437,6 +1444,101 @@ EOF
 }
 
 # ============================================================================
+# AI CLI Tools
+# ============================================================================
+
+cmd_ai() {
+    local subcmd="${1:-status}"
+    shift || true
+
+    case "$subcmd" in
+        update)        cmd_ai_update "$@" ;;
+        install-timer) cmd_ai_install_timer "$@" ;;
+        status)        cmd_ai_status "$@" ;;
+        *)
+            error "Unknown ai subcommand: $subcmd"
+            echo ""
+            echo "Usage: cli ai <update|status|install-timer>"
+            exit 1
+            ;;
+    esac
+}
+
+cmd_ai_update() {
+    echo ""
+    echo -e "${BOLD}Updating AI CLI Tools${RESET}"
+    echo "────────────────────────────────────────"
+    echo ""
+
+    source "${SCRIPT_DIR}/env/lib/ai-cli-update.sh"
+    update_ai_clis
+}
+
+cmd_ai_status() {
+    echo ""
+    echo -e "${BOLD}AI CLI Tool Versions${RESET}"
+    echo "────────────────────────────────────────"
+    echo ""
+
+    if command -v claude &>/dev/null; then
+        success "claude  $(claude --version 2>&1 | head -1)"
+    else
+        warn "claude  not found"
+    fi
+
+    local prod_bin="${PROD_LINK}/bin"
+    if [[ -x "${prod_bin}/codex" ]]; then
+        success "codex   $(${prod_bin}/codex --version 2>&1 | head -1)"
+    else
+        warn "codex   not found"
+    fi
+
+    if [[ -x "${prod_bin}/gemini" ]]; then
+        success "gemini  $(${prod_bin}/gemini --version 2>&1 | head -1)"
+    else
+        warn "gemini  not found"
+    fi
+
+    echo ""
+    local timer_name="ai-cli-update.timer"
+    if systemctl --user is-active "$timer_name" &>/dev/null; then
+        success "Timer active"
+        systemctl --user status "$timer_name" --no-pager 2>/dev/null || true
+    else
+        warn "Timer not installed (run: cli ai install-timer)"
+    fi
+    echo ""
+}
+
+cmd_ai_install_timer() {
+    echo ""
+    echo -e "${BOLD}Installing AI CLI Update Timer${RESET}"
+    echo "────────────────────────────────────────"
+    echo ""
+
+    local service_src="${SCRIPT_DIR}/env/ai-cli-update.service"
+    local timer_src="${SCRIPT_DIR}/env/ai-cli-update.timer"
+    local systemd_dir="${HOME}/.config/systemd/user"
+
+    mkdir -p "$systemd_dir"
+
+    info "Copying systemd units..."
+    cp "$service_src" "${systemd_dir}/ai-cli-update.service"
+    cp "$timer_src" "${systemd_dir}/ai-cli-update.timer"
+
+    info "Reloading systemd..."
+    systemctl --user daemon-reload
+
+    info "Enabling and starting timer..."
+    systemctl --user enable --now ai-cli-update.timer
+
+    success "Timer installed (daily at 05:00)"
+    systemctl --user status ai-cli-update.timer --no-pager || true
+
+    echo ""
+}
+
+# ============================================================================
 # Main
 # ============================================================================
 
@@ -1451,6 +1553,7 @@ main() {
         uninstall)  cmd_uninstall "$@" ;;
         status)     cmd_status "$@" ;;
         env)        cmd_env "$@" ;;
+        ai)         cmd_ai "$@" ;;
         help|--help|-h)  cmd_help ;;
         *)
             error "Unknown command: $cmd"

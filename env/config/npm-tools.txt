@@ -1,6 +1,7 @@
 # NPM CLI tools to install globally within the conda env
 # nodejs is installed via conda, so npm install -g puts binaries in $prefix/bin/
 @openai/codex
+@google/gemini-cli
 pnpm@latest-10
 wrangler
 @infisical/cli
