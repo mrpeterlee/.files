@@ -1,9 +1,9 @@
 [Unit]
-Description=Update AI CLI tools (claude, codex, gemini)
+Description=Update system prerequisites and CLI tools
 After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/home/peter/.files/cli ai update
+ExecStart=/home/peter/.files/cli update
 StandardOutput=journal
 StandardError=journal

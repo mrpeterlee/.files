@@ -1,10 +1,29 @@
 #!/usr/bin/env bash
 #
-# ai-cli-update.sh - Update AI CLI tools (claude, codex, gemini) to latest versions
+# auto-update.sh - Update system prerequisites and AI CLI tools
 #
 # Sourced by the main cli script. Expects logging functions (info, success, warn, error)
 # and CONDA_ENVS_DIR / PROD_LINK to be defined.
 #
+
+update_prereqs() {
+    info "Updating system packages..."
+    detect_platform
+    pkg_update
+    success "System packages updated"
+
+    info "Checking 1Password CLI..."
+    install_1password_cli || true
+
+    info "Checking chezmoi..."
+    if has_cmd chezmoi || [[ -x "$CHEZMOI_BIN" ]]; then
+        local current
+        current=$(chezmoi --version 2>/dev/null | head -1 || echo "unknown")
+        success "chezmoi present ($current)"
+    else
+        ensure_chezmoi
+    fi
+}
 
 update_ai_clis() {
     local failed=0

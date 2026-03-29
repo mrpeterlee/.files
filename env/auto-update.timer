@@ -1,5 +1,5 @@
 [Unit]
-Description=Daily AI CLI tools update (claude, codex, gemini)
+Description=Daily system and CLI tools update
 
 [Timer]
 OnCalendar=*-*-* 05:00

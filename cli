@@ -12,7 +12,7 @@
 #   uninstall   Remove all chezmoi-managed files
 #   status      Show current installation status
 #   env         Manage conda environments (build, nuke, rollback, status)
-#   ai          Manage AI CLI tools (claude, codex, gemini)
+#   update      Update system prereqs and AI CLI tools (claude, codex, gemini)
 #   help        Show this help message
 #
 # Examples:
@@ -1369,7 +1369,7 @@ cmd_help() {
       uninstall     Remove all managed files
       status        Show installation status
       env           Manage conda environments
-      ai            Manage AI CLI tools (claude, codex, gemini)
+      update        Update system prereqs and CLI tools (claude, codex, gemini)
       help          Show this help message
 
   ENV SUBCOMMANDS:
@@ -1379,10 +1379,10 @@ cmd_help() {
       env nuke           Destroy all envs and rebuild from scratch
       env install-timer  Install systemd timer for weekly auto-rebuild
 
-  AI SUBCOMMANDS:
-      ai update          Update claude, codex, and gemini to latest versions
-      ai status          Show installed versions and timer status
-      ai install-timer   Install systemd timer for daily auto-update
+  UPDATE SUBCOMMANDS:
+      update               Run full update (prereqs + AI CLIs)
+      update status        Show installed versions and timer status
+      update install-timer Install systemd timer for daily auto-update
 
   PREREQ OPTIONS:
       --update      Also update existing packages
@@ -1444,42 +1444,41 @@ EOF
 }
 
 # ============================================================================
-# AI CLI Tools
+# Update (prereqs + AI CLI tools)
 # ============================================================================
 
-cmd_ai() {
-    local subcmd="${1:-status}"
-    shift || true
-
-    case "$subcmd" in
-        update)        cmd_ai_update "$@" ;;
-        install-timer) cmd_ai_install_timer "$@" ;;
-        status)        cmd_ai_status "$@" ;;
-        *)
-            error "Unknown ai subcommand: $subcmd"
-            echo ""
-            echo "Usage: cli ai <update|status|install-timer>"
-            exit 1
-            ;;
-    esac
-}
-
-cmd_ai_update() {
+cmd_update() {
     echo ""
-    echo -e "${BOLD}Updating AI CLI Tools${RESET}"
+    echo -e "${BOLD}Updating System & CLI Tools${RESET}"
     echo "────────────────────────────────────────"
     echo ""
 
-    source "${SCRIPT_DIR}/env/lib/ai-cli-update.sh"
+    source "${SCRIPT_DIR}/env/lib/auto-update.sh"
+
+    update_prereqs
+    echo ""
     update_ai_clis
 }
 
-cmd_ai_status() {
+cmd_update_status() {
     echo ""
-    echo -e "${BOLD}AI CLI Tool Versions${RESET}"
+    echo -e "${BOLD}Update Status${RESET}"
     echo "────────────────────────────────────────"
     echo ""
 
+    echo -e "${BOLD}System:${RESET}"
+    has_cmd curl && success "curl" || warn "curl not found"
+    has_cmd git && success "git" || warn "git not found"
+    has_cmd jq && success "jq" || warn "jq not found"
+    has_cmd op && success "op  $(op --version 2>&1 | head -1)" || warn "op not found"
+    if has_cmd chezmoi || [[ -x "$CHEZMOI_BIN" ]]; then
+        success "chezmoi  $(chezmoi --version 2>&1 | head -1)"
+    else
+        warn "chezmoi not found"
+    fi
+
+    echo ""
+    echo -e "${BOLD}AI CLIs:${RESET}"
     if command -v claude &>/dev/null; then
         success "claude  $(claude --version 2>&1 | head -1)"
     else
@@ -1500,40 +1499,48 @@ cmd_ai_status() {
     fi
 
     echo ""
-    local timer_name="ai-cli-update.timer"
+    echo -e "${BOLD}Timer:${RESET}"
+    local timer_name="auto-update.timer"
     if systemctl --user is-active "$timer_name" &>/dev/null; then
         success "Timer active"
         systemctl --user status "$timer_name" --no-pager 2>/dev/null || true
     else
-        warn "Timer not installed (run: cli ai install-timer)"
+        warn "Timer not installed (run: cli update install-timer)"
     fi
     echo ""
 }
 
-cmd_ai_install_timer() {
+cmd_update_install_timer() {
     echo ""
-    echo -e "${BOLD}Installing AI CLI Update Timer${RESET}"
+    echo -e "${BOLD}Installing Auto-Update Timer${RESET}"
     echo "────────────────────────────────────────"
     echo ""
 
-    local service_src="${SCRIPT_DIR}/env/ai-cli-update.service"
-    local timer_src="${SCRIPT_DIR}/env/ai-cli-update.timer"
+    local service_src="${SCRIPT_DIR}/env/auto-update.service"
+    local timer_src="${SCRIPT_DIR}/env/auto-update.timer"
     local systemd_dir="${HOME}/.config/systemd/user"
 
     mkdir -p "$systemd_dir"
 
+    # Remove old ai-cli-update timer if present
+    if systemctl --user is-active ai-cli-update.timer &>/dev/null; then
+        info "Removing old ai-cli-update timer..."
+        systemctl --user disable --now ai-cli-update.timer 2>/dev/null || true
+        rm -f "${systemd_dir}/ai-cli-update.timer" "${systemd_dir}/ai-cli-update.service"
+    fi
+
     info "Copying systemd units..."
-    cp "$service_src" "${systemd_dir}/ai-cli-update.service"
-    cp "$timer_src" "${systemd_dir}/ai-cli-update.timer"
+    cp "$service_src" "${systemd_dir}/auto-update.service"
+    cp "$timer_src" "${systemd_dir}/auto-update.timer"
 
     info "Reloading systemd..."
     systemctl --user daemon-reload
 
     info "Enabling and starting timer..."
-    systemctl --user enable --now ai-cli-update.timer
+    systemctl --user enable --now auto-update.timer
 
     success "Timer installed (daily at 05:00)"
-    systemctl --user status ai-cli-update.timer --no-pager || true
+    systemctl --user status auto-update.timer --no-pager || true
 
     echo ""
 }
@@ -1553,7 +1560,14 @@ main() {
         uninstall)  cmd_uninstall "$@" ;;
         status)     cmd_status "$@" ;;
         env)        cmd_env "$@" ;;
-        ai)         cmd_ai "$@" ;;
+        update)
+            local subcmd="${1:-}"
+            case "$subcmd" in
+                install-timer) shift; cmd_update_install_timer "$@" ;;
+                status)        shift; cmd_update_status "$@" ;;
+                *)             cmd_update "$@" ;;
+            esac
+            ;;
         help|--help|-h)  cmd_help ;;
         *)
             error "Unknown command: $cmd"
