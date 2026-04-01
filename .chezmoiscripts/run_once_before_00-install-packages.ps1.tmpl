@@ -6,17 +6,10 @@ $ErrorActionPreference = "Stop"
 Write-Host "==> Installing Windows packages via winget..."
 
 $packages = @(
-    @{ Id = "Neovim.Neovim";              Name = "Neovim" }
-    @{ Id = "wez.wezterm";                Name = "WezTerm" }
     @{ Id = "AgileBits.1Password.CLI";    Name = "1Password CLI" }
-    @{ Id = "JanDeDobbeleer.OhMyPosh";   Name = "Oh My Posh" }
-    @{ Id = "sharkdp.bat";               Name = "bat" }
     @{ Id = "BurntSushi.ripgrep.MSVC";   Name = "ripgrep" }
-    @{ Id = "junegunn.fzf";              Name = "fzf" }
-    @{ Id = "sharkdp.fd";               Name = "fd" }
-    @{ Id = "jesseduffield.lazygit";     Name = "lazygit" }
+    @{ Id = "sharkdp.bat";               Name = "bat" }
     @{ Id = "ajeetdsouza.zoxide";        Name = "zoxide" }
-    @{ Id = "dandavison.delta";          Name = "delta" }
     @{ Id = "eza-community.eza";         Name = "eza" }
 )
 
