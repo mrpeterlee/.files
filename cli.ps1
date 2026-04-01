@@ -139,16 +139,11 @@ function Invoke-Reinstall {
     $defaultSource = Join-Path $env:USERPROFILE ".local\share\chezmoi"
     if (Test-Path $defaultSource) { Remove-Item $defaultSource -Recurse -Force }
 
-    # Step 2: Remove external dependencies
-    Write-Info "Removing external dependencies..."
-    $lazyNvim = Join-Path $env:LOCALAPPDATA "nvim-data\lazy\lazy.nvim"
-    if (Test-Path $lazyNvim) { Remove-Item $lazyNvim -Recurse -Force }
-
-    # Step 3: Ensure chezmoi and source link
+    # Step 2: Ensure chezmoi and source link
     Ensure-Chezmoi
     Ensure-SourceLink
 
-    # Step 4: Initialize
+    # Step 3: Initialize
     Write-Info "Initializing chezmoi..."
     if (Test-LocalSource) {
         chezmoi init --source $DotfilesLink
@@ -156,7 +151,7 @@ function Invoke-Reinstall {
         chezmoi init $Repo --prompt=false
     }
 
-    # Step 5: Force apply
+    # Step 4: Force apply
     Write-Info "Applying dotfiles..."
     chezmoi apply --force
 
@@ -165,7 +160,7 @@ function Invoke-Reinstall {
         exit 1
     }
 
-    # Step 6: Refresh externals
+    # Step 5: Refresh externals
     Write-Info "Refreshing external dependencies..."
     chezmoi apply --refresh-externals 2>&1 | Out-Null
 
@@ -230,10 +225,6 @@ function Invoke-Uninstall {
         Remove-Item $defaultSource -Recurse -Force
     }
 
-    Write-Info "Removing external dependencies..."
-    $lazyNvim = Join-Path $env:LOCALAPPDATA "nvim-data\lazy\lazy.nvim"
-    if (Test-Path $lazyNvim) { Remove-Item $lazyNvim -Recurse -Force }
-
     Write-Host ""
     Write-Ok "Uninstall complete!"
     Write-Host ""
@@ -268,7 +259,7 @@ function Invoke-Status {
 
     # Tools
     Write-Host "  Tools:"
-    $tools = @("nvim", "bat", "rg", "fzf", "lazygit", "eza", "oh-my-posh", "delta", "zoxide", "op")
+    $tools = @("bat", "rg", "lazygit", "eza", "zoxide", "op")
     foreach ($tool in $tools) {
         if (Test-Tool $tool) { Write-Ok $tool } else { Write-Err $tool }
     }
@@ -278,11 +269,9 @@ function Invoke-Status {
     Write-Host "  Config files:"
     $configs = @(
         @{ Name = "git";        Path = Join-Path $env:USERPROFILE ".config\git\config" }
-        @{ Name = "nvim";       Path = Join-Path $env:USERPROFILE ".config\nvim\init.lua" }
         @{ Name = "powershell"; Path = Join-Path $env:USERPROFILE ".config\powershell\profile.ps1" }
         @{ Name = "lazygit";    Path = Join-Path $env:USERPROFILE ".config\lazygit\config.yml" }
         @{ Name = "wezterm";    Path = Join-Path $env:USERPROFILE ".wezterm.lua" }
-        @{ Name = "oh-my-posh"; Path = Join-Path $env:USERPROFILE ".config\zsh\ohmyposh.json" }
     )
     foreach ($cfg in $configs) {
         if (Test-Path $cfg.Path) { Write-Ok $cfg.Name } else { Write-Err $cfg.Name }
@@ -294,7 +283,6 @@ function Invoke-Status {
     $symlinks = @(
         @{ Name = "Windows Terminal"; Path = Join-Path $env:LOCALAPPDATA "Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" }
         @{ Name = "GlazeWM";         Path = Join-Path $env:USERPROFILE ".glzr\glazewm\config.yaml" }
-        @{ Name = "nvim (appdata)";   Path = Join-Path $env:LOCALAPPDATA "nvim" }
         @{ Name = ".files";           Path = Join-Path $env:USERPROFILE ".files" }
     )
     foreach ($sym in $symlinks) {
