@@ -218,6 +218,17 @@ op item list --vault ACap         # List items in ACap vault
 op item get Infrastructure --vault ACap  # View item
 ```
 
+## Windows Environment Model
+
+Two environments, one repo:
+
+| Environment | Purpose | Tools |
+|-------------|---------|-------|
+| **cmd/PowerShell** | Minimal Claude Code host | **winget:** 1Password CLI, ripgrep, bat, zoxide, eza. **conda:** lazygit (`D:\tool\conda\envs\paper\Library\bin`). **system:** git, chezmoi. |
+| **WSL** | Full dev environment | Standard Linux — run `cli install` inside WSL. Gets conda env, zsh, tmux, neovim, all terminal utilities. |
+
+The Windows side intentionally has no Neovim, Oh My Posh, fzf, fd, or delta. All dev tooling lives in WSL. Do not add dev tools to the Windows package list or PowerShell profile.
+
 ## Conda Environment Management
 
 The `cli env` command manages a blue-green conda environment at `/opt/conda/envs/`. This is the primary development environment ("acap") containing Python, Node.js, Rust, and all project dependencies.
@@ -345,6 +356,12 @@ Agent configs (Claude Code, Codex, OpenClaw) have moved to `~/.agents` (separate
 - `~/.agents/cli install` — install all agent configs
 - `~/.agents/cli snapshot` — capture evolved workspace files
 - The deploy script (`.chezmoiscripts/run_after_60-deploy-ai-agents.sh.tmpl`) triggers `~/.agents/cli install` automatically.
+
+## gstack
+
+Use the `/browse` skill from gstack for all web browsing. Never use `mcp__claude-in-chrome__*` tools.
+
+Available skills: `/office-hours`, `/plan-ceo-review`, `/plan-eng-review`, `/plan-design-review`, `/design-consultation`, `/design-shotgun`, `/design-html`, `/review`, `/ship`, `/land-and-deploy`, `/canary`, `/benchmark`, `/browse`, `/connect-chrome`, `/qa`, `/qa-only`, `/design-review`, `/setup-browser-cookies`, `/setup-deploy`, `/retro`, `/investigate`, `/document-release`, `/codex`, `/cso`, `/autoplan`, `/careful`, `/freeze`, `/guard`, `/unfreeze`, `/gstack-upgrade`, `/learn`.
 
 ## Related Documentation
 
