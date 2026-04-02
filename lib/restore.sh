@@ -2,8 +2,11 @@
 #
 # restore.sh - Restore dotfiles and tools from repo to system
 #
-# Assumes lib/common.sh and lib/platform.sh have been sourced.
+# Assumes lib/common.sh has been sourced.
 # Assumes SCRIPT_DIR, CHEZMOI_BIN, CHEZMOI_SOURCE, CHEZMOI_CONFIG_DIR, REPO are set.
+
+# Source platform helpers (only needed by restore)
+source "${SCRIPT_DIR}/lib/platform.sh"
 
 # Install miniconda to /opt/conda if not present (Linux only).
 # Requires write access to /opt — on multi-user hosts run as the /opt owner.
@@ -501,7 +504,7 @@ cmd_restore() {
             rsync -a --exclude='.git' "${SCRIPT_DIR}/" "$CHEZMOI_SOURCE/"
             debug "Copied $(find "$CHEZMOI_SOURCE" -type f | wc -l) files"
         else
-            "$CHEZMOI_BIN" init "$REPO" --prompt=false
+            "$CHEZMOI" init "$REPO" --prompt=false
         fi
     else
         if [[ ! -t 0 ]]; then
@@ -510,16 +513,16 @@ cmd_restore() {
                 info "Using local source: ${SCRIPT_DIR}"
             else
                 info "Fetching from: ${REPO}"
-                "$CHEZMOI_BIN" init "$REPO" --prompt=false
+                "$CHEZMOI" init "$REPO" --prompt=false
             fi
         else
             # Interactive mode — let chezmoi handle prompts
             if is_local_source; then
                 info "Using local source: ${SCRIPT_DIR}"
-                "$CHEZMOI_BIN" init --source "$SCRIPT_DIR"
+                "$CHEZMOI" init --source "$SCRIPT_DIR"
             else
                 info "Fetching from: ${REPO}"
-                "$CHEZMOI_BIN" init "$REPO"
+                "$CHEZMOI" init "$REPO"
             fi
         fi
     fi
@@ -527,9 +530,9 @@ cmd_restore() {
     # Apply dotfiles
     info "Applying dotfiles..."
     if [[ ! -t 0 ]] || [[ "$force" == "true" ]]; then
-        "$CHEZMOI_BIN" apply --force
+        "$CHEZMOI" apply --force
     else
-        "$CHEZMOI_BIN" apply
+        "$CHEZMOI" apply
     fi
 
     # Install conda + shared env (Linux only, skips if already present)
@@ -542,7 +545,7 @@ cmd_restore() {
     # Refresh externals on force reinstall
     if [[ "$force" == "true" ]]; then
         info "Refreshing external dependencies..."
-        "$CHEZMOI_BIN" apply --refresh-externals 2>&1 || warn "Some externals may have failed"
+        "$CHEZMOI" apply --refresh-externals 2>&1 || warn "Some externals may have failed"
     fi
 
     echo ""
