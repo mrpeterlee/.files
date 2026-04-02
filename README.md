@@ -22,11 +22,12 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply MrPeterLee
 git clone https://github.com/MrPeterLee/dotfiles.git ~/.files
 cd ~/.files
 
-./cli install      # First-time setup
-./cli reinstall    # Clean slate reinstall
-./cli uninstall    # Remove all managed files
-./cli status       # Show what's installed
-./cli help         # Full usage guide
+./cli restore              # Apply dotfiles + install prereqs
+./cli restore --force      # Clean-slate reinstall
+./cli backup               # Capture system changes into repo
+./cli conda build          # Build conda environment
+./cli status               # Show what's installed
+./cli help                 # Full usage guide
 ```
 
 ## What's Included

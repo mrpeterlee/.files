@@ -12,7 +12,7 @@ The Windows/cmd side of the dotfiles repo installs a full dev environment (Neovi
 | Environment | Purpose | Tooling |
 |-------------|---------|---------|
 | **cmd/PowerShell** (native Windows) | Minimal host for Claude Code | **winget:** 1Password CLI, ripgrep, bat, zoxide, eza. **conda:** lazygit. **system:** git (`D:\tool\git`), chezmoi. **Configs:** WezTerm, GlazeWM, Windows Terminal, lazygit, WSL, PowerShell profile. |
-| **WSL** | Full dev environment | Standard Linux treatment via `cli install` — conda env, zsh, tmux, neovim, all terminal utilities. No customization vs a regular Linux host. |
+| **WSL** | Full dev environment | Standard Linux treatment via `cli restore` — conda env, zsh, tmux, neovim, all terminal utilities. No customization vs a regular Linux host. |
 
 ## Changes
 
@@ -109,7 +109,7 @@ Neovim is no longer installed on Windows, so this dead cleanup code should be re
 
 Add a "Windows Environment Model" section explaining:
 - cmd/PowerShell = minimal Claude Code host
-- WSL = full dev environment via standard `cli install`
+- WSL = full dev environment via standard `cli restore`
 - Tools that live on each side and why
 
 ## Files Changed

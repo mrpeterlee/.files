@@ -4,6 +4,6 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/home/peter/.files/cli update
+ExecStart=/home/peter/.files/cli restore
 StandardOutput=journal
 StandardError=journal

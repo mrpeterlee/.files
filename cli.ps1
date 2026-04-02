@@ -244,7 +244,7 @@ function Invoke-Status {
     } else {
         Write-Err "chezmoi not installed"
         Write-Host ""
-        Write-Host "  Run 'cli install' to get started."
+        Write-Host "  Run 'cli restore' to get started."
         return
     }
 
@@ -322,18 +322,18 @@ function Invoke-Help {
       # Clone and install:
       git clone https://github.com/MrPeterLee/dotfiles.git D:\lab\.files
       cd D:\lab\.files
-      .\cli.bat install
+      .\cli.bat restore
 
       # Or from PowerShell directly:
-      pwsh .\cli.ps1 install
+      pwsh .\cli.ps1 restore
 
   COMMON WORKFLOWS:
 
       # First time setup
-      > cli install
+      > cli restore
 
       # Something broke? Start fresh
-      > cli reinstall
+      > cli restore --force
 
       # See what chezmoi would change
       > chezmoi diff

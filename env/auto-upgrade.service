@@ -4,6 +4,6 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/home/peter/.files/cli env build
+ExecStart=/home/peter/.files/cli conda build
 StandardOutput=journal
 StandardError=journal
