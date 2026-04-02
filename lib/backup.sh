@@ -14,7 +14,7 @@ cmd_backup() {
     ensure_chezmoi
 
     info "Capturing changes from live system..."
-    "$CHEZMOI" re-add
+    "$CHEZMOI" re-add --source "$SCRIPT_DIR"
 
     # Show what changed in the source dir
     local changes
