@@ -5,6 +5,9 @@
 # CODEX
 export CODEX_AUTO_APPROVE=1
 
+# Claude Code (ECC hooks)
+export CLAUDE_PLUGIN_ROOT="$HOME/.claude"
+
 # 1Password
 if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/op/env" ]]; then
     source "${XDG_CONFIG_HOME:-$HOME/.config}/op/env"
