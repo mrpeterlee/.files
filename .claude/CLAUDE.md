@@ -201,7 +201,7 @@ chezmoi apply
 
 ```bash
 # CLI wrapper
-./cli install|reinstall|uninstall|status|help
+./cli backup|restore|conda|status|help
 
 # Chezmoi operations
 chezmoi diff              # Preview changes
@@ -225,13 +225,13 @@ Two environments, one repo:
 | Environment | Purpose | Tools |
 |-------------|---------|-------|
 | **cmd/PowerShell** | Minimal Claude Code host | **winget:** 1Password CLI, ripgrep, bat, zoxide, eza. **conda:** lazygit (`D:\tool\conda\envs\paper\Library\bin`). **system:** git, chezmoi. |
-| **WSL** | Full dev environment | Standard Linux — run `cli install` inside WSL. Gets conda env, zsh, tmux, neovim, all terminal utilities. |
+| **WSL** | Full dev environment | Standard Linux — run `cli restore` inside WSL. Gets conda env, zsh, tmux, neovim, all terminal utilities. |
 
 The Windows side intentionally has no Neovim, Oh My Posh, fzf, fd, or delta. All dev tooling lives in WSL. Do not add dev tools to the Windows package list or PowerShell profile.
 
 ## Conda Environment Management
 
-The `cli env` command manages a blue-green conda environment at `/opt/conda/envs/`. This is the primary development environment ("acap") containing Python, Node.js, Rust, and all project dependencies.
+The `cli conda` command manages a blue-green conda environment at `/opt/conda/envs/`. This is the primary development environment ("acap") containing Python, Node.js, Rust, and all project dependencies.
 
 ### Architecture
 
@@ -252,11 +252,11 @@ The env is **shared across all users** on a host — there is one `prod` symlink
 
 | Command | Purpose |
 |---------|---------|
-| `cli env build` | Create a new timestamped env, validate it, atomically swap the `prod` symlink, clean up envs older than 30 days |
-| `cli env status` | Show current `prod` target, Python/Node/uv versions, list all available envs |
-| `cli env rollback` | Revert `prod` symlink to the previously recorded env |
-| `cli env nuke` | Remove **all** `acap-*` envs and the `prod` symlink, then rebuild from scratch |
-| `cli env install-timer` | Install a systemd user timer for weekly auto-rebuild (Sun 04:00) |
+| `cli conda build` | Create a new timestamped env, validate it, atomically swap the `prod` symlink, clean up envs older than 30 days |
+| `cli conda status` | Show current `prod` target, Python/Node/uv versions, list all available envs |
+| `cli conda rollback` | Revert `prod` symlink to the previously recorded env |
+| `cli conda nuke` | Remove **all** `acap-*` envs and the `prod` symlink, then rebuild from scratch |
+| `cli conda install-timer` | Install a systemd user timer for weekly auto-rebuild (Sun 04:00) |
 
 ### What gets installed
 
@@ -278,7 +278,7 @@ The build pipeline runs in this order:
    `gh`, `kubectl`, `argocd`, `helm`, `aliyun`, `yazi`, `sesh`, `twm`, `oh-my-posh`.
 
 6. **System-level tools** -- installed outside the env, available on system PATH
-   `op` (1Password CLI, via `cli prereq`), `claude` (Claude Code, native standalone binary at `~/.local/bin/claude`).
+   `op` (1Password CLI, installed automatically by `cli restore`), `claude` (Claude Code, native standalone binary at `~/.local/bin/claude`).
 
 
 ### Adding or removing packages
@@ -288,7 +288,7 @@ The build pipeline runs in this order:
 - **NPM tool**: edit `env/config/npm-tools.txt`, one scoped-or-bare package per line.
 - **Standalone binary**: add an `_install_<name>` function to `env/lib/cli-tools.sh` and call it from `install_cli_tools`.
 
-After editing, run `cli env build` to create a fresh env with the changes. The previous env remains available for rollback.
+After editing, run `cli conda build` to create a fresh env with the changes. The previous env remains available for rollback.
 
 ### Cleanup policy
 
@@ -322,7 +322,7 @@ If validation fails, the new env is deleted and the `prod` symlink is **not** sw
       build.sh                           # build_env() — orchestrates install steps
       validate.sh                        # validate_env() — post-build checks
       cli-tools.sh                       # install_cli_tools() — standalone binary downloads
-    auto-upgrade.service                 # systemd oneshot for cli env build
+    auto-upgrade.service                 # systemd oneshot for cli conda build
     auto-upgrade.timer                   # weekly timer (Sun 04:00)
     deploy-host.sh                       # full host deployment (miniconda + env + user bashrc)
     setup-bashrc.sh                      # inject conda init block into each user's bashrc
