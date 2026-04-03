@@ -40,15 +40,17 @@ windows:
       panes:
         - acap-cc-1
             - mkdir -p /tmp/claude_telegram_sessions/acap-cc1
-            - [ -f /tmp/claude_telegram_sessions/acap-cc1/access.json ] || cp ~/.claude/channels/telegram/access.json /tmp/claude_telegram_sessions/acap-cc1/ 
+            - ensure_file() { local dst="$1" src="$2"; if [[ ! -f "$dst" ]]; then cp "$src" "$dst"; fi }
+            - ensure_file /tmp/claude_telegram_sessions/acap-cc1/access.json ~/.claude/channels/telegram/access.json
             - TELEGRAM_BOT_TOKEN="$(op read 'op://ACap/Telegram Bot - acap_cc1_bot/credential')" 
             - TELEGRAM_STATE_DIR="/tmp/claude_telegram_sessions/acap-cc1"
             - cd ~/acap
             - claude --dangerously-skip-permissions --channels plugin:telegram@claude-plugins-official
 
-        - acap-cc-2
+        - acap-cc-a
             - mkdir -p /tmp/claude_telegram_sessions/acap-cc2
-            - [ -f /tmp/claude_telegram_sessions/acap-cc2/access.json ] || cp ~/.claude/channels/telegram/access.json /tmp/claude_telegram_sessions/acap-cc2/ 
+            - ensure_file() { local dst="$1" src="$2"; if [[ ! -f "$dst" ]]; then cp "$src" "$dst"; fi }
+            - ensure_file /tmp/claude_telegram_sessions/acap-cc2/access.json ~/.claude/channels/telegram/access.json
             - TELEGRAM_BOT_TOKEN="$(op read 'op://ACap/Telegram Bot - acap_cc2_bot/credential')" 
             - TELEGRAM_STATE_DIR="/tmp/claude_telegram_sessions/acap-cc2"
             - cd ~/acap
@@ -56,7 +58,8 @@ windows:
 
         - tapai-cc-1:
             - mkdir -p /tmp/claude_telegram_sessions/tapai-cc1
-            - [ -f /tmp/claude_telegram_sessions/tapai-cc1/access.json ] || cp ~/.claude/channels/telegram/access.json /tmp/claude_telegram_sessions/tapai-cc1/ 
+            - ensure_file() { local dst="$1" src="$2"; if [[ ! -f "$dst" ]]; then cp "$src" "$dst"; fi }
+            - ensure_file /tmp/claude_telegram_sessions/tapai-cc1/access.json ~/.claude/channels/telegram/access.json
             - TELEGRAM_BOT_TOKEN="$(op read 'op://Tapai/Telegram Bot - tapai_cc1_bot/credential')" 
             - TELEGRAM_STATE_DIR="/tmp/claude_telegram_sessions/tapai-cc1"
             - cd ~/tapai
@@ -64,12 +67,12 @@ windows:
 
         - tapai-cc-2:
             - mkdir -p /tmp/claude_telegram_sessions/tapai-cc2
-            - [ -f /tmp/claude_telegram_sessions/tapai-cc2/access.json ] || cp ~/.claude/channels/telegram/access.json /tmp/claude_telegram_sessions/tapai-cc2/ 
+            - ensure_file() { local dst="$1" src="$2"; if [[ ! -f "$dst" ]]; then cp "$src" "$dst"; fi }
+            - ensure_file /tmp/claude_telegram_sessions/tapai-cc2/access.json ~/.claude/channels/telegram/access.json
             - TELEGRAM_BOT_TOKEN="$(op read 'op://Tapai/Telegram Bot - tapai_cc2_bot/credential')" 
             - TELEGRAM_STATE_DIR="/tmp/claude_telegram_sessions/tapai-cc2"
             - cd ~/tapai
             - claude --dangerously-skip-permissions --channels plugin:telegram@claude-plugins-official
-
 
   - monitor:
       layout: tiled
