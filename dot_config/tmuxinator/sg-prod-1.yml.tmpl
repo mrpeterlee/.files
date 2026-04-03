@@ -35,6 +35,42 @@ windows:
         - acap-5:
             - cd ~/acap
 
+  - CCs:
+      layout: even-horizontal
+      panes:
+        - acap-cc-1
+            - mkdir -p /tmp/claude_telegram_sessions/acap-cc1
+            - [ -f /tmp/claude_telegram_sessions/acap-cc1/access.json ] || cp ~/.claude/channels/telegram/access.json /tmp/claude_telegram_sessions/acap-cc1/ 
+            - TELEGRAM_BOT_TOKEN="$(op read 'op://ACap/Telegram Bot - acap_cc1_bot/credential')" 
+            - TELEGRAM_STATE_DIR="/tmp/claude_telegram_sessions/acap-cc1"
+            - cd ~/acap
+            - claude --dangerously-skip-permissions --channels plugin:telegram@claude-plugins-official
+
+        - acap-cc-2
+            - mkdir -p /tmp/claude_telegram_sessions/acap-cc2
+            - [ -f /tmp/claude_telegram_sessions/acap-cc2/access.json ] || cp ~/.claude/channels/telegram/access.json /tmp/claude_telegram_sessions/acap-cc2/ 
+            - TELEGRAM_BOT_TOKEN="$(op read 'op://ACap/Telegram Bot - acap_cc2_bot/credential')" 
+            - TELEGRAM_STATE_DIR="/tmp/claude_telegram_sessions/acap-cc2"
+            - cd ~/acap
+            - claude --dangerously-skip-permissions --channels plugin:telegram@claude-plugins-official
+
+        - tapai-cc-1:
+            - mkdir -p /tmp/claude_telegram_sessions/tapai-cc1
+            - [ -f /tmp/claude_telegram_sessions/tapai-cc1/access.json ] || cp ~/.claude/channels/telegram/access.json /tmp/claude_telegram_sessions/tapai-cc1/ 
+            - TELEGRAM_BOT_TOKEN="$(op read 'op://Tapai/Telegram Bot - tapai_cc1_bot/credential')" 
+            - TELEGRAM_STATE_DIR="/tmp/claude_telegram_sessions/tapai-cc1"
+            - cd ~/tapai
+            - claude --dangerously-skip-permissions --channels plugin:telegram@claude-plugins-official
+
+        - tapai-cc-2:
+            - mkdir -p /tmp/claude_telegram_sessions/tapai-cc2
+            - [ -f /tmp/claude_telegram_sessions/tapai-cc2/access.json ] || cp ~/.claude/channels/telegram/access.json /tmp/claude_telegram_sessions/tapai-cc2/ 
+            - TELEGRAM_BOT_TOKEN="$(op read 'op://Tapai/Telegram Bot - tapai_cc2_bot/credential')" 
+            - TELEGRAM_STATE_DIR="/tmp/claude_telegram_sessions/tapai-cc2"
+            - cd ~/tapai
+            - claude --dangerously-skip-permissions --channels plugin:telegram@claude-plugins-official
+
+
   - monitor:
       layout: tiled
       panes:
