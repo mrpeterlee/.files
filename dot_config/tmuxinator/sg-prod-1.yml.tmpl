@@ -81,6 +81,18 @@ windows:
             - cd ~/acap
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
 
+        - acap_cc_5:
+            - sleep 21
+            - mkdir -p /tmp/claude_telegram_sessions/acap_cc_5
+            - ensure_file() { local dst="$1" src="$2"; if [[ ! -f "$dst" ]]; then cp "$src" "$dst"; fi }
+            - ensure_file /tmp/claude_telegram_sessions/acap_cc_5/access.json ~/.claude/channels/telegram/access.json
+            - export TELEGRAM_BOT_TOKEN="$(op read 'op://ACap/Telegram Bot - acap_cc5_bot/credential')"
+            - export TELEGRAM_STATE_DIR="/tmp/claude_telegram_sessions/acap_cc_5"
+            - sleep 1 && export BW_SESSION=$(bw unlock "$(op read 'op://Tapai/Bitwarden/password')" --raw)
+            - cd ~/acap
+            - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
+
+
   - Tapai-CCs:
       layout: tiled
       panes:
