@@ -49,7 +49,7 @@ windows:
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
 
         - acap_cc_2:
-            - sleep 3
+            - sleep 17
             - mkdir -p /tmp/claude_telegram_sessions/acap_cc_2
             - ensure_file() { local dst="$1" src="$2"; if [[ ! -f "$dst" ]]; then cp "$src" "$dst"; fi }
             - ensure_file /tmp/claude_telegram_sessions/acap_cc_2/access.json ~/.claude/channels/telegram/access.json
@@ -60,7 +60,7 @@ windows:
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
 
         - acap_cc_3:
-            - sleep 6
+            - sleep 33
             - mkdir -p /tmp/claude_telegram_sessions/acap_cc_3
             - ensure_file() { local dst="$1" src="$2"; if [[ ! -f "$dst" ]]; then cp "$src" "$dst"; fi }
             - ensure_file /tmp/claude_telegram_sessions/acap_cc_3/access.json ~/.claude/channels/telegram/access.json
@@ -71,7 +71,7 @@ windows:
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
 
         - acap_cc_4:
-            - sleep 9
+            - sleep 51
             - mkdir -p /tmp/claude_telegram_sessions/acap_cc_4
             - ensure_file() { local dst="$1" src="$2"; if [[ ! -f "$dst" ]]; then cp "$src" "$dst"; fi }
             - ensure_file /tmp/claude_telegram_sessions/acap_cc_4/access.json ~/.claude/channels/telegram/access.json
@@ -82,7 +82,7 @@ windows:
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
 
         - acap_cc_5:
-            - sleep 21
+            - sleep 68
             - mkdir -p /tmp/claude_telegram_sessions/acap_cc_5
             - ensure_file() { local dst="$1" src="$2"; if [[ ! -f "$dst" ]]; then cp "$src" "$dst"; fi }
             - ensure_file /tmp/claude_telegram_sessions/acap_cc_5/access.json ~/.claude/channels/telegram/access.json
@@ -97,6 +97,7 @@ windows:
       layout: tiled
       panes:
         - tapai_cc_1:
+            - sleep 85
             - mkdir -p /tmp/claude_telegram_sessions/tapai_cc_1
             - ensure_file() { local dst="$1" src="$2"; if [[ ! -f "$dst" ]]; then cp "$src" "$dst"; fi }
             - ensure_file /tmp/claude_telegram_sessions/tapai_cc_1/access.json ~/.claude/channels/telegram/access.json
@@ -107,7 +108,7 @@ windows:
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
 
         - tapai_cc_2:
-            - sleep 3
+            - sleep 102
             - mkdir -p /tmp/claude_telegram_sessions/tapai_cc_2
             - ensure_file() { local dst="$1" src="$2"; if [[ ! -f "$dst" ]]; then cp "$src" "$dst"; fi }
             - ensure_file /tmp/claude_telegram_sessions/tapai_cc_2/access.json ~/.claude/channels/telegram/access.json
@@ -118,7 +119,7 @@ windows:
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
 
         - tapai_cc_3:
-            - sleep 6
+            - sleep 118
             - mkdir -p /tmp/claude_telegram_sessions/tapai_cc_3
             - ensure_file() { local dst="$1" src="$2"; if [[ ! -f "$dst" ]]; then cp "$src" "$dst"; fi }
             - ensure_file /tmp/claude_telegram_sessions/tapai_cc_3/access.json ~/.claude/channels/telegram/access.json
@@ -129,7 +130,7 @@ windows:
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
 
         - tapai_cc_4:
-            - sleep 9
+            - sleep 136
             - mkdir -p /tmp/claude_telegram_sessions/tapai_cc_4
             - ensure_file() { local dst="$1" src="$2"; if [[ ! -f "$dst" ]]; then cp "$src" "$dst"; fi }
             - ensure_file /tmp/claude_telegram_sessions/tapai_cc_4/access.json ~/.claude/channels/telegram/access.json
