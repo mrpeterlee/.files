@@ -13,12 +13,13 @@ if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/op/env" ]]; then
     source "${XDG_CONFIG_HOME:-$HOME/.config}/op/env"
 fi
 
+# Bitwarden
+if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/bw/env" ]]; then
+    source "${XDG_CONFIG_HOME:-$HOME/.config}/bw/env"
+fi
+
 # Infisical
-{{- if eq .chezmoi.hostname "tapai-admin" }}
-export INFISICAL_API_URL="https://infisical.tapai.com/api"
-{{- else }}
 export INFISICAL_API_URL="https://infisical.acap.cc/api"
-{{- end }}
 
 # Set XDG directories
 export XDG_CONFIG_HOME="${HOME}/.config"
@@ -31,13 +32,8 @@ export NVIM_APPNAME="nvim"
 
 # Set default applications
 export EDITOR="nvim"
-{{- if .isDarwin }}
-export TERMINAL="wezterm"
-export BROWSER="open"
-{{- else }}
 export TERMINAL="kitty"
 export BROWSER="firefox"
-{{- end }}
 export PAGER="less"
 
 ## Respect XDG directories
@@ -69,35 +65,19 @@ export LC_ALL='C'
 # Avoid `PATH=$PATH:...` which causes PATH to grow without bound.
 typeset -U path PATH
 
-{{- if .isWSL }}
-# WSL imports the Windows PATH by default (as `/mnt/<drive>/...` entries).
-# Disable that globally via `/etc/wsl.conf` (`appendWindowsPath=false`) or, if you
-# just want to hide it in zsh, keep this filter enabled.
-if [[ -n "${WSL_DISTRO_NAME-}" && -z "${ZSH_WSL_KEEP_WINDOWS_PATH-}" ]]; then
-  path=(${path:#/mnt/[a-zA-Z]/*})
-fi
-{{- end }}
-
 path+=(
   "$HOME/.local/bin"
   "$HOME/bin"
-{{- if .isLinux }}
   "/lab/lib"
   "/opt/conda/bin"
   "/opt/conda/envs/prod/bin"
   "/usr/lib/lightdm/lightdm"
-{{- end }}
   "/usr/local/sbin"
   "/usr/local/bin"
   "/usr/sbin"
   "/usr/bin"
   "/sbin"
   "/bin"
-{{- if .isDarwin }}
-  "/opt/homebrew/bin"
-  "/opt/homebrew/sbin"
-{{- end }}
-{{- if .isLinux }}
   "/usr/games"
   "/usr/local/games"
   "/usr/lib/wsl/lib"
@@ -106,7 +86,6 @@ path+=(
   "/lab/lib/finclab/sh/bash"
   "/lab/lib/finclab/sh/zsh"
   "/lab/lib/finclab/sh/fish"
-{{- end }}
   "$HOME/.cargo/bin"
   "$HOME/.local/share/cargo/bin"
 )
