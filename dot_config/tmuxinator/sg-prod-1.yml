@@ -46,8 +46,6 @@ windows:
             - sleep 1 && export BW_SESSION=$(bw unlock "$(op read 'op://Tapai/Bitwarden/password')" --raw)
             - cd ~/acap
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
-            - /gstack-upgrade
-            - /using-superpowers
 
         - acap_cc_2:
             - sleep 17
@@ -59,7 +57,6 @@ windows:
             - sleep 1 && export BW_SESSION=$(bw unlock "$(op read 'op://Tapai/Bitwarden/password')" --raw)
             - cd ~/acap
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
-            - /using-superpowers
 
         - acap_cc_3:
             - sleep 33
@@ -71,7 +68,6 @@ windows:
             - sleep 1 && export BW_SESSION=$(bw unlock "$(op read 'op://Tapai/Bitwarden/password')" --raw)
             - cd ~/acap
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
-            - /using-superpowers
 
         - acap_cc_4:
             - sleep 51
@@ -83,7 +79,6 @@ windows:
             - sleep 1 && export BW_SESSION=$(bw unlock "$(op read 'op://Tapai/Bitwarden/password')" --raw)
             - cd ~/acap
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
-            - /using-superpowers
 
         - acap_cc_5:
             - sleep 68
@@ -95,7 +90,6 @@ windows:
             - sleep 1 && export BW_SESSION=$(bw unlock "$(op read 'op://Tapai/Bitwarden/password')" --raw)
             - cd ~/acap
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
-            - /using-superpowers
 
 
   - Tapai-CCs:
@@ -111,7 +105,6 @@ windows:
             - sleep 1 && export BW_SESSION=$(bw unlock "$(op read 'op://Tapai/Bitwarden/password')" --raw)
             - cd ~/tapai
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
-            - /using-superpowers
 
         - tapai_cc_2:
             - sleep 102
@@ -123,7 +116,6 @@ windows:
             - sleep 1 && export BW_SESSION=$(bw unlock "$(op read 'op://Tapai/Bitwarden/password')" --raw)
             - cd ~/tapai
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
-            - /using-superpowers
 
         - tapai_cc_3:
             - sleep 118
@@ -135,7 +127,6 @@ windows:
             - sleep 1 && export BW_SESSION=$(bw unlock "$(op read 'op://Tapai/Bitwarden/password')" --raw)
             - cd ~/tapai
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
-            - /using-superpowers
 
         - tapai_cc_4:
             - sleep 136
@@ -147,7 +138,6 @@ windows:
             - sleep 1 && export BW_SESSION=$(bw unlock "$(op read 'op://Tapai/Bitwarden/password')" --raw)
             - cd ~/tapai
             - claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
-            - /using-superpowers
 
   - monitor:
       layout: tiled
